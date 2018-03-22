@@ -15,18 +15,18 @@ function* loginSaga(action) {
             username: action.username,
             password: action.password
         });
-        if (response) {
-            yield call(localStorage.setItem, 'token', response.payload.token);
-            yield put(actions.loginSuccess(response.payload.user.username, response.payload.user.id));
-            yield call(history.push, '/');
-            yield call(console.log, 'success');
+        if (response.success) {
+            yield localStorage.setItem('token', response.data.token);
+            yield put(actions.loginSuccess(response.data.user.username, response.data.user.id));
         } else {
-            yield put(actions.loginError('Пользователя с такой комбинацией логина и пароля нет.'));
-            yield call(console.log, 'error unknown user');
+            if (response.status === 400) {
+                yield put(actions.loginError('Пользователя с такой комбинацией логина и пароля нет.'));
+            } else {
+                yield put(actions.loginError('Извините, произошла ошибка. Попробуйте позже.'));
+            }
         }
-    } catch (error) {
+    } catch(err) {
         yield put(actions.loginError('Извините, произошла ошибка. Попробуйте позже.'));
-        yield call(console.log, error.message);
     }
 }
 

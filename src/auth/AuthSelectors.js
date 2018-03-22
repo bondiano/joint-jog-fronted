@@ -5,7 +5,3 @@ export const selectAuthStatus = (state) => {
 export const selectErrors = (state) => {
     return state.auth.errors;
 };
-
-export const selectToken = (state) => {
-    return state.auth.token;
-}

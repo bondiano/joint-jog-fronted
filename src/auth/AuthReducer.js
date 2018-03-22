@@ -1,7 +1,6 @@
 import * as types from './AuthActionTypes';
 
 const initialState = {
-    token: '',
     isAuth: false,
     username: '',
     id: '',
