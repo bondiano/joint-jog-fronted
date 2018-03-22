@@ -1,3 +1,3 @@
 export const gcf = {};
 
-gcf.url = 'localhost:3001';
+gcf.url = 'http://localhost:3000';

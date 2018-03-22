@@ -3,7 +3,9 @@ import * as types from './AuthActionTypes';
 const initialState = {
     token: '',
     isAuth: false,
-    errors: []
+    username: '',
+    id: '',
+    errors: ''
 };
 
 export const auth = (state = initialState, action) => {
@@ -11,19 +13,19 @@ export const auth = (state = initialState, action) => {
         case types.LOGIN_SUCCESS:
             return {
                 ...state,
-                token: action.token,
+                username: action.username,
+                id: action.id,
                 isAuth: true,
-                errors: []
+                errors: ''
             };
         case types.REGISTER_SUCCESS:
             return {
                 ...state,
-                errors: []
+                errors: ''
             };
         case types.LOGOUT:
             return {
                 ...state,
-                token: '',
                 isAuth: false
             };
         case types.REGISTER_ERROR:
