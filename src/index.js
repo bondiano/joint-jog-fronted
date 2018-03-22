@@ -1,16 +1,18 @@
 import React from 'react';
 import createSagaMiddleware from 'redux-saga';
-import createHistory from 'history/createBrowserHistory';
 import { render } from 'react-dom';
 import { createStore, applyMiddleware }  from 'redux';
 import { Provider } from 'react-redux';
-import { BrowserRouter } from 'react-router-dom';
+import { Router } from 'react-router-dom';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import reducer from './reducer';
-// import saga from './saga';
+import rootSaga from './saga';
 import App from './app/App';
+import history from './history'
 
-const history = createHistory();
+import axios from 'axios';
+window.axios = axios;
+
 const sagaMiddleware = createSagaMiddleware();
 const initialState = {};
 const store = createStore(
@@ -19,13 +21,14 @@ const store = createStore(
     composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
 
-// sagaMiddleware.run(saga);
+
+sagaMiddleware.run(rootSaga);
 
 render((
         <Provider store={store}>
-            <BrowserRouter history={history}>
+            <Router history={history}>
                 <App/>
-            </BrowserRouter>
+            </Router>
         </Provider>),
     document.getElementById('app')
 );

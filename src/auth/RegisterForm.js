@@ -3,8 +3,19 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 
+import { withStyles, TextField, Button, Typography, Card } from 'material-ui';
+
+import ErrorsForm from './ErrorsForm';
+
 import * as actions from './AuthActions';
 import * as selectors from './AuthSelectors';
+
+const styles = theme => ({
+    container: {},
+    cardHeading: {},
+    fieldLine: {},
+    buttonLine:{}
+});
 
 class RegisterForm extends React.Component {
     constructor(props) {
@@ -72,40 +83,44 @@ class RegisterForm extends React.Component {
     }
 
     render() {
+        const { classes } = this.props;
         return (
             <Card className={classes.container}>
-                <form action="/" onSubmit={handleSubmit}>
+                <form action="/" onSubmit={(e) => {this.handleSubmit(e)}}>
                     <h2 className={classes.cardHeading}>Регистрация</h2>
 
-                    <ErrorsForm errors={errors}/>
+                    <ErrorsForm errors={this.props.serverErrors}/>
 
                     <div className={classes.fieldLine}>
                         <TextField
-                            onChange={handleChange}
+                            onChange={(e) => {this.handleChange(e)}}
                             type="text"
                             label="Username"
                             name="username"
-                            value={username}
+                            value={this.state.username}
+                            errorText={this.state.validErrors.username}
                         />
                     </div>
 
                     <div className={classes.fieldLine}>
                         <TextField
-                            onChange={handleChange}
+                            onChange={(e) => {this.handleChange(e)}}
                             type="text"
                             label="Email"
                             name="email"
                             value={email}
+                            errorText={this.state.validErrors.email}
                         />
                     </div>
 
                     <div className={classes.fieldLine}>
                         <TextField
-                            onChange={handleChange}
+                            onChange={(e) => {this.handleChange(e)}}
                             type="password"
                             label="Password"
                             name="password"
                             value={password}
+                            errorText={this.state.validErrors.password}
                         />
                     </div>
 
@@ -133,4 +148,4 @@ RegisterForm.propTypes = {
     serverErrors: PropTypes.array
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(RegisterForm));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RegisterForm)));

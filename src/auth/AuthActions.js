@@ -17,9 +17,10 @@ export const registerSuccess = () => ({
     type: types.REGISTER_SUCCESS,
 });
 
-export const loginSuccess = (token) => ({
+export const loginSuccess = (username, id) => ({
     type: types.LOGIN_SUCCESS,
-    token
+    username,
+    id
 });
 
 export const registerError = (errors) => ({
