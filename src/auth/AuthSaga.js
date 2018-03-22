@@ -17,6 +17,7 @@ function* loginSaga(action) {
         });
         if (response.success) {
             yield localStorage.setItem('token', response.data.token);
+            yield call(history.push, '/');
             yield put(actions.loginSuccess(response.data.user.username, response.data.user.id));
         } else {
             if (response.status === 400) {
