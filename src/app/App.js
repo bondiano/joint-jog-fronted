@@ -13,7 +13,7 @@ class App extends React.Component {
                 <Navbar/>
                 <Switch>
                     <Route exact path="/" component={Navbar} />
-
+                    <Route path="/login" component={Navbar} />
                     {/*<Route exact path="/" component={Homepage}/>*/}
                     {/*<PrivateRoute*/}
                         {/*isAuth={this.props.isAuth}*/}
