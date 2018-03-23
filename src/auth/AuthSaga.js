@@ -31,8 +31,39 @@ function* loginSaga(action) {
     }
 }
 
+function* registerSaga(action) {
+    try {
+        const response = yield call(xhr.post, '/user/register', {
+            username: action.username,
+            email: action.email,
+            password: action.password
+        });
+        if (response.success) {
+            yield call(history.push, '/login');
+            yield put(actions.registerSuccess());
+        } else {
+            if (response.status == 422) {
+                if (response.data.payload.length < 2) {
+                    if (response.data.payload[0].errorOnField === 'username') {
+                        yield put(actions.registerError('Пользователь с таким логином уже есть.'));
+                    } else {
+                        yield put(actions.registerError('Пользователь с такой электронной почтой уже есть.'));
+                    }
+                } else {
+                    yield put(actions.registerError('Пользователь с такими логином и электронной почтой уже есть.'));
+                }
+            } else {
+                yield put(actions.loginError('Извините, произошла ошибка. Попробуйте позже.'));
+            }
+        }
+    } catch(err) {
+        yield put(actions.loginError('Извините, произошла ошибка. Попробуйте позже.'));
+    }
+}
+
 export function* authRootSaga() {
     yield all([
-        yield takeLatest(types.LOGIN_REQUEST, loginSaga)
+        yield takeLatest(types.LOGIN_REQUEST, loginSaga),
+        yield takeLatest(types.REGISTER_REQUEST, registerSaga)
     ]);
 }

@@ -132,7 +132,7 @@ class RegisterForm extends React.Component {
                             value={this.state.email}
                             error={!this.state.emailValid}
                         />
-                        <Typography variant="caption" color="error" className={classes.errors}>{this.state.errors.username}</Typography>
+                        <Typography variant="caption" color="error" className={classes.errors}>{this.state.errors.email}</Typography>
                     </div>
 
                     <div className={classes.fieldLine}>
