@@ -2,22 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, AppBar, Toolbar, Typography, Button } from 'material-ui';
 
-const styles = theme => ({
-    root: {
-        position: 'fixed',
-        width: '100%',
-        zIndex: 1
-    },
-    flex: {
-        flex: 1,
-    },
-    menuButton: {
-        marginLeft: -12,
-        marginRight: 20,
-    }
-});
+import {NavbarStyles} from '../AppStyles';
 
-function Navbar({isAuth, logout, toLogin, toProfile, toMap, classes}) {
+function Navbar({/* isAuth, logout, toProfile, */ toLogin,  toMap, classes}) {
     return (
     <div className={classes.root}>
         <AppBar position="static">
@@ -43,4 +30,4 @@ Navbar.propTypes = {
     classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(Navbar);
+export default withStyles(NavbarStyles)(Navbar);

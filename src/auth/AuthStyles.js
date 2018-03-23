@@ -3,6 +3,7 @@ export const AuthStyles = theme => ({
         margin: '0 auto',
         textAlign: 'center',
         width: '700px',
+        marginTop: '75px'
     },
     cardHeading: {
         margin: 8
@@ -25,4 +26,3 @@ export const AuthStyles = theme => ({
         color: 'red',
     }
 });
-

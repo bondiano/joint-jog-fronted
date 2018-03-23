@@ -7,6 +7,13 @@ import * as actions from './AuthActions';
 import { AuthStyles } from './AuthStyles';
 
 class LoginForm extends React.Component {
+    static propTypes = {
+        loginRequest: PropTypes.func.isRequired,
+        serverErrors: PropTypes.string.isRequired,
+        history: PropTypes.object.isRequired,
+        classes: PropTypes.object.isRequired
+    };
+
     constructor(props) {
         super(props);
 
@@ -120,11 +127,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     loginRequest: actions.loginRequest
-};
-
-LoginForm.propTypes = {
-    loginRequest: PropTypes.func,
-    serverErrors: PropTypes.string
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(AuthStyles)(LoginForm));

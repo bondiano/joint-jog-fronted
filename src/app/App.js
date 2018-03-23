@@ -12,15 +12,7 @@ import LoginForm from "../auth/LoginForm";
 import EventContainer from '../events/EventsContainer';
 
 import theme from '../theme';
-
-const styles= theme => ({
-    root: {
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100vh',
-        overflow: 'hidden'
-    }
-});
+import {AppStyles} from './AppStyles';
 
 class App extends React.Component {
     static propTypes = {
@@ -63,4 +55,4 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(App)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(AppStyles)(App)));
