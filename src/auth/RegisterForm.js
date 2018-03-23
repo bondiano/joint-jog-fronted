@@ -5,35 +5,7 @@ import { withRouter } from 'react-router';
 import { withStyles, TextField, Button, Typography, Card } from 'material-ui';
 
 import * as actions from './AuthActions';
-import * as selectors from './AuthSelectors';
-
-const styles = theme => ({
-    container: {
-        margin: '0 auto',
-        textAlign: 'center',
-        width: '700px',
-    },
-    cardHeading: {
-        margin: 8
-    },
-    fieldLine: {
-        padding: 16,
-        margin: 8
-    },
-    buttonLine:{
-        padding: 16,
-        margin: 16
-    },
-    root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        listStyle: 'none',
-        justifyContent: 'center'
-    },
-    error: {
-        color: 'red',
-    }
-});
+import { AuthStyles } from './AuthStyles';
 
 class RegisterForm extends React.Component {
     constructor(props) {
@@ -53,7 +25,7 @@ class RegisterForm extends React.Component {
 
     register() {
         const { username, email, password } = this.state;
-        this.props.registerRequest(username, email, password);
+        this.props.registerRequest(username, email, password, this.props.history.push);
     }
 
     handleSubmit(e) {
@@ -132,7 +104,7 @@ class RegisterForm extends React.Component {
                             value={this.state.email}
                             error={!this.state.emailValid}
                         />
-                        <Typography variant="caption" color="error" className={classes.errors}>{this.state.errors.username}</Typography>
+                        <Typography variant="caption" color="error" className={classes.errors}>{this.state.errors.email}</Typography>
                     </div>
 
                     <div className={classes.fieldLine}>
@@ -163,7 +135,7 @@ class RegisterForm extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    serverErrors: selectors.selectErrors(state)
+    serverErrors: state.auth.errors
 });
 
 const mapDispatchToProps = {
@@ -175,4 +147,4 @@ RegisterForm.propTypes = {
     serverErrors: PropTypes.string
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(RegisterForm)));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(AuthStyles)(RegisterForm)));

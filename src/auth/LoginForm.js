@@ -4,36 +4,7 @@ import { connect } from 'react-redux';
 import { TextField, Button, Card, Typography, withStyles } from 'material-ui';
 
 import * as actions from './AuthActions';
-import * as selectors from './AuthSelectors';
-
-const styles = theme => ({
-    container: {
-        margin: '0 auto',
-        textAlign: 'center',
-        width: '700px',
-        marginTop: '75px'
-    },
-    cardHeading: {
-        margin: 8
-    },
-    fieldLine: {
-        padding: 16,
-        margin: 8
-    },
-    buttonLine:{
-        padding: 16,
-        margin: 16
-    },
-    root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        listStyle: 'none',
-        justifyContent: 'center'
-    },
-    error: {
-        color: 'red',
-    }
-});
+import { AuthStyles } from './AuthStyles';
 
 class LoginForm extends React.Component {
     constructor(props) {
@@ -50,7 +21,7 @@ class LoginForm extends React.Component {
     }
 
     login() {
-        this.props.loginRequest(this.state.username, this.state.password);
+        this.props.loginRequest(this.state.username, this.state.password, this.props.history.push);
     }
 
     handleChange(e) {
@@ -144,7 +115,7 @@ class LoginForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
-    serverErrors: selectors.selectErrors(state)
+    serverErrors: state.auth.errors
 });
 
 const mapDispatchToProps = {
@@ -156,4 +127,4 @@ LoginForm.propTypes = {
     serverErrors: PropTypes.string
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(LoginForm));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(AuthStyles)(LoginForm));

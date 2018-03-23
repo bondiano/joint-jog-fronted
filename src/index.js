@@ -3,15 +3,11 @@ import createSagaMiddleware from 'redux-saga';
 import { render } from 'react-dom';
 import { createStore, applyMiddleware }  from 'redux';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import reducer from './reducer';
 import rootSaga from './saga';
 import App from './app/App';
-import history from './history'
-
-import axios from 'axios';
-window.axios = axios;
 
 const sagaMiddleware = createSagaMiddleware();
 const initialState = {};
@@ -26,9 +22,9 @@ sagaMiddleware.run(rootSaga);
 
 render((
         <Provider store={store}>
-            <Router history={history}>
+            <BrowserRouter>
                 <App/>
-            </Router>
+            </BrowserRouter>
         </Provider>),
     document.getElementById('app')
 );
