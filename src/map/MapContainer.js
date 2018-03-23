@@ -8,12 +8,21 @@ class MapContainer extends Component {
         console.log(e);
     }
 
+    getUserCurrentPosition() {
+        if ("geolocation" in window.navigator) {
+            window.navigator.geolocation.getCurrentPosition(pos => console.log(pos));
+          } else {
+            /* geolocation IS NOT available */
+          }
+    }
+
     render() {
         return(
             <YMaps>
-                <Map state={{center: [54.98, 82.89], zoom: 15}}
-                     // TODO: handle this shit for ADAPTIVNOST'
-                     onClick={this.onClick} width={document.documentElement.clientWidth} height={document.documentElement.clientHeight}>
+                <Map state={{center: [54.98, 82.89], zoom: 15, controls: []}}
+                    onClick={this.onClick}
+                    width="100%"
+                    height="100%">
 
                     <Placemark
                         geometry={{

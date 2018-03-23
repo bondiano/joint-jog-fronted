@@ -1,22 +1,39 @@
 import React from 'react';
-import { withStyles } from 'material-ui';
+import PropTypes from 'prop-types';
+import { withStyles, AppBar, Toolbar, Typography, Button } from 'material-ui';
 
-const styles = {
-    navbar: {
-        position: 'absolute',
-        top: 0,
+const styles = theme => ({
+    root: {
+        position: 'fixed',
         width: '100%',
-        backgroundColor: 'white',
         zIndex: 1
+    },
+    flex: {
+        flex: 1,
+    },
+    menuButton: {
+        marginLeft: -12,
+        marginRight: 20,
     }
-};
+});
 
-function Navbar({classes}) {
+function Navbar({isAuth, logout, toLogin, toProfile, toMap, classes}) {
     return (
-      <div className={classes.navbar}>
-          <p>navbar</p>
-      </div>
+    <div className={classes.root}>
+        <AppBar position="static">
+            <Toolbar>
+                <Typography variant="title" color="inherit" className={classes.flex}>
+                    Joint Jog
+                </Typography>
+                <Button color="secondary">Войти</Button>
+            </Toolbar>
+        </AppBar>
+    </div>
     );
 }
+
+Navbar.propTypes = {
+    classes: PropTypes.object.isRequired
+};
 
 export default withStyles(styles)(Navbar);
