@@ -7,6 +7,13 @@ import * as actions from './AuthActions';
 import { AuthStyles } from './AuthStyles';
 
 class LoginForm extends React.Component {
+    static propTypes = {
+        loginRequest: PropTypes.func.isRequired,
+        serverErrors: PropTypes.string.isRequired,
+        history: PropTypes.object.isRequired,
+        classes: PropTypes.object.isRequired
+    };
+
     constructor(props) {
         super(props);
 
@@ -28,7 +35,7 @@ class LoginForm extends React.Component {
         const name = e.target.name;
         const value = e.target.value;
         this.setState({[name]: value},
-            () => { this.validateField(name, value) });
+            () => { this.validateField(name, value); });
     }
 
     handleSubmit(e) {
@@ -75,7 +82,7 @@ class LoginForm extends React.Component {
 
                 <div className={classes.fieldLine}>
                     <TextField
-                        onChange={(e) => {this.handleChange(e)}}
+                        onChange={(e) => {this.handleChange(e);}}
                         type="text"
                         label="Username"
                         name="username"
@@ -87,7 +94,7 @@ class LoginForm extends React.Component {
 
                 <div className={classes.fieldLine}>
                     <TextField
-                        onChange={(e) => {this.handleChange(e)}}
+                        onChange={(e) => {this.handleChange(e);}}
                         type="password"
                         label="Password"
                         name="password"
@@ -97,7 +104,7 @@ class LoginForm extends React.Component {
                     <Typography variant="caption" color="error" className={classes.errors}>{this.state.errors.password}</Typography>
                 </div>
 
-                <Button variant="raised" color="primary" onClick={(e) => {this.handleSubmit(e)}} className={classes.buttonLine} disabled={!this.state.formValid}>
+                <Button variant="raised" color="primary" onClick={(e) => {this.handleSubmit(e);}} className={classes.buttonLine} disabled={!this.state.formValid}>
                     Войти
                 </Button>
 
@@ -120,11 +127,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     loginRequest: actions.loginRequest
-};
-
-LoginForm.propTypes = {
-    loginRequest: PropTypes.func,
-    serverErrors: PropTypes.string
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(AuthStyles)(LoginForm));

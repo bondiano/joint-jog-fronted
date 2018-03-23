@@ -14,7 +14,7 @@ function* loginSaga(action) {
             password: action.password
         });
         if (response.success) {
-            yield localStorage.setItem('token', response.data.token);
+            yield window.localStorage.setItem('token', response.data.token);
             yield call(action.historyPush, '/');
             yield put(actions.loginSuccess(response.data.user.username, response.data.user.id));
         } else {

@@ -1,37 +1,50 @@
-import React, { Fragment } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
+import CssBaseline from 'material-ui/CssBaseline';
 import { Switch, Route, withRouter } from 'react-router-dom';
+import { withStyles } from 'material-ui';
+import { MuiThemeProvider } from 'material-ui/styles';
 import { connect } from 'react-redux';
+
 import Navbar from './common/Navbar';
-
-// import PrivateRoute from './common/PrivateRouter';
-
 import RegisterForm from '../auth/RegisterForm';
 import LoginForm from "../auth/LoginForm";
+import EventContainer from '../events/EventsContainer';
+
+import theme from '../theme';
+import {AppStyles} from './AppStyles';
 
 class App extends React.Component {
+    static propTypes = {
+        history: PropTypes.object.isRequired,
+        classes: PropTypes.object.isRequired
+    }
+
+    toMap = () => {
+        this.props.history.push('/events');
+    }
+
+    toLogin = () => {
+        this.props.history.push('/login');
+    }
 
     render() {
         return (
-            <Fragment>
-                <Navbar/>
-                <Switch>
-                    <Route exact path="/" component={Navbar} />
-                    <Route path="/login" component={LoginForm} />
-                    <Route path="/register" component={RegisterForm} />
-                    {/*<Route exact path="/" component={Homepage}/>*/}
-                    {/*<PrivateRoute*/}
-                        {/*isAuth={this.props.isAuth}*/}
-                        {/*exact*/}
-                        {/*path="/"*/}
-                        {/*component={}*/}
-                    {/*/>*/}
-                    {/*<PrivateRoute*/}
-                        {/*isAuth={this.props.isAuth}*/}
-                        {/*path="/"*/}
-                        {/*component={}*/}
-                    {/*/>*/}
-                </Switch>
-            </Fragment>
+            <div className={this.props.classes.root}>
+                <CssBaseline/>
+                <MuiThemeProvider theme={theme}>
+                    <Navbar
+                        toMap={this.toMap}
+                        toLogin={this.toLogin}
+                    />
+                    <Switch>
+                        <Route exact path="/" component={EventContainer} />
+                        <Route path="/events" component={EventContainer} />                        
+                        <Route path="/login" component={LoginForm} />
+                        <Route path="/register" component={RegisterForm} />
+                    </Switch>
+                </MuiThemeProvider>
+            </div>
         );
     }
 }
@@ -42,4 +55,4 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
 };
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(App));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(AppStyles)(App)));
