@@ -5,7 +5,7 @@ import Navbar from './common/Navbar';
 
 // import PrivateRoute from './common/PrivateRouter';
 
-import AuthRouter from '../auth/AuthRouter';
+import RegisterForm from '../auth/RegisterForm';
 import LoginForm from "../auth/LoginForm";
 
 class App extends React.Component {
@@ -17,6 +17,7 @@ class App extends React.Component {
                 <Switch>
                     <Route exact path="/" component={Navbar} />
                     <Route path="/login" component={LoginForm} />
+                    <Route path="/register" component={RegisterForm} />
                     {/*<Route exact path="/" component={Homepage}/>*/}
                     {/*<PrivateRoute*/}
                         {/*isAuth={this.props.isAuth}*/}
