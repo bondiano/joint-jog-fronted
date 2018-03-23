@@ -3,7 +3,7 @@ import axios from 'axios';
 import { gcf } from '../config';
 
 let instance = null;
-const headerWithToken = {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}};
+const headerWithToken = {headers: {'Authorization': `bearer ${localStorage.getItem('token')}`}};
 
 export default class XHRProvider {
     constructor() {
@@ -20,7 +20,7 @@ export default class XHRProvider {
 
     successHandler = (response) => {
         if(!response.data.success) {
-            return new Promise((resolve, reject) => reject({response}))
+            return new Promise((resolve, reject) => reject({response}));
         }
         return ({
             data: response.data.payload,
