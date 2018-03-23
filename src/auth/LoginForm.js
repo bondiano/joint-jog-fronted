@@ -11,6 +11,7 @@ const styles = theme => ({
         margin: '0 auto',
         textAlign: 'center',
         width: '700px',
+        marginTop: '75px'
     },
     cardHeading: {
         margin: 8
@@ -56,7 +57,7 @@ class LoginForm extends React.Component {
         const name = e.target.name;
         const value = e.target.value;
         this.setState({[name]: value},
-            () => { this.validateField(name, value) });
+            () => { this.validateField(name, value); });
     }
 
     handleSubmit(e) {
@@ -103,7 +104,7 @@ class LoginForm extends React.Component {
 
                 <div className={classes.fieldLine}>
                     <TextField
-                        onChange={(e) => {this.handleChange(e)}}
+                        onChange={(e) => {this.handleChange(e);}}
                         type="text"
                         label="Username"
                         name="username"
@@ -115,7 +116,7 @@ class LoginForm extends React.Component {
 
                 <div className={classes.fieldLine}>
                     <TextField
-                        onChange={(e) => {this.handleChange(e)}}
+                        onChange={(e) => {this.handleChange(e);}}
                         type="password"
                         label="Password"
                         name="password"
@@ -125,7 +126,7 @@ class LoginForm extends React.Component {
                     <Typography variant="caption" color="error" className={classes.errors}>{this.state.errors.password}</Typography>
                 </div>
 
-                <Button variant="raised" color="primary" onClick={(e) => {this.handleSubmit(e)}} className={classes.buttonLine} disabled={!this.state.formValid}>
+                <Button variant="raised" color="primary" onClick={(e) => {this.handleSubmit(e);}} className={classes.buttonLine} disabled={!this.state.formValid}>
                     Войти
                 </Button>
 
