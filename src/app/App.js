@@ -24,7 +24,16 @@ const styles= theme => ({
 
 class App extends React.Component {
     static propTypes = {
+        history: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired
+    }
+
+    toMap = () => {
+        this.props.history.push('/events');
+    }
+
+    toLogin = () => {
+        this.props.history.push('/login');
     }
 
     render() {
@@ -32,9 +41,13 @@ class App extends React.Component {
             <div className={this.props.classes.root}>
                 <CssBaseline/>
                 <MuiThemeProvider theme={theme}>
-                    <Navbar/>
+                    <Navbar
+                        toMap={this.toMap}
+                        toLogin={this.toLogin}
+                    />
                     <Switch>
                         <Route exact path="/" component={EventContainer} />
+                        <Route path="/events" component={EventContainer} />                        
                         <Route path="/login" component={LoginForm} />
                         <Route path="/register" component={RegisterForm} />
                     </Switch>

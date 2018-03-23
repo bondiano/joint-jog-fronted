@@ -25,7 +25,12 @@ function Navbar({isAuth, logout, toLogin, toProfile, toMap, classes}) {
                 <Typography variant="title" color="inherit" className={classes.flex}>
                     Joint Jog
                 </Typography>
-                <Button color="secondary">Войти</Button>
+                <Button color="secondary" onClick={toMap}>
+                    Карта
+                </Button>
+                <Button color="secondary" onClick={toLogin}>
+                    Войти
+                </Button>
             </Toolbar>
         </AppBar>
     </div>
@@ -33,6 +38,8 @@ function Navbar({isAuth, logout, toLogin, toProfile, toMap, classes}) {
 }
 
 Navbar.propTypes = {
+    toLogin: PropTypes.func.isRequired,
+    toMap: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired
 };
 
