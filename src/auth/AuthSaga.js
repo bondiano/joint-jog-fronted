@@ -5,8 +5,6 @@ import XHRProvider from '../utils/XHRProvider';
 import * as actions from './AuthActions';
 import * as types from './AuthActionTypes';
 
-import history from '../history';
-
 const xhr = new XHRProvider();
 
 function* loginSaga(action) {
@@ -17,7 +15,7 @@ function* loginSaga(action) {
         });
         if (response.success) {
             yield localStorage.setItem('token', response.data.token);
-            yield call(history.push, '/');
+            yield call(action.historyPush, '/');
             yield put(actions.loginSuccess(response.data.user.username, response.data.user.id));
         } else {
             if (response.status === 400) {
@@ -39,7 +37,7 @@ function* registerSaga(action) {
             password: action.password
         });
         if (response.success) {
-            yield call(history.push, '/login');
+            yield call(action.historyPush, '/login');
             yield put(actions.registerSuccess());
         } else {
             if (response.status == 422) {
