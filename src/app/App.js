@@ -27,8 +27,27 @@ class App extends React.Component {
         classes: PropTypes.object.isRequired,
     }
 
-    componentDidMount() {
-        window.localStorage.getItem('token') && this.props.checkJWT(this.props.history.push);
+    constructor(props) {
+        super(props);
+        let isAuth = false;
+        if (window.localStorage.getItem('token')){
+            isAuth = true;
+            this.props.checkJWT(this.props.history.push);
+        } else {
+            isAuth = false;
+        }
+        this.state = {
+            isAuth
+        };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.isAuth !== this.state.isAuth) {
+            this.setState({
+                ...this.state,
+                isAuth: nextProps.isAuth
+            });
+        }
     }
 
     toMap = () => {
@@ -64,7 +83,7 @@ class App extends React.Component {
                         <Route path="/events" component={EventContainer} />                   
                         <Route path="/login" component={LoginForm} />
                         <Route path="/register" component={RegisterForm} />
-                        <PrivateRouter path="/editor" isAuth={this.props.isAuth} component={EditorContainer}/>
+                        <PrivateRouter path="/editor" isAuth={this.state.isAuth} component={EditorContainer}/>
                     </Switch>
                 </MuiThemeProvider>
             </div>
