@@ -5,17 +5,19 @@ import { connect } from 'react-redux';
 import MapContainer from '../map/MapContainer';
 import EventCreateForm from './EventCreateForm';
 import EventEditForm from './EventEditForm';
+import EditorModal from './EditorModal';
 class EditorContainer extends Component {
 
     render() {
-        console.log(this.props);
         return(
             <Fragment>
                 <MapContainer/>
-                <Switch>
-                    <Route exact path="/editor/create" component={EventCreateForm}/>
-                    <Route path="/editor/:id" component={EventEditForm}/>                
-                </Switch>
+                <EditorModal>
+                    <Switch>
+                        <Route exact path="/editor/create" component={EventCreateForm}/>
+                        <Route path="/editor/:id" component={EventEditForm}/>                
+                    </Switch>
+                </EditorModal>
             </Fragment>
         );
     }

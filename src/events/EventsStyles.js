@@ -1,8 +1,8 @@
 export const EventStyles = theme => ({
     newEvent: {
         position: 'absolute',
-        bottom: '20px',
-        right: '20px',
+        bottom: '25px',
+        right: '25px',
         zIndex: 1
     }
 });

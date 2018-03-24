@@ -1,9 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui';
 
-const EventCreateForm = (props) => {
-    console.log('EventCreateForm', props);
+import { CreateEventFormStyles } from './EditorStyles';
+
+const EventCreateForm = ({classes}) => {
     return (
-        <div>
+        <div className={classes.root}>
             <p>
                 Meow
             </p>
@@ -11,4 +14,8 @@ const EventCreateForm = (props) => {
     );
 };
 
-export default EventCreateForm;
+EventCreateForm.propTypes = {
+    classes: PropTypes.object.isRequired
+};
+
+export default withStyles(CreateEventFormStyles)(EventCreateForm);
