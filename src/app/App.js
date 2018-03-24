@@ -11,14 +11,22 @@ import RegisterForm from '../auth/RegisterForm';
 import LoginForm from "../auth/LoginForm";
 import EventContainer from '../events/EventsContainer';
 
+import * as authActions from '../auth/AuthActions';
+
 import theme from '../theme';
 import {AppStyles} from './AppStyles';
 
 class App extends React.Component {
     static propTypes = {
         isAuth: PropTypes.bool.isRequired,
+        logout: PropTypes.func.isRequired,
+        checkJWT: PropTypes.func.isRequired,
         history: PropTypes.object.isRequired,
-        classes: PropTypes.object.isRequired
+        classes: PropTypes.object.isRequired,
+    }
+
+    componentDidMount() {
+        window.localStorage.getItem('token') && this.props.checkJWT(this.props.history.push);
     }
 
     toMap = () => {
@@ -34,7 +42,7 @@ class App extends React.Component {
     }
 
     logout = () => {
-
+        this.props.logout();
     }
     
     render() {
@@ -66,6 +74,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
+    logout: authActions.logout,
+    checkJWT: authActions.checkJWTRequest
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(AppStyles)(App)));

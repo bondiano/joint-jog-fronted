@@ -25,7 +25,28 @@ export const auth = (state = initialState, action) => {
         case types.LOGOUT:
             return {
                 ...state,
-                isAuth: false
+                isAuth: false,
+                id: '',
+                username: ''
+            };
+        case types.CHECK_JWT_REQUEST:
+            return {
+                ...state,
+                isAuth: true
+            };
+        case types.CHECK_JWT_SUCCESS:
+            return {
+                ...state,
+                isAuth: true,
+                username: action.username,
+                id: action.id,
+                errors: ''
+            };
+        case types.CHECK_JWT_ERROR:
+            return {
+                ...state,
+                isAuth: false,
+                errors: action.errors
             };
         case types.REGISTER_ERROR:
         case types.LOGIN_ERROR:

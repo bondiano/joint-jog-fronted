@@ -59,9 +59,30 @@ function* registerSaga(action) {
     }
 }
 
+function* logoutSaga() {
+    yield window.localStorage.removeItem('token');    
+}
+
+function* checkJWTSaga(action) {
+    try {
+        const response = yield call(xhr.get, '/user/', true);
+        if (response.success) {
+            yield put(actions.checkJWTSuccess(response.data.username, response.data.id));
+        } else {
+            yield put(actions.checkJWTError('Пожалуйста, войдите снова.'));
+            yield call(action.historyPush, '/login');                  
+        }
+    } catch(err) {
+        yield put(actions.checkJWTError('Извините, произошла ошибка. Попробуйте позже.'));
+        yield call(action.historyPush, '/login');        
+    }
+}
+
 export function* authRootSaga() {
     yield all([
         yield takeLatest(types.LOGIN_REQUEST, loginSaga),
-        yield takeLatest(types.REGISTER_REQUEST, registerSaga)
+        yield takeLatest(types.REGISTER_REQUEST, registerSaga),
+        yield takeLatest(types.LOGOUT, logoutSaga),
+        yield takeLatest(types.CHECK_JWT_REQUEST, checkJWTSaga)
     ]);
 }

@@ -3,7 +3,7 @@ import axios from 'axios';
 import { gcf } from '../config';
 
 let instance = null;
-const headerWithToken = {headers: {'Authorization': `bearer ${localStorage.getItem('token')}`}};
+const headerWithToken = {headers: {'Authorization': `bearer ${window.localStorage.getItem('token')}`}};
 
 export default class XHRProvider {
     constructor() {

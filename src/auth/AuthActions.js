@@ -38,3 +38,19 @@ export const loginError = (errors) => ({
 export const logout = () => ({
     type: types.LOGOUT
 });
+
+export const checkJWTRequest = (historyPush) => ({
+    type: types.CHECK_JWT_REQUEST,
+    historyPush
+});
+
+export const checkJWTSuccess = (id, username) => ({
+    type: types.CHECK_JWT_SUCCESS,
+    id,
+    username
+});
+
+export const checkJWTError = (errors) => ({
+    type: types.CHECK_JWT_ERROR,
+    errors
+});
