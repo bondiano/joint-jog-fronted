@@ -6,16 +6,18 @@ import * as actions from './MapActions';
 
 class MapContainer extends Component {
     static propTypes = {
-        basicGeo: PropTypes.array.isRequired,
-        setUserBasicGeo: PropTypes.func.isRequired
+        userWhere: PropTypes.array.isRequired,
+        setUserPosition: PropTypes.func.isRequired
     }
     
     componentDidMount() {
         if ("geolocation" in window.navigator) {
             window.navigator.geolocation.getCurrentPosition(position => {
+                console.log(position);
                 const latitude = position.coords.latitude;
                 const longitude = position.coords.longitude;
-                this.props.setUserBasicGeo(latitude, longitude);
+                const accuracy = position.coords.accuracy;
+                this.props.setUserPosition(latitude, longitude, accuracy);
             });
         } else {
             console.log('Cannot receive geoposition');
@@ -25,13 +27,13 @@ class MapContainer extends Component {
     render() {
         return(
             <YMaps>
-                <Map state={{center: this.props.basicGeo, zoom: 15, controls: []}}
+                <Map state={{center: [54.98, 82.89], zoom: 12, controls: []}}
                     width="100%"
                     height="100%">
 
                     <Placemark
                         geometry={{
-                            coordinates: this.props.basicGeo
+                            coordinates: this.props.userWhere
                         }}
                         properties={{
                             hintContent: 'Вы тут',
@@ -46,11 +48,11 @@ class MapContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-    basicGeo: [state.map.basicGeo.latitude, state.map.basicGeo.longitude]
+    userWhere: [state.map.userWhere.latitude, state.map.userWhere.longitude]
 });
 
 const mapDispatchToProps = {
-    setUserBasicGeo: actions.setUserBasicGeo
+    setUserPosition: actions.setUserPosition
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(MapContainer);

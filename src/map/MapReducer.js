@@ -1,9 +1,10 @@
 import * as types from './MapActionTypes';
 
 const initialState = {
-    basicGeo:{
+    userWhere:{
         latitude: 54.98, 
-        longitude: 82.89
+        longitude: 82.89,
+        accuracy: 0
     }
 };
 
@@ -12,10 +13,11 @@ export const map = (state = initialState, action) => {
         case types.SET_USER_GEO:
             return {
                 ...state,
-                basicGeo: {
-                    ...state.basicGeo,
+                userWhere: {
+                    ...state.userWhere,
                     latitude: action.latitude,
-                    longitude: action.longitude
+                    longitude: action.longitude,
+                    accuracy: action.accuracy
                 }
             };
         default:

@@ -1,7 +1,8 @@
 import * as types from './MapActionTypes';
 
-export const setUserBasicGeo = (latitude, longitude) => ({
+export const setUserPosition = (latitude, longitude, accuracy) => ({
     type: types.SET_USER_GEO,
     latitude,
-    longitude
+    longitude,
+    accuracy
 });

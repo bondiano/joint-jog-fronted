@@ -7,9 +7,11 @@ import { MuiThemeProvider } from 'material-ui/styles';
 import { connect } from 'react-redux';
 
 import Navbar from './common/Navbar';
+import PrivateRouter from './common/PrivateRouter';
 import RegisterForm from '../auth/RegisterForm';
 import LoginForm from "../auth/LoginForm";
 import EventContainer from '../events/EventsContainer';
+import EditorContainer from '../editor/EditorContainer';
 
 import * as authActions from '../auth/AuthActions';
 
@@ -59,9 +61,10 @@ class App extends React.Component {
                     />
                     <Switch>
                         <Route exact path="/" component={EventContainer} />
-                        <Route path="/events" component={EventContainer} />                        
+                        <Route path="/events" component={EventContainer} />                   
                         <Route path="/login" component={LoginForm} />
                         <Route path="/register" component={RegisterForm} />
+                        <PrivateRouter path="/editor" isAuth={this.props.isAuth} component={EditorContainer}/>
                     </Switch>
                 </MuiThemeProvider>
             </div>
