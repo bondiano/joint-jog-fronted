@@ -31,14 +31,14 @@ class LoginForm extends React.Component {
         this.props.loginRequest(this.state.username, this.state.password, this.props.history.push);
     }
 
-    handleChange(e) {
+    handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
         this.setState({[name]: value},
             () => { this.validateField(name, value); });
     }
 
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         this.login();
         e.preventDefault();
     }
@@ -71,18 +71,24 @@ class LoginForm extends React.Component {
         this.setState({formValid: this.state.usernameValid && this.state.passwordValid});
     }
 
+    toRegister = () => {
+        this.props.history.push('/register');
+    }
+
     render() {
         const { classes } = this.props;
         return (
             <div className={classes.root}>
             <Card className={classes.container}>
-                <Typography className={classes.fieldLine} variant="headline" component="h2" className={classes.cardHeading}>Вход</Typography>
+                <Typography className={classes.cardHeading} variant="headline" component="h2">
+                    Вход
+                </Typography>
 
                 <Typography color="error">{this.props.serverErrors}</Typography>
 
                 <div className={classes.fieldLine}>
                     <TextField
-                        onChange={(e) => {this.handleChange(e);}}
+                        onChange={this.handleChange}
                         type="text"
                         label="Username"
                         name="username"
@@ -94,7 +100,7 @@ class LoginForm extends React.Component {
 
                 <div className={classes.fieldLine}>
                     <TextField
-                        onChange={(e) => {this.handleChange(e);}}
+                        onChange={this.handleChange}
                         type="password"
                         label="Password"
                         name="password"
@@ -104,13 +110,11 @@ class LoginForm extends React.Component {
                     <Typography variant="caption" color="error" className={classes.errors}>{this.state.errors.password}</Typography>
                 </div>
 
-                <Button variant="raised" color="primary" onClick={(e) => {this.handleSubmit(e);}} className={classes.buttonLine} disabled={!this.state.formValid}>
+                <Button variant="raised" color="primary" onClick={this.handleSubmit} className={classes.buttonLine} disabled={!this.state.formValid}>
                     Войти
                 </Button>
 
-                <Button variant="raised" onClick={() => {
-                    this.props.history.push('/register');
-                }} className={classes.buttonLine}>
+                <Button variant="raised" onClick={this.toRegister} className={classes.buttonLine}>
                     Зарегистрироваться
                 </Button>
 

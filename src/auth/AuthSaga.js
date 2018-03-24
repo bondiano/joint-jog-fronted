@@ -40,7 +40,7 @@ function* registerSaga(action) {
             yield call(action.historyPush, '/login');
             yield put(actions.registerSuccess());
         } else {
-            if (response.status == 422) {
+            if (response.status === 422) {
                 if (response.data.payload.length < 2) {
                     if (response.data.payload[0].errorOnField === 'username') {
                         yield put(actions.registerError('Пользователь с таким логином уже есть.'));

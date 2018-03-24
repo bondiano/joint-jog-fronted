@@ -16,6 +16,7 @@ import {AppStyles} from './AppStyles';
 
 class App extends React.Component {
     static propTypes = {
+        isAuth: PropTypes.bool.isRequired,
         history: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired
     }
@@ -28,6 +29,14 @@ class App extends React.Component {
         this.props.history.push('/login');
     }
 
+    toProfile = () => {
+        this.props.history.push('/profile');        
+    }
+
+    logout = () => {
+
+    }
+    
     render() {
         return (
             <div className={this.props.classes.root}>
@@ -36,6 +45,9 @@ class App extends React.Component {
                     <Navbar
                         toMap={this.toMap}
                         toLogin={this.toLogin}
+                        toProfile={this.toProfile}
+                        logout={this.logout}
+                        isAuth={this.props.isAuth}
                     />
                     <Switch>
                         <Route exact path="/" component={EventContainer} />
@@ -50,6 +62,7 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
+    isAuth: state.auth.isAuth
 });
 
 const mapDispatchToProps = {

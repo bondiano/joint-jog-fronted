@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import { YMaps, Map, Placemark }from 'react-yandex-maps';
 import PropTypes from 'prop-types';
 import * as actions from './MapActions';
-import * as selectors from './MapSelectors';
 
 class MapContainer extends Component {
     static propTypes = {
@@ -23,15 +22,10 @@ class MapContainer extends Component {
         }
     }
     
-    onClick(e) {
-        console.log(e);
-    }
-    
     render() {
         return(
             <YMaps>
                 <Map state={{center: this.props.basicGeo, zoom: 15, controls: []}}
-                    onClick={this.onClick}
                     width="100%"
                     height="100%">
 
@@ -43,10 +37,6 @@ class MapContainer extends Component {
                             hintContent: 'Вы тут',
                             balloonContent: 'Вы тут, примерно :)'
                         }}
-                        options={{
-                            iconImageSize: [30, 42],
-                            iconImageOffset: [-3, -42]
-                        }}
                     />
 
                 </Map>
@@ -56,7 +46,7 @@ class MapContainer extends Component {
 }
 
 const mapStateToProps = state => ({
-    basicGeo: selectors.selectUserBasicGeo(state)
+    basicGeo: [state.map.basicGeo.latitude, state.map.basicGeo.longitude]
 });
 
 const mapDispatchToProps = {

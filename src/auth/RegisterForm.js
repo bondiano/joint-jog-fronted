@@ -8,6 +8,13 @@ import * as actions from './AuthActions';
 import { AuthStyles } from './AuthStyles';
 
 class RegisterForm extends React.Component {
+    static propTypes = {
+        classes: PropTypes.object.isRequired,
+        history: PropTypes.object.isRequired,
+        registerRequest: PropTypes.func.isRequired,
+        serverErrors: PropTypes.string.isRequired
+    };
+
     constructor(props) {
         super(props);
 
@@ -15,7 +22,11 @@ class RegisterForm extends React.Component {
             username: '',
             email: '',
             password: '',
-            errors: {username: '', email: '', password: ''},
+            errors: {
+                username: '',
+                email: '', 
+                password: ''
+            },
             usernameValid: true,
             emailValid: true,
             passwordValid: true,
@@ -28,16 +39,20 @@ class RegisterForm extends React.Component {
         this.props.registerRequest(username, email, password, this.props.history.push);
     }
 
-    handleSubmit(e) {
+    handleSubmit = (e) => {
         e.preventDefault();
         this.register();
     }
 
-    handleChange(e) {
+    handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
         this.setState({[name]: value},
-            () => { this.validateField(name, value) });
+            () => { this.validateField(name, value); });
+    }
+
+    toLogin = () => {
+        this.props.history.push('/login');
     }
 
     validateField(fieldName, value) {
@@ -63,7 +78,8 @@ class RegisterForm extends React.Component {
                 break;
         }
 
-        this.setState({validErrors: fieldValidErrors,
+        this.setState({
+            validErrors: fieldValidErrors,
             usernameValid: usernameValid,
             emailValid: emailValid,
             passwordValid: passwordValid
@@ -79,13 +95,13 @@ class RegisterForm extends React.Component {
         return (
             <div className={classes.root}>
                 <Card className={classes.container}>
-                    <Typography className={classes.fieldLine} variant="headline" component="h2" className={classes.cardHeading}>Регистрация</Typography>
+                    <Typography className={classes.cardHeading} variant="headline" component="h2">Регистрация</Typography>
 
                     <Typography color="error">{this.props.serverErrors}</Typography>
 
                     <div className={classes.fieldLine}>
                         <TextField
-                            onChange={(e) => {this.handleChange(e)}}
+                            onChange={this.handleChange}
                             type="text"
                             label="Логин"
                             name="username"
@@ -97,7 +113,7 @@ class RegisterForm extends React.Component {
 
                     <div className={classes.fieldLine}>
                         <TextField
-                            onChange={(e) => {this.handleChange(e)}}
+                            onChange={this.handleChange}
                             type="text"
                             label="Электронная почта"
                             name="email"
@@ -109,7 +125,7 @@ class RegisterForm extends React.Component {
 
                     <div className={classes.fieldLine}>
                         <TextField
-                            onChange={(e) => {this.handleChange(e)}}
+                            onChange={this.handleChange}
                             type="password"
                             label="Пароль"
                             name="password"
@@ -119,13 +135,11 @@ class RegisterForm extends React.Component {
                         <Typography variant="caption" color="error" className={classes.errors}>{this.state.errors.password}</Typography>
                     </div>
 
-                    <Button variant="raised" color="primary" onClick={(e) => {this.handleSubmit(e)}} className={classes.buttonLine} disabled={!this.state.formValid}>
+                    <Button variant="raised" color="primary" onClick={this.handleSubmit} className={classes.buttonLine} disabled={!this.state.formValid}>
                         Зарегистрироваться
                     </Button>
 
-                    <Button variant="raised" onClick={() => {
-                        this.props.history.push('/login');
-                    }} className={classes.buttonLine}>
+                    <Button variant="raised" onClick={this.toLogin} className={classes.buttonLine}>
                         Войти
                     </Button>
                 </Card>
@@ -140,11 +154,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = {
     registerRequest: actions.registerRequest
-};
-
-RegisterForm.propTypes = {
-    registerRequest: PropTypes.func,
-    serverErrors: PropTypes.string
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(AuthStyles)(RegisterForm)));
