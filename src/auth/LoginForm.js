@@ -39,8 +39,8 @@ class LoginForm extends React.Component {
     }
 
     handleSubmit = (e) => {
-        this.login();
         e.preventDefault();
+        this.login();
     }
 
     validateField(fieldName, value) {
@@ -80,6 +80,7 @@ class LoginForm extends React.Component {
         return (
             <div className={classes.root}>
                 <Card className={classes.container}>
+                <form onSubmit={this.handleSubmit}>
                     <Typography className={classes.cardHeading} variant="headline" component="h2">
                         Вход
                     </Typography>
@@ -110,13 +111,14 @@ class LoginForm extends React.Component {
                         <Typography variant="caption" color="error" className={classes.errors}>{this.state.errors.password}</Typography>
                     </div>
 
-                    <Button variant="raised" color="primary" onClick={this.handleSubmit} className={classes.buttonLine} disabled={!this.state.formValid}>
+                    <Button variant="raised" color="primary" type="submit" className={classes.buttonLine} disabled={!this.state.formValid}>
                         Войти
                     </Button>
 
                     <Button variant="raised" color="secondary" onClick={this.toRegister} className={classes.buttonLine}>
                         Зарегистрироваться
                     </Button>
+                </form>
                 </Card>
             </div>
         );
