@@ -1,0 +1,6 @@
+{
+    "short_name": "Join Jog",
+    "name": "Join Jog is a final project for Noveo University Frontend Internship",
+    "start_url": "index.html",
+    "display": "standalone"
+  }
