@@ -79,47 +79,45 @@ class LoginForm extends React.Component {
         const { classes } = this.props;
         return (
             <div className={classes.root}>
-            <Card className={classes.container}>
-                <Typography className={classes.cardHeading} variant="headline" component="h2">
-                    Вход
-                </Typography>
+                <Card className={classes.container}>
+                    <Typography className={classes.cardHeading} variant="headline" component="h2">
+                        Вход
+                    </Typography>
 
-                <Typography color="error">{this.props.serverErrors}</Typography>
+                    <Typography color="error">{this.props.serverErrors}</Typography>
 
-                <div className={classes.fieldLine}>
-                    <TextField
-                        onChange={this.handleChange}
-                        type="text"
-                        label="Username"
-                        name="username"
-                        value={this.state.username}
-                        error={!this.state.usernameValid}
-                    />
-                    <Typography variant="caption" color="error" className={classes.errors}>{this.state.errors.username}</Typography>
-                </div>
+                    <div className={classes.fieldLine}>
+                        <TextField
+                            onChange={this.handleChange}
+                            type="text"
+                            label="Логин"
+                            name="username"
+                            value={this.state.username}
+                            error={!this.state.usernameValid}
+                        />
+                        <Typography variant="caption" color="error" className={classes.errors}>{this.state.errors.username}</Typography>
+                    </div>
 
-                <div className={classes.fieldLine}>
-                    <TextField
-                        onChange={this.handleChange}
-                        type="password"
-                        label="Password"
-                        name="password"
-                        value={this.state.password}
-                        error={!this.state.passwordValid}
-                    />
-                    <Typography variant="caption" color="error" className={classes.errors}>{this.state.errors.password}</Typography>
-                </div>
+                    <div className={classes.fieldLine}>
+                        <TextField
+                            onChange={this.handleChange}
+                            type="password"
+                            label="Пароль"
+                            name="password"
+                            value={this.state.password}
+                            error={!this.state.passwordValid}
+                        />
+                        <Typography variant="caption" color="error" className={classes.errors}>{this.state.errors.password}</Typography>
+                    </div>
 
-                <Button variant="raised" color="primary" onClick={this.handleSubmit} className={classes.buttonLine} disabled={!this.state.formValid}>
-                    Войти
-                </Button>
+                    <Button variant="raised" color="primary" onClick={this.handleSubmit} className={classes.buttonLine} disabled={!this.state.formValid}>
+                        Войти
+                    </Button>
 
-                <Button variant="raised" onClick={this.toRegister} className={classes.buttonLine}>
-                    Зарегистрироваться
-                </Button>
-
-
-            </Card>
+                    <Button variant="raised" color="secondary" onClick={this.toRegister} className={classes.buttonLine}>
+                        Зарегистрироваться
+                    </Button>
+                </Card>
             </div>
         );
     }

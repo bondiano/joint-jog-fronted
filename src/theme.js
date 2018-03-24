@@ -1,6 +1,6 @@
 import { createMuiTheme } from 'material-ui/styles';
 import indigo from 'material-ui/colors/indigo';
-import grey from 'material-ui/colors/grey';
+import purple from 'material-ui/colors/purple';
 import red from 'material-ui/colors/red';
 
 const theme = createMuiTheme({
@@ -9,12 +9,12 @@ const theme = createMuiTheme({
             light: indigo[200],
             main: indigo[500],
             dark: indigo[600],
-            contrastText: grey[300],
+            contrastText: '#fff',
         },
         secondary: {
-            light: grey[200],
-            main: grey[300],
-            dark: grey[400],
+            light: purple[200],
+            main: purple[300],
+            dark: purple[400],
             contrastText: '#fff',
         },
         error: red

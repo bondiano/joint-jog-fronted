@@ -1,30 +1,33 @@
 import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, AppBar, Toolbar, Typography, Button } from 'material-ui';
-
-import {NavbarStyles} from '../AppStyles';
+import {logo} from '../../assets';
+import { NavbarStyles } from '../AppStyles';
 
 function Navbar({isAuth, logout, toProfile, toLogin,  toMap, classes}) {
     return (
     <div className={classes.root}>
         <AppBar position="static">
             <Toolbar>
-                <Typography variant="title" color="inherit" className={classes.flex}>
-                    Joint Jog
-                </Typography>
-                <Button color="secondary" onClick={toMap}>
+                <div className={classes.flex}>
+                    <img src={logo} alt="Logo" className={classes.logo}/>
+                    <Typography variant="title" color="inherit" className={classes.title}>
+                        Joint Jog
+                    </Typography>
+                </div>
+                <Button color="inherit" onClick={toMap}>
                     Карта
                 </Button>
                 {isAuth ?
                     <Fragment>
-                        <Button color="secondary" onClick={toProfile}>
+                        <Button color="inherit" onClick={toProfile}>
                             Профиль
                         </Button>
-                        <Button color="secondary" onClick={logout}>
+                        <Button color="inherit" onClick={logout}>
                             Выйти
                         </Button>
                     </Fragment> : 
-                    <Button color="secondary" onClick={toLogin}>
+                    <Button color="inherit" onClick={toLogin}>
                         Войти
                     </Button>
                 }

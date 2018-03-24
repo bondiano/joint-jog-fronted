@@ -139,7 +139,7 @@ class RegisterForm extends React.Component {
                         Зарегистрироваться
                     </Button>
 
-                    <Button variant="raised" onClick={this.toLogin} className={classes.buttonLine}>
+                    <Button variant="raised" color="secondary" onClick={this.toLogin} className={classes.buttonLine}>
                         Войти
                     </Button>
                 </Card>
