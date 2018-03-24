@@ -39,7 +39,6 @@ class MapContainer extends Component {
                             balloonContent: 'Вы тут, примерно :)'
                         }}
                     />
-
                 </Map>
             </YMaps>
         );

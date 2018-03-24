@@ -4,6 +4,13 @@ import purple from 'material-ui/colors/purple';
 import red from 'material-ui/colors/red';
 
 const theme = createMuiTheme({
+    overrides: {
+        MuiFormControl: {
+            root: {
+                width: '100%'
+            }
+        }
+    },
     palette: {
         primary: {
             light: indigo[200],
