@@ -30,6 +30,14 @@ export const EditorModalStyles = thene => ({
         zIndex: 3,
         display: 'flex',
     },
+    heading: {
+        margin: '0px 8px 8px 8px'
+    },
+    pointsListContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
     hideButton: {
         position: 'absolute',
         bottom: '25px',

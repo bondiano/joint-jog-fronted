@@ -5,7 +5,18 @@ const initialState = {
         latitude: 54.98, 
         longitude: 82.89,
         accuracy: 0
-    }
+    },
+    pointsList: [
+    /**
+     * {
+            latitude:,
+            longitude:,
+            type:,
+            title:,
+            icon:
+     * }
+     */
+    ]
 };
 
 export const map = (state = initialState, action) => {

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 import { withStyles, TextField, Typography, Button } from 'material-ui';
 import Slide from 'material-ui/transitions/Slide';
 
@@ -10,6 +11,7 @@ class EventCreateForm extends Component {
 
     static propTypes = {
         showEditor: PropTypes.bool,
+        pointsList: PropTypes.array.isRequired,
         classes: PropTypes.object.isRequired
     };
 
@@ -22,8 +24,7 @@ class EventCreateForm extends Component {
         this.state = {
             title: '',
             description: '',
-            date: new Date().toISOString().substring(0, 16),
-            pointsList: []
+            date: new Date().toISOString().substring(0, 16)
         };
     }
 
@@ -41,7 +42,15 @@ class EventCreateForm extends Component {
     } 
 
     addNewPoint = (e) => {
-        console.log(e.target);        
+        console.log(e.target);
+    }
+
+    removePointHandler = (index) => (e) => {
+        console.log(e.target);    
+    }
+
+    showPointOnMap = (index) => (e) => {
+        console.log(e.target);            
     }
 
     render() {
@@ -92,10 +101,15 @@ class EventCreateForm extends Component {
                             />
                         </div>
 
-                        <PointsList/>
+                        <PointsList 
+                            pointsList={this.props.pointsList}
+                            removePointHandler={this.removePointHandler}
+                            showPointOnMap={this.showPointOnMap}
+                        />
 
                         <Button 
                             className={classes.submitButton}
+                            variant="raised"                             
                             color="primary" 
                             aria-label="send"
                             type="submit"
@@ -105,7 +119,8 @@ class EventCreateForm extends Component {
 
                         <Button 
                             className={classes.submitButton}
-                            color="primary" 
+                            variant="raised" 
+                            color="secondary"
                             aria-label="add"
                             onClick={this.addNewPoint}
                         >
@@ -118,5 +133,11 @@ class EventCreateForm extends Component {
     }
 }
 
+const mapStateToProps = (state) => ({
+    pointsList: state.map.pointsList
+});
 
-export default withStyles(CreateEventFormStyles)(EventCreateForm);
+const mapDispatchToProps = {
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(CreateEventFormStyles)(EventCreateForm));
