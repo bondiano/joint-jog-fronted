@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles, TextField, Typography, Button } from 'material-ui';
 import Slide from 'material-ui/transitions/Slide';
 
+import PointsList from './common/PointsList';
 import { CreateEventFormStyles } from './EditorStyles';
 
 class EventCreateForm extends Component {
@@ -21,7 +22,8 @@ class EventCreateForm extends Component {
         this.state = {
             title: '',
             description: '',
-            date: new Date().toISOString().substring(0, 16)
+            date: new Date().toISOString().substring(0, 16),
+            pointsList: []
         };
     }
 
@@ -37,6 +39,10 @@ class EventCreateForm extends Component {
         e.preventDefault();
         console.log(e.target);
     } 
+
+    addNewPoint = (e) => {
+        console.log(e.target);        
+    }
 
     render() {
         const {classes, showEditor} = this.props;
@@ -62,6 +68,7 @@ class EventCreateForm extends Component {
 
                         <div className={classes.fieldLine}>
                             <TextField
+                                onChange={this.handleChange}                            
                                 id="datetime-local"
                                 required
                                 label="Выберите дату"
@@ -84,13 +91,25 @@ class EventCreateForm extends Component {
                                 margin="dense"
                             />
                         </div>
+
+                        <PointsList/>
+
+                        <Button 
+                            className={classes.submitButton}
+                            color="primary" 
+                            aria-label="send"
+                            type="submit"
+                        >
+                            Отправить
+                        </Button>
+
                         <Button 
                             className={classes.submitButton}
                             color="primary" 
                             aria-label="add"
-                            type="submit"
+                            onClick={this.addNewPoint}
                         >
-                            Отправить
+                            Добавить точку
                         </Button>
                     </form>
                 </div>

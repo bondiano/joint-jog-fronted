@@ -14,6 +14,10 @@ class MapContainer extends Component {
         if ("geolocation" in window.navigator) {
             window.navigator.geolocation.getCurrentPosition(position => {
                 const latitude = position.coords.latitude;
+                if (this.props.userWhere[0] === latitude) {
+                    // Abort dispatch unnecessary action
+                    return;
+                }
                 const longitude = position.coords.longitude;
                 const accuracy = position.coords.accuracy;
                 this.props.setUserPosition(latitude, longitude, accuracy);

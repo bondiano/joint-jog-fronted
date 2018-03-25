@@ -1,7 +1,6 @@
 export const CreateEventFormStyles = theme => ({
     root: {
         display: 'flex',
-        justifyContent: 'center',
         alignItems: 'center',
         position: 'fixed',
         right: 0,
@@ -16,7 +15,7 @@ export const CreateEventFormStyles = theme => ({
         margin: '4px 12px 4px 12px'
     },
     heading: {
-        margin: 8
+        margin: '16px 8px 8px 8px'
     },
     submitButton: {
         margin: 8        
