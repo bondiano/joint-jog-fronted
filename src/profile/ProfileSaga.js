@@ -9,7 +9,7 @@ const xhr = new XHRProvider();
 
 function* profileRequestSaga(action) {
     try {
-        const response = yield call(xhr.post, `/user/profile/${action.username}`, true);
+        const response = yield call(xhr.get, `/user/profile/${action.username}`, true);
         if (response.success) {
             yield put(actions.profileRequestSuccess(response.data.user_info, response.data.events));
         } else {

@@ -48,7 +48,6 @@ class App extends React.Component {
     }
     
     render() {
-        console.log(this.props.currentUserUsername)
         return (
             <div className={this.props.classes.root}>
                 <CssBaseline/>
