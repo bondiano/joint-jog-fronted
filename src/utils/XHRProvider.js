@@ -43,13 +43,13 @@ export default class XHRProvider {
             .then(this.successHandler)
             .catch(this.errorHandler);
 
-    post = (path, body, needToken = false) =>
+    post = (path, body) =>
         instance
             .post(path, body)
             .then(this.successHandler)
             .catch(this.errorHandler);
 
-    patch = (path, body, needToken = false) =>
+    patch = (path, body) =>
         instance
             .patch(path, body)
             .then(this.successHandler)
