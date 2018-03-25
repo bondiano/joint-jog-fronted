@@ -10,13 +10,14 @@ const xhr = new XHRProvider();
 function* profileRequestSaga(action) {
     try {
         const response = yield call(xhr.get, `/user/profile/${action.username}`, true);
-        if (response.success) {
-            yield put(actions.profileRequestSuccess(response.data.user_info, response.data.events));
+        if (response.data.success) {
+            yield put(actions.profileRequestSuccess(response.data.payload.user_info, response.data.payload.events));
         } else {
             yield put(actions.profileRequestError('Извините, произошла ошибка. Попробуйте позже.'));
         }
     } catch(err) {
         yield put(actions.profileRequestError('Извините, произошла ошибка. Попробуйте позже.'));
+        yield call(console.error, err.message)
     }
 }
 
