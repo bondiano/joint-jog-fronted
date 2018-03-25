@@ -44,7 +44,7 @@ export const checkJWTRequest = (historyPush) => ({
     historyPush
 });
 
-export const checkJWTSuccess = (username, id) => ({
+export const checkJWTSuccess = (id, username) => ({
     type: types.CHECK_JWT_SUCCESS,
     id,
     username
