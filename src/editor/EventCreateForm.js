@@ -14,6 +14,7 @@ class EventCreateForm extends Component {
     static propTypes = {
         showEditor: PropTypes.bool,
         createNewPoint: PropTypes.func.isRequired,
+        currentMapCenter: PropTypes.array.isRequired,
         pointsList: PropTypes.array.isRequired,
         classes: PropTypes.object.isRequired
     };
@@ -45,7 +46,8 @@ class EventCreateForm extends Component {
     } 
 
     addNewPoint = (e) => {
-        this.props.createNewPoint();
+        const [latitude, longitude] = this.props.currentMapCenter;
+        this.props.createNewPoint(latitude, longitude);
     }
 
     removePointHandler = (index) => (e) => {
@@ -137,6 +139,7 @@ class EventCreateForm extends Component {
 }
 
 const mapStateToProps = (state) => ({
+    currentMapCenter: state.map.currentMap.center,
     pointsList: state.map.pointsList
 });
 

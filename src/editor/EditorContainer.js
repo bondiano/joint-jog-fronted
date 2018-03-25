@@ -26,7 +26,7 @@ class EditorContainer extends Component {
     render() {
         return(
             <Fragment>
-                <MapContainer/>
+                <MapContainer editorMode/>
                 <HideEditorButton hideHandler={this.hideHandler} isHidden={!this.state.showModal}/>
                 <EditorModal>
                     <Switch>

@@ -1,7 +1,11 @@
 import * as types from './MapActionTypes';
 
 const initialState = {
-    userWhere:{
+    currentMap: {
+        center: [54.98, 82.89],
+        zoom: 10
+    },
+    userWhere: {
         latitude: 54.98, 
         longitude: 82.89,
         accuracy: 0
@@ -36,11 +40,21 @@ export const map = (state = initialState, action) => {
             return {
                 ...state,
                 editorPointsList: [
-                    ...state.editorPointsList, {
-                        latitude: 0,
-                        longitude: 0,
+                    ...state.editorPointsList, 
+                    {
+                        latitude: action.latitude,
+                        longitude: action.longitude,
                     }
                 ]
+            };
+        case types.SET_CURRENT_MAP_INFO:
+            return {
+                ...state,
+                currentMap: {
+                    ...state.currentMap,
+                    center: [action.center[0], action.center[1]],
+                    zoom: action.zoom
+                }
             };
         default:
             return state;

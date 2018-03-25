@@ -7,6 +7,14 @@ export const setUserPosition = (latitude, longitude, accuracy) => ({
     accuracy
 });
 
-export const createNewPoint = () => ({
-    type: types.CREATE_NEW_POINT
+export const setCurrentMapInfo = (center, zoom) => ({
+    type: types.SET_CURRENT_MAP_INFO,
+    center,
+    zoom
+});
+
+export const createNewPoint = (latitude, longitude) => ({
+    type: types.CREATE_NEW_POINT,
+    latitude, 
+    longitude
 });
