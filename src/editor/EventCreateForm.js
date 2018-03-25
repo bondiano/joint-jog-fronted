@@ -50,6 +50,10 @@ class EventCreateForm extends Component {
         this.props.createNewPoint(latitude, longitude);
     }
 
+    handlePointTitleChange = (index) => (e) => {
+        
+    }
+
     removePointHandler = (index) => (e) => {
         console.log(e.target);    
     }
@@ -110,7 +114,17 @@ class EventCreateForm extends Component {
                             pointsList={this.props.pointsList}
                             removePointHandler={this.removePointHandler}
                             showPointOnMap={this.showPointOnMap}
+                            handlePointTitleChange={this.handlePointTitleChange}
                         />
+
+                        {this.props.pointsList.length > 1 ? <Button 
+                            className={classes.routeButton}
+                            color="primary"
+                            aria-label="add"
+                            onClick={this.showRoute}
+                        >
+                            Показать маршрут
+                        </Button> : null}
 
                         <Button 
                             className={classes.submitButton}
@@ -140,7 +154,7 @@ class EventCreateForm extends Component {
 
 const mapStateToProps = (state) => ({
     currentMapCenter: state.map.currentMap.center,
-    pointsList: state.map.pointsList
+    pointsList: state.map.editorPointsList
 });
 
 const mapDispatchToProps = {

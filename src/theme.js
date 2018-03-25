@@ -9,6 +9,12 @@ const theme = createMuiTheme({
             root: {
                 width: '100%'
             }
+        },
+        MuiTooltip: {
+            root: {
+                display: 'flex',
+                alignItem: 'center'
+            }
         }
     },
     palette: {

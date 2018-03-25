@@ -19,6 +19,9 @@ export const CreateEventFormStyles = theme => ({
     },
     submitButton: {
         margin: 8        
+    },
+    routeButton: {
+        display: 'flex'
     }
 });
 
@@ -37,11 +40,20 @@ export const EditorModalStyles = thene => ({
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',
+        flexDirection: 'column'
     },
     hideButton: {
         position: 'absolute',
         bottom: '25px',
         left: '25px',
         zIndex: 5        
+    },
+    pointEdit: {
+        display: 'flex',
+        width: '100%',
+        padding: '0px 8px 0px 8px'
+    },
+    pointButton: {
+        minWidth: 32
     }
 });

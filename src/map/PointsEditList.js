@@ -35,7 +35,7 @@ class PointsEditList extends Component {
                                 balloonContent: point.title ? point.title : null
                             }}
                             options={{
-                                preset: 'islands#blueRunIcon',
+                                preset: point.selected ? 'islands#redRunIcon' : 'islands#blueRunIcon',
                                 draggable: true
                             }}
                             onDragEnd = {this.handleDrag(point, index)}

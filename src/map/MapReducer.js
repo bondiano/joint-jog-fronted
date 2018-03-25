@@ -42,6 +42,7 @@ export const map = (state = initialState, action) => {
                     {
                         latitude: action.latitude,
                         longitude: action.longitude,
+                        selected: false
                     }
                 ]
             };
