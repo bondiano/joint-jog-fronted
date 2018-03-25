@@ -16,7 +16,8 @@ const initialState = {
             icon:
      * }
      */
-    ]
+    ],
+    editorPointsList: []
 };
 
 export const map = (state = initialState, action) => {
@@ -30,6 +31,16 @@ export const map = (state = initialState, action) => {
                     longitude: action.longitude,
                     accuracy: action.accuracy
                 }
+            };
+        case types.CREATE_NEW_POINT:
+            return {
+                ...state,
+                editorPointsList: [
+                    ...state.editorPointsList, {
+                        latitude: 0,
+                        longitude: 0,
+                    }
+                ]
             };
         default:
             return state;

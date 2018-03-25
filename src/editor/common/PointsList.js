@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles, TextField, Typography, Button } from 'material-ui';
+import { withStyles, Typography } from 'material-ui';
 import {EditorModalStyles} from '../EditorStyles';
 
 const PointsList = ({classes}) => (

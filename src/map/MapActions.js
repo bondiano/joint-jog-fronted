@@ -6,3 +6,7 @@ export const setUserPosition = (latitude, longitude, accuracy) => ({
     longitude,
     accuracy
 });
+
+export const createNewPoint = () => ({
+    type: types.CREATE_NEW_POINT
+});

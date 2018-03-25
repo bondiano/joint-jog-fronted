@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { withStyles, TextField, Typography, Button } from 'material-ui';
 import Slide from 'material-ui/transitions/Slide';
 
+import * as mapActions from '../map/MapActions';
+
 import PointsList from './common/PointsList';
 import { CreateEventFormStyles } from './EditorStyles';
 
@@ -11,6 +13,7 @@ class EventCreateForm extends Component {
 
     static propTypes = {
         showEditor: PropTypes.bool,
+        createNewPoint: PropTypes.func.isRequired,
         pointsList: PropTypes.array.isRequired,
         classes: PropTypes.object.isRequired
     };
@@ -42,7 +45,7 @@ class EventCreateForm extends Component {
     } 
 
     addNewPoint = (e) => {
-        console.log(e.target);
+        this.props.createNewPoint();
     }
 
     removePointHandler = (index) => (e) => {
@@ -138,6 +141,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
+    createNewPoint: mapActions.createNewPoint
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(CreateEventFormStyles)(EventCreateForm));
