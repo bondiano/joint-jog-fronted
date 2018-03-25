@@ -67,7 +67,7 @@ function* checkJWTSaga(action) {
     try {
         const response = yield call(xhr.get, '/user/', true);
         if (response.success) {
-            yield put(actions.checkJWTSuccess(response.data.username, response.data.id));
+            yield put(actions.checkJWTSuccess(response.data.id, response.data.username));
         } else {
             yield put(actions.checkJWTError('Пожалуйста, войдите снова.'));
             yield call(action.historyPush, '/login');                  
