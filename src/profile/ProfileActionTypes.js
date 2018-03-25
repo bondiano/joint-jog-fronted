@@ -1,0 +1,6 @@
+export const PROFILE_REQUEST = '@@profile/PROFILE_REQUEST';
+export const PROFILE_REQUEST_SUCCESS = '@@profile/PROFILE_REQUEST_SUCCESS';
+export const PROFILE_REQUEST_ERROR = '@@profile/PROFILE_REQUEST_ERROR';
+export const PROFILE_UPDATE = '@@profile/PROFILE_UPDATE';
+export const PROFILE_UPDATE_SUCCESS = '@@profile/PROFILE_UPDATE_SUCCESS';
+export const PROFILE_UPDATE_ERROR = '@@profile/PROFILE_UPDATE_ERROR';

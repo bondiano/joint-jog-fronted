@@ -10,6 +10,7 @@ import Navbar from './common/Navbar';
 import RegisterForm from '../auth/RegisterForm';
 import LoginForm from "../auth/LoginForm";
 import EventContainer from '../events/EventsContainer';
+import ProfileForm from "../profile/ProfileForm";
 
 import * as authActions from '../auth/AuthActions';
 
@@ -19,6 +20,7 @@ import {AppStyles} from './AppStyles';
 class App extends React.Component {
     static propTypes = {
         isAuth: PropTypes.bool.isRequired,
+        currentUserUsername: PropTypes.string.isRequired,
         logout: PropTypes.func.isRequired,
         checkJWT: PropTypes.func.isRequired,
         history: PropTypes.object.isRequired,
@@ -38,7 +40,7 @@ class App extends React.Component {
     }
 
     toProfile = () => {
-        this.props.history.push('/profile');        
+        this.props.history.push(`/profile/${this.props.currentUserUsername}`);
     }
 
     logout = () => {
@@ -46,6 +48,7 @@ class App extends React.Component {
     }
     
     render() {
+        console.log(this.props.currentUserUsername)
         return (
             <div className={this.props.classes.root}>
                 <CssBaseline/>
@@ -56,12 +59,14 @@ class App extends React.Component {
                         toProfile={this.toProfile}
                         logout={this.logout}
                         isAuth={this.props.isAuth}
+                        username={this.props.currentUserUsername}
                     />
                     <Switch>
                         <Route exact path="/" component={EventContainer} />
                         <Route path="/events" component={EventContainer} />                        
                         <Route path="/login" component={LoginForm} />
                         <Route path="/register" component={RegisterForm} />
+                        <Route path="/profile/:username" component={ProfileForm} />
                     </Switch>
                 </MuiThemeProvider>
             </div>
@@ -70,7 +75,8 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-    isAuth: state.auth.isAuth
+    isAuth: state.auth.isAuth,
+    currentUserUsername: state.auth.username
 });
 
 const mapDispatchToProps = {

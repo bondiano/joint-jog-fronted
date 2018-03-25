@@ -10,6 +10,7 @@ const initialState = {
 export const auth = (state = initialState, action) => {
     switch (action.type) {
         case types.LOGIN_SUCCESS:
+            console.log(action.id)
             return {
                 ...state,
                 username: action.username,
