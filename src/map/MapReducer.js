@@ -15,9 +15,7 @@ const initialState = {
      * {
             latitude:,
             longitude:,
-            type:,
-            title:,
-            icon:
+            title:
      * }
      */
     ],
@@ -55,6 +53,19 @@ export const map = (state = initialState, action) => {
                     center: [action.center[0], action.center[1]],
                     zoom: action.zoom
                 }
+            };
+        case types.CHANGE_POINT_POSITION:
+            return {
+                ...state,
+                editorPointsList: [
+                    ...state.editorPointsList.slice(0, action.index),
+                    {
+                        ...state.editorPointsList[action.index],
+                        latitude: action.latitude, 
+                        longitude: action.longitude
+                    },
+                    ...state.editorPointsList.slice(action.index + 1)
+                ]
             };
         default:
             return state;

@@ -18,3 +18,10 @@ export const createNewPoint = (latitude, longitude) => ({
     latitude, 
     longitude
 });
+
+export const changePointPosition = (index, latitude, longitude) => ({
+    type: types.CHANGE_POINT_POSITION,
+    index,
+    latitude, 
+    longitude
+});

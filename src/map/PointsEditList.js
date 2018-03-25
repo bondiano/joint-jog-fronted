@@ -4,29 +4,42 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Placemark }from 'react-yandex-maps';
 
-// import * as actions from './MapActions';
+import * as actions from './MapActions';
 
 class PointsEditList extends Component {
     static propTypes = {
-        editorPointsList: PropTypes.array.isRequired
+        editorPointsList: PropTypes.array.isRequired,
+        changePointPosition: PropTypes.func.isRequired
+    }
+
+    setPlacemarkRef = index => ref => {
+        this[`placeMarkRef${index}`] = ref;
+    }
+
+    handleDrag = (point, index) => event => {
+        const [latitude, longitude] = this[`placeMarkRef${index}`].geometry.getCoordinates();
+        this.props.changePointPosition(index, latitude, longitude);
     }
 
     render() {
         return (
             <Fragment>
                 {this.props.editorPointsList.map((point, index) => {
-                    console.log('point', index, point);
                         return (<Placemark
                             key={index}
                             geometry={{
                                 coordinates:  [point.latitude, point.longitude]
                             }}
                             properties={{
-                                hintContent: 'PointsEditList'
+                                hintContent: 'Перетащите на нужное место',
+                                balloonContent: point.title ? point.title : null
                             }}
                             options={{
-                                preset: 'islands#blueRunIcon'
+                                preset: 'islands#blueRunIcon',
+                                draggable: true
                             }}
+                            onDragEnd = {this.handleDrag(point, index)}
+                            instanceRef = {this.setPlacemarkRef(index)}
                         />);
                     })
                 }
@@ -40,6 +53,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
+    changePointPosition: actions.changePointPosition
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(PointsEditList);
