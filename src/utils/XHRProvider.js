@@ -3,7 +3,8 @@ import axios from 'axios';
 import { gcf } from '../config';
 
 let instance = null;
-const auth = () => `bearer ${window.localStorage.getItem('token')}`;
+const headerWithToken = {headers: {'Authorization': `bearer ${window.localStorage.getItem('token')}`}};
+
 export default class XHRProvider {
     constructor() {
         if (instance !== null) {
@@ -11,10 +12,6 @@ export default class XHRProvider {
         }
         instance = axios.create({
             baseURL: gcf.url,
-            transformRequest: [ (data, headers) => {
-                headers['Authorization'] = auth();
-                return JSON.stringify(data);
-            }],
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `bearer ${window.localStorage.getItem('token')}`
@@ -37,21 +34,21 @@ export default class XHRProvider {
             status: response.status
     });
 
-    get = (path) =>
+    get = (path, needToken = false) =>
         instance
-            .get(path)
+            .get(path, headerWithToken)
             .then(this.successHandler)
             .catch(this.errorHandler);
 
-    post = (path, body) =>
+    post = (path, body, needToken = false) =>
         instance
-            .post(path, body)
+            .post(path, body, headerWithToken)
             .then(this.successHandler)
             .catch(this.errorHandler);
 
-    patch = (path, body) =>
+    patch = (path, body, needToken = false) =>
         instance
-            .patch(path, body)
+            .patch(path, body, headerWithToken)
             .then(this.successHandler)
             .catch(this.errorHandler);
 }

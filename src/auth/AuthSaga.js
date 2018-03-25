@@ -65,7 +65,7 @@ function* logoutSaga() {
 
 function* checkJWTSaga(action) {
     try {
-        const response = yield call(xhr.get, '/user/');
+        const response = yield call(xhr.get, '/user/', true);
         if (response.success) {
             yield put(actions.checkJWTSuccess(response.data.id, response.data.username));
         } else {

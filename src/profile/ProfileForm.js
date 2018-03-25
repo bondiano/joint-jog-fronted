@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { TextField, Button, Card, Typography, Paper, withStyles } from 'material-ui';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
+import { Typography, Paper, withStyles } from 'material-ui';
+
 
 import * as profileActions from './ProfileActions';
 import * as eventsActions from '../events/EventsActions';
@@ -33,13 +33,13 @@ class ProfileForm extends React.Component {
 
     render() {
         const { classes } = this.props;
+        console.log(this.props.profileData);
         return (
-            <div>
-                <Typography>Профиль</Typography>
+            <div className={classes.root}>
+                <Typography >Профиль</Typography>
                 <Paper>
                     <Typography>Ваши данные</Typography>
                     <Typography variant="display4">{this.props.profileData.username}</Typography>
-
                 </Paper>
 
 
