@@ -14,11 +14,14 @@ function* unsubscribeSaga(action) {
         });
         if (response.success) {
             yield  put(actions.unsubscribeEventSuccess());
+            yield call(console.log, '+++++++++');
         } else {
             yield put(actions.unsubscribeEventError('Извините, произошла ошибка. Попробуйте позже.'));
+            yield call(console.log, '---------');
         }
     } catch(err) {
         yield put(actions.unsubscribeEventError('Извините, произошла ошибка. Попробуйте позже.'));
+        yield call(console.log, err);
     }
 }
 

@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Typography, Paper, withStyles, TextField } from 'material-ui';
-
+import { Typography, Paper, withStyles, TextField, Button, InputLabel, Select, MenuItem, FormControl } from 'material-ui';
+import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 
 import * as profileActions from './ProfileActions';
 import * as eventsActions from '../events/EventsActions';
@@ -13,7 +13,14 @@ class ProfileForm extends React.Component {
     static propTypes = {
         history: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired,
-        profileRequest: PropTypes.func.isRequired
+        profileRequest: PropTypes.func.isRequired,
+        profileUpdate: PropTypes.func.isRequired,
+        removeEvent: PropTypes.func.isRequired,
+        profileError: PropTypes.string.isRequired,
+        unsubscribeEventError: PropTypes.string.isRequired,
+        profileData: PropTypes.object.isRequired,
+        profileEvents: PropTypes.array.isRequired,
+        currentUserUsername: PropTypes.string.isRequired
     };
 
     constructor(props) {
@@ -21,15 +28,15 @@ class ProfileForm extends React.Component {
 
         this.state = {
             data: {
-                username: this.props.profileData.username,
-                email: this.props.profileData.email,
-                password: this.props.profileData.password,
-                check_password: this.props.profileData.check_password,
-                socialNetworks: this.props.profileData.socialNetworks,
-                firstName: this.props.profileData.firstName,
-                lastName: this.props.profileData.lastName,
-                age: this.props.profileData.age,
-                sex: this.props.profileData.sex
+                username: '',
+                email: '',
+                password: '',
+                check_password: '',
+                socialNetworks: '',
+                firstName: '',
+                lastName: '',
+                age: '',
+                sex: ''
             },
             errors: {
                 username: '',
@@ -37,7 +44,8 @@ class ProfileForm extends React.Component {
                 password: '',
                 check_password: '',
                 firstName: '',
-                lastName: ''
+                lastName: '',
+                age: ''
             },
             isValid: {
                 username: true,
@@ -45,27 +53,42 @@ class ProfileForm extends React.Component {
                 password: true,
                 check_password: true,
                 firstName: true,
-                lastName: true
+                lastName: true,
+                age: true
             },
             iValidForm: true
         };
     }
 
-    componentDidMount() {
+    componentWillMount() {
         this.props.profileRequest(this.props.match.params.username);
     }
 
+    componentWillReceiveProps(nextProps) {
+        this.setState({data: {
+                ...nextProps.profileData
+            },})
+    }
+
     toEvent = (eventId) => {
-        this.props.history.push(`/events/${eventId}`);
+        this.props.history.push(`/event/${eventId}`);
     };
 
-    unsubscribe = (eventId) => {
-        this.props.unsubscribe(eventId);
+    unsubscribe(eventId) {
+        console.log(eventId);
+        this.props.removeEvent(eventId);
+    };
+
+    handleChange = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState({[name]: value});
     };
 
     render() {
         const { classes } = this.props;
         const isCurrentUser = this.props.match.params.username === this.props.currentUserUsername;
+
         return (
             <div className={classes.root}>
                 <Paper>
@@ -125,6 +148,35 @@ class ProfileForm extends React.Component {
                             />
                             <Typography variant="caption" color="error" className={classes.errors}>{this.state.errors.lastName}</Typography>
                         </div>
+                        <div>
+                            <TextField
+                                onChange={this.handleChange}
+                                type="text"
+                                label="Возраст"
+                                name="age"
+                                value={this.state.data.age}
+                                error={!this.state.isValid.age}
+                            />
+                            <Typography variant="caption" color="error" className={classes.errors}>{this.state.errors.lastName}</Typography>
+                        </div>
+                        {/*<div>*/}
+                        {/*<FormControl className={classes.formControl}>*/}
+                            {/*<InputLabel>Age</InputLabel>*/}
+                            {/*<Select*/}
+                                {/*value={this.state.age}*/}
+                                {/*onChange={this.handleChange}*/}
+                                {/*inputProps={{*/}
+                                    {/*name: 'age'*/}
+                                {/*}}*/}
+                            {/*>*/}
+                                {/*<MenuItem value=''>*/}
+                                    {/*<em>None</em>*/}
+                                {/*</MenuItem>*/}
+                                {/*<MenuItem value="male">Мужской</MenuItem>*/}
+                                {/*<MenuItem value="female">Женский</MenuItem>*/}
+                            {/*</Select>*/}
+                        {/*</FormControl>*/}
+                        {/*</div>*/}
                     </div>
                     :
                     <div>
@@ -134,6 +186,39 @@ class ProfileForm extends React.Component {
                 </Paper>
                 <Paper>
                     <Typography className={classes.cardHeading} variant="headline" component="h2">Пробежки</Typography>
+                    <Table className={classes.table}>
+                        <TableBody>
+                            {this.props.profileEvents.map(ev => {
+                                return (
+                                    <TableRow key={ev._id}>
+                                        <TableCell>{ev.title}</TableCell>
+                                        <TableCell>{(new Date(ev.date)).toDateString()}</TableCell>
+                                        <TableCell>
+                                            <Button
+                                                variant="raised"
+                                                color="primary"
+                                                type="submit"
+                                                onClick={() => this.toEvent(ev._id)}
+                                            >
+                                                На карте
+                                            </Button>
+                                        </TableCell>
+                                        {isCurrentUser &&
+                                        <TableCell>
+                                            <Button
+                                                variant="raised"
+                                                color="secondary"
+                                                type="submit"
+                                                onClick={() => this.unsubscribe(ev._id)}
+                                            >
+                                                Не пойду
+                                            </Button>
+                                        </TableCell>}
+                                    </TableRow>
+                                );
+                            })}
+                        </TableBody>
+                    </Table>
                 </Paper>
 
 
