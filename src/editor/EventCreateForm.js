@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { withStyles, TextField, Typography, Button } from 'material-ui';
 import ScrollArea from 'react-scrollbar';
 import Slide from 'material-ui/transitions/Slide';
+import { CircularProgress } from 'material-ui/Progress';
 
 import * as mapActions from '../map/MapActions';
 import * as editorActions from './EditorActions';
@@ -18,6 +19,8 @@ class EventCreateForm extends Component {
         createNewPoint: PropTypes.func.isRequired,
         removePoint: PropTypes.func.isRequired,
         changePointTitle: PropTypes.func.isRequired,
+        showRoute: PropTypes.func.isRequired,
+        isSending: PropTypes.bool.isRequired,
         createNewPointRequest: PropTypes.func.isRequired,
         currentMapCenter: PropTypes.array.isRequired,
         pointsList: PropTypes.array.isRequired,
@@ -52,12 +55,12 @@ class EventCreateForm extends Component {
             date = this.state.date, 
             pointsList = this.props.pointsList;
         this.props.createNewPointRequest(title, description, date, pointsList);
-    } 
+    };
 
     addNewPoint = (e) => {
         const [latitude, longitude] = this.props.currentMapCenter;
         this.props.createNewPoint(latitude, longitude);
-    }
+    };
 
     handlePointTitleChange = (index) => (e) => { 
         this.props.changePointTitle(index, e.target.value);
@@ -65,7 +68,11 @@ class EventCreateForm extends Component {
 
     removePointHandler = (index) => (e) => {
         this.props.removePoint(index);
-    }
+    };
+
+    showRoute = () => {
+        this.props.showRoute();
+    };
 
     render() {
         const {classes, showEditor} = this.props;
@@ -126,29 +133,37 @@ class EventCreateForm extends Component {
                             color="primary"
                             aria-label="add"
                             onClick={this.showRoute}
+                            disabled={this.props.isSending}
                         >
                             Показать маршрут
                         </Button>}
-
-                        <Button 
-                            className={classes.submitButton}
-                            variant="raised"                             
-                            color="primary" 
-                            aria-label="send"
-                            type="submit"
-                        >
-                            Отправить
-                        </Button>
-
-                        <Button 
-                            className={classes.submitButton}
-                            variant="raised" 
-                            color="secondary"
-                            aria-label="add"
-                            onClick={this.addNewPoint}
-                        >
-                            Добавить точку
-                        </Button>
+                        <div className={classes.buttonsWrapper}>
+                            <div className={classes.wrapper}>
+                                <Button 
+                                    className={classes.submitButton}
+                                    variant="raised"                             
+                                    color="primary" 
+                                    aria-label="send"
+                                    type="submit"
+                                    disabled={this.props.isSending}
+                                >
+                                    Отправить
+                                </Button>
+                                {this.props.isSending && <CircularProgress size={32} className={classes.fabProgress}/>}
+                            </div>
+                            <div className={classes.wrapper}>
+                                <Button 
+                                    className={classes.submitButton}
+                                    variant="raised" 
+                                    color="secondary"
+                                    aria-label="add"
+                                    onClick={this.addNewPoint}
+                                    disabled={this.props.isSending}
+                                >
+                                    Добавить точку
+                                </Button>
+                            </div>
+                        </div>
                     </form>
                     </ScrollArea>
                 </div>
@@ -158,6 +173,7 @@ class EventCreateForm extends Component {
 }
 
 const mapStateToProps = (state) => ({
+    isSending: state.editor.isSending,
     currentMapCenter: state.map.currentMap.center,
     pointsList: state.map.editorPointsList
 });
@@ -166,6 +182,7 @@ const mapDispatchToProps = {
     createNewPoint: mapActions.createNewPoint,
     removePoint: mapActions.removePoint,
     changePointTitle: mapActions.changePointTitle,
+    showRoute: mapActions.showRoute,
     createNewPointRequest: editorActions.createNewEventRequest,
 };
 

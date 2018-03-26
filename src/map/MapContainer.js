@@ -12,7 +12,9 @@ import PointsEditorList from './PointsEditList';
 class MapContainer extends Component {
     static propTypes = {
         editorMode: PropTypes.bool,
+        showRoute: PropTypes.bool.isRequired,
         userWhere: PropTypes.array.isRequired,
+        editorPointsList: PropTypes.array.isRequired,
         currentMap: PropTypes.object.isRequired,
         setCurrentMapInfo: PropTypes.func.isRequired,
         setUserPosition: PropTypes.func.isRequired
@@ -25,10 +27,12 @@ class MapContainer extends Component {
     constructor(props) {
         super(props);
 
+        this.ymaps = null;
+        this.route = null;
         this.searchControl = null;
         this.mapControl = null;
     }
-    
+
     componentDidMount() {
         if (window.navigator.geolocation) {
             window.navigator.geolocation.getCurrentPosition(position => {
@@ -48,6 +52,16 @@ class MapContainer extends Component {
         }
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(this.props.showRoute !== nextProps.showRoute) {
+            if(nextProps.showRoute) {
+                this.showRoute();
+            } else {
+                this.hideRoute();
+            }
+        }
+    }
+
     componentWillUnmount() {
         this.removeMapEventListeners();
     }
@@ -59,6 +73,28 @@ class MapContainer extends Component {
     setMapControlRef = (ref) => {
         this.mapControl = ref;
         this.addMapEventListeners();
+    }
+
+    showRoute() {
+        this.route = new this.ymaps.multiRouter.MultiRoute({
+            referencePoints: this.props.editorPointsList.map((el) => [el.latitude, el.longitude]),
+            params: {
+                routingMode: 'pedestrian',
+                results: 1
+            }
+        },{
+            editorDrawOver: false,
+            routeStrokeColor: "000088",
+            routeActiveStrokeColor: "ff0000",
+            pinIconFillColor: "ff0000",
+            boundsAutoApply: true,
+            zoomMargin: 30
+        });
+        this.mapControl.geoObjects.add(this.route);
+    }
+
+    hideRoute() {
+        this.mapControl.geoObjects.remove(this.route);
     }
     
     addMapEventListeners() {
@@ -84,9 +120,13 @@ class MapContainer extends Component {
         this.mapControl.events.remove('actionend');
     }
 
+    onApiAvaliable(ymaps) {
+        this.ymaps = ymaps;
+    }
+
     render() {
         return(
-            <YMaps>
+            <YMaps onApiAvaliable={(ymaps) => this.onApiAvaliable(ymaps)}>
                 <Map state={
                     {
                         center: this.props.currentMap.center, 
@@ -139,7 +179,9 @@ const zoomControlOptions = {
 };
 
 const mapStateToProps = state => ({
+    editorPointsList: state.map.editorPointsList,    
     currentMap: state.map.currentMap,
+    showRoute: state.map.showRoute,
     userWhere: [state.map.userWhere.latitude, state.map.userWhere.longitude]
 });
 

@@ -9,7 +9,7 @@ export const createNewEventRequest = (title, description, date, pointsList) => (
 });
 
 export const createNewEventSuccess = () => ({
-    type: types.CREATE_NEW_EVENT_REQUEST
+    type: types.CREATE_NEW_EVENT_SUCCESS
 });
 
 export const createNewEventError = (error) => ({

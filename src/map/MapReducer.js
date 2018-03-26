@@ -19,7 +19,8 @@ const initialState = {
      * }
      */
     ],
-    editorPointsList: []
+    editorPointsList: [],
+    showRoute: false
 };
 
 export const map = (state = initialState, action) => {
@@ -44,7 +45,8 @@ export const map = (state = initialState, action) => {
                         longitude: action.longitude,
                         selected: false
                     }
-                ]
+                ],
+                showRoute: false
             };
         case types.SET_CURRENT_MAP_INFO:
             return {
@@ -66,7 +68,8 @@ export const map = (state = initialState, action) => {
                         longitude: action.longitude
                     },
                     ...state.editorPointsList.slice(action.index + 1)
-                ]
+                ],
+                showRoute: false                
             };
         case types.CHANGE_POINT_TITLE:
             return {
@@ -80,10 +83,22 @@ export const map = (state = initialState, action) => {
                     ...state.editorPointsList.slice(action.index + 1)
                 ]
             };
+        case types.CLEAR_EDITOR_POINTS:
+            return {
+                ...state,
+                editorPointsList: [],
+                showRoute: false  
+            };
         case types.REMOVE_POINT:
             return {
                 ...state,
-                editorPointsList: state.editorPointsList.filter((point, index) => index !== action.index)
+                editorPointsList: state.editorPointsList.filter((point, index) => index !== action.index),
+                showRoute: false
+            };
+        case types.SHOW_ROUTE:
+            return {
+                ...state,
+                showRoute: true
             };
         default:
             return state;

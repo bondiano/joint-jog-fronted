@@ -25,13 +25,22 @@ export const changePointPosition = (index, latitude, longitude) => ({
     latitude, 
     longitude
 });
+
 export const removePoint = (index) => ({
     type: types.REMOVE_POINT,
     index
+});
+
+export const clearEditorPoints = () => ({
+    type: types.CLEAR_EDITOR_POINTS
 });
 
 export const changePointTitle = (index, title) => ({
     type: types.CHANGE_POINT_TITLE,
     index,
     title
+});
+
+export const showRoute = () => ({
+    type: types.SHOW_ROUTE
 });

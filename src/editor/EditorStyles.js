@@ -1,3 +1,5 @@
+import purple from 'material-ui/colors/purple';
+
 export const CreateEventFormStyles = theme => ({
     root: {
         display: 'flex',
@@ -20,8 +22,23 @@ export const CreateEventFormStyles = theme => ({
     submitButton: {
         margin: 8        
     },
+    fabProgress: {
+        color: purple[500],
+        position: 'absolute',
+        top: 10,
+        left: 50,
+        zIndex: 1,
+    },
+    wrapper: {
+        position: 'relative'
+    },
+    buttonsWrapper: {
+        display: 'flex',
+        flexDirection: 'row'
+    },
     routeButton: {
-        display: 'flex'
+        display: 'flex',
+        marginLeft: 8
     }
 });
 
