@@ -6,6 +6,7 @@ import ScrollArea from 'react-scrollbar';
 import Slide from 'material-ui/transitions/Slide';
 
 import * as mapActions from '../map/MapActions';
+import * as editorActions from './EditorActions';
 
 import PointsList from './common/PointsList';
 import { CreateEventFormStyles } from './EditorStyles';
@@ -17,6 +18,7 @@ class EventCreateForm extends Component {
         createNewPoint: PropTypes.func.isRequired,
         removePoint: PropTypes.func.isRequired,
         changePointTitle: PropTypes.func.isRequired,
+        createNewPointRequest: PropTypes.func.isRequired,
         currentMapCenter: PropTypes.array.isRequired,
         pointsList: PropTypes.array.isRequired,
         classes: PropTypes.object.isRequired
@@ -45,7 +47,11 @@ class EventCreateForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(e.target);
+        const title = this.state.title, 
+            description = this.state.description, 
+            date = this.state.date, 
+            pointsList = this.props.pointsList;
+        this.props.createNewPointRequest(title, description, date, pointsList);
     } 
 
     addNewPoint = (e) => {
@@ -159,7 +165,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     createNewPoint: mapActions.createNewPoint,
     removePoint: mapActions.removePoint,
-    changePointTitle: mapActions.changePointTitle
+    changePointTitle: mapActions.changePointTitle,
+    createNewPointRequest: editorActions.createNewEventRequest,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(CreateEventFormStyles)(EventCreateForm));
