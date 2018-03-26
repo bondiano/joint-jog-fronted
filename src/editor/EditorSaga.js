@@ -1,6 +1,6 @@
 import { takeLatest, all, call } from 'redux-saga/effects';
 
-import XHRProvider from '../utils/XHRProvider';
+// import XHRProvider from '../utils/XHRProvider';
 
 // import * as actions from './EditorActions';
 import * as types from './EditorActionTypes';

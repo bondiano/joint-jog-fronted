@@ -11,6 +11,7 @@ class RegisterForm extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
         history: PropTypes.object.isRequired,
+        isSending: PropTypes.bool.isRequired,        
         registerRequest: PropTypes.func.isRequired,
         serverErrors: PropTypes.string.isRequired
     };
@@ -136,11 +137,23 @@ class RegisterForm extends React.Component {
                         <Typography variant="caption" color="error" className={classes.errors}>{this.state.errors.password}</Typography>
                     </div>
 
-                    <Button variant="raised" color="primary" type="submit" className={classes.buttonLine} disabled={!this.state.formValid}>
+                    <Button 
+                        variant="raised" 
+                        color="primary" 
+                        type="submit" 
+                        className={classes.buttonLine} 
+                        disabled={!this.state.formValid || this.props.isSending}
+                    >
                         Зарегистрироваться
                     </Button>
 
-                    <Button variant="raised" color="secondary" onClick={this.toLogin} className={classes.buttonLine}>
+                    <Button 
+                        variant="raised" 
+                        color="secondary" 
+                        onClick={this.toLogin} 
+                        className={classes.buttonLine}
+                        disabled={this.props.isSending}                        
+                    >
                         Войти
                     </Button>
                 </form>
@@ -151,6 +164,7 @@ class RegisterForm extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
+    isSending: state.auth.isSending,    
     serverErrors: state.auth.errors
 });
 

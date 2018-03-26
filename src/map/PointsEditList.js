@@ -32,7 +32,7 @@ class PointsEditList extends Component {
                             }}
                             properties={{
                                 hintContent: 'Перетащите на нужное место',
-                                balloonContent: point.title ? point.title : null
+                                balloonContent: point.title && point.title
                             }}
                             options={{
                                 preset: point.selected ? 'islands#redRunIcon' : 'islands#blueRunIcon',

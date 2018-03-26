@@ -20,7 +20,7 @@ class EventsContainer extends Component {
         return(
             <Fragment>
                 <MapContainer/>
-                {this.props.isAuth ? <NewEventButton toCreateNewEvent={this.toCreateNewEvent}/> : null}
+                {this.props.isAuth && <NewEventButton toCreateNewEvent={this.toCreateNewEvent}/>}
             </Fragment>
         );
     }

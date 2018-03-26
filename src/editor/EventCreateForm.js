@@ -121,14 +121,14 @@ class EventCreateForm extends Component {
                             handlePointTitleChange={this.handlePointTitleChange}
                         />
 
-                        {this.props.pointsList.length > 1 ? <Button 
+                        {this.props.pointsList.length > 1 && <Button 
                             className={classes.routeButton}
                             color="primary"
                             aria-label="add"
                             onClick={this.showRoute}
                         >
                             Показать маршрут
-                        </Button> : null}
+                        </Button>}
 
                         <Button 
                             className={classes.submitButton}

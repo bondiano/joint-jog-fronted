@@ -1,3 +1,4 @@
+import purple from 'material-ui/colors/purple';
 export const AuthStyles = theme => ({
     container: {
         textAlign: 'center'
@@ -22,5 +23,19 @@ export const AuthStyles = theme => ({
     },
     error: {
         color: 'red',
+    },
+    fabProgress: {
+        color: purple[500],
+        position: 'absolute',
+        top: 17,
+        left: 42,
+        zIndex: 1,
+    },
+    wrapper: {
+        position: 'relative'
+    },
+    buttonsWrapper: {
+        display: 'flex',
+        flexDirection: 'row'
     }
 });

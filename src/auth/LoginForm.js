@@ -2,12 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { TextField, Button, Card, Typography, withStyles } from 'material-ui';
+import { CircularProgress } from 'material-ui/Progress';
 
 import * as actions from './AuthActions';
 import { AuthStyles } from './AuthStyles';
 
 class LoginForm extends React.Component {
     static propTypes = {
+        isSending: PropTypes.bool.isRequired,
         loginRequest: PropTypes.func.isRequired,
         serverErrors: PropTypes.string.isRequired,
         history: PropTypes.object.isRequired,
@@ -111,13 +113,31 @@ class LoginForm extends React.Component {
                         <Typography variant="caption" color="error" className={classes.errors}>{this.state.errors.password}</Typography>
                     </div>
 
-                    <Button variant="raised" color="primary" type="submit" className={classes.buttonLine} disabled={!this.state.formValid}>
-                        Войти
-                    </Button>
-
-                    <Button variant="raised" color="secondary" onClick={this.toRegister} className={classes.buttonLine}>
-                        Зарегистрироваться
-                    </Button>
+                    <div className={classes.buttonsWrapper}>
+                        <div className={classes.wrapper}>
+                            <Button 
+                                variant="raised"
+                                color="primary"
+                                type="submit" 
+                                className={classes.buttonLine} 
+                                disabled={!this.state.formValid || this.props.isSending}
+                            >
+                                Войти
+                            </Button>
+                            {this.props.isSending && <CircularProgress size={32} className={classes.fabProgress}/>}
+                        </div>
+                        <div className={classes.wrapper}>
+                            <Button 
+                                variant="raised" 
+                                color="secondary" 
+                                onClick={this.toRegister} 
+                                className={classes.buttonLine}
+                                disabled={this.props.isSending}
+                            >
+                                Зарегистрироваться
+                            </Button>
+                        </div>
+                    </div>
                 </form>
                 </Card>
             </div>
@@ -126,6 +146,7 @@ class LoginForm extends React.Component {
 }
 
 const mapStateToProps = state => ({
+    isSending: state.auth.isSending,
     serverErrors: state.auth.errors
 });
 
