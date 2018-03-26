@@ -1,7 +1,15 @@
 {
     "short_name": "Join Jog",
-    "name": "Join Jog is a final project for Noveo University Frontend Internship",
+    "name": "Join Jog app",
     "start_url": "index.html",
     "display": "standalone",
+    "theme_color": "#3f51b5",
+    "background_color": "#ffffff",
+    "version_name": "0.1 beta",
+    "icons": {
+      "192": "logo192.png"
+    },
+    "web_accessible_resources": ["logo.png"],
+    "default_locale": "ru",
     "lang": "ru-RU"
   }
