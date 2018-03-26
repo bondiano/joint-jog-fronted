@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles, TextField, Typography, Button } from 'material-ui';
+import ScrollArea from 'react-scrollbar';
 import Slide from 'material-ui/transitions/Slide';
 
 import * as mapActions from '../map/MapActions';
@@ -14,6 +15,8 @@ class EventCreateForm extends Component {
     static propTypes = {
         showEditor: PropTypes.bool,
         createNewPoint: PropTypes.func.isRequired,
+        removePoint: PropTypes.func.isRequired,
+        changePointTitle: PropTypes.func.isRequired,
         currentMapCenter: PropTypes.array.isRequired,
         pointsList: PropTypes.array.isRequired,
         classes: PropTypes.object.isRequired
@@ -31,7 +34,7 @@ class EventCreateForm extends Component {
             date: new Date().toISOString().substring(0, 16)
         };
     }
-
+ 
     handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
@@ -50,23 +53,20 @@ class EventCreateForm extends Component {
         this.props.createNewPoint(latitude, longitude);
     }
 
-    handlePointTitleChange = (index) => (e) => {
-        
-    }
+    handlePointTitleChange = (index) => (e) => { 
+        this.props.changePointTitle(index, e.target.value);
+    };
 
     removePointHandler = (index) => (e) => {
-        console.log(e.target);    
-    }
-
-    showPointOnMap = (index) => (e) => {
-        console.log(e.target);            
+        this.props.removePoint(index);
     }
 
     render() {
         const {classes, showEditor} = this.props;
         return (
             <Slide direction="left" mountOnEnter unmountOnExit in={showEditor}>
-                <div className={classes.root}>
+            <div className={classes.root}>
+                <ScrollArea>
                     <Typography className={classes.heading} variant="headline" component="h2">
                         Новая пробежка
                     </Typography>
@@ -74,7 +74,6 @@ class EventCreateForm extends Component {
                         <div className={classes.fieldLine}>
                             <TextField
                                 onChange={this.handleChange}
-                                autoFocus
                                 required
                                 type="textarea"
                                 label="Заголовок"
@@ -113,7 +112,6 @@ class EventCreateForm extends Component {
                         <PointsList 
                             pointsList={this.props.pointsList}
                             removePointHandler={this.removePointHandler}
-                            showPointOnMap={this.showPointOnMap}
                             handlePointTitleChange={this.handlePointTitleChange}
                         />
 
@@ -146,6 +144,7 @@ class EventCreateForm extends Component {
                             Добавить точку
                         </Button>
                     </form>
+                    </ScrollArea>
                 </div>
             </Slide>
         );
@@ -158,7 +157,9 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
-    createNewPoint: mapActions.createNewPoint
+    createNewPoint: mapActions.createNewPoint,
+    removePoint: mapActions.removePoint,
+    changePointTitle: mapActions.changePointTitle
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(CreateEventFormStyles)(EventCreateForm));

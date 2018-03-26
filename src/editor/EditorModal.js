@@ -15,7 +15,7 @@ class EditorModal extends Component {
     render() {
         return createPortal(
             <aside className={this.props.classes.root}>
-                {this.props.children}
+                    {this.props.children}
             </aside>,
             modalRoot
         );

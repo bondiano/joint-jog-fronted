@@ -68,6 +68,23 @@ export const map = (state = initialState, action) => {
                     ...state.editorPointsList.slice(action.index + 1)
                 ]
             };
+        case types.CHANGE_POINT_TITLE:
+            return {
+                ...state,
+                editorPointsList: [
+                    ...state.editorPointsList.slice(0, action.index),
+                    {
+                        ...state.editorPointsList[action.index],
+                        title: action.title
+                    },
+                    ...state.editorPointsList.slice(action.index + 1)
+                ]
+            };
+        case types.REMOVE_POINT:
+            return {
+                ...state,
+                editorPointsList: state.editorPointsList.filter((point, index) => index !== action.index)
+            };
         default:
             return state;
     }
