@@ -4,6 +4,7 @@ const initialState = {
     isAuth: false,
     username: '',
     id: '',
+    isSending: false,
     errors: ''
 };
 
@@ -15,11 +16,13 @@ export const auth = (state = initialState, action) => {
                 username: action.username,
                 id: action.id,
                 isAuth: true,
+                isSending: false,
                 errors: ''
             };
         case types.REGISTER_SUCCESS:
             return {
                 ...state,
+                isSending: false,
                 errors: ''
             };
         case types.LOGOUT:
@@ -48,10 +51,17 @@ export const auth = (state = initialState, action) => {
                 isAuth: false,
                 errors: action.errors
             };
+        case types.LOGIN_REQUEST:
+        case types.REGISTER_REQUEST:
+            return {
+                ...state,
+                isSending: true
+            };
         case types.REGISTER_ERROR:
         case types.LOGIN_ERROR:
             return {
                 ...state,
+                isSending: false,
                 errors: action.errors
             };
         default:

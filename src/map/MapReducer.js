@@ -1,10 +1,26 @@
 import * as types from './MapActionTypes';
 
 const initialState = {
-    basicGeo:{
+    currentMap: {
+        center: [54.98, 82.89],
+        zoom: 10
+    },
+    userWhere: {
         latitude: 54.98, 
-        longitude: 82.89
-    }
+        longitude: 82.89,
+        accuracy: 0
+    },
+    pointsList: [
+    /**
+     * {
+            latitude:,
+            longitude:,
+            title:
+     * }
+     */
+    ],
+    editorPointsList: [],
+    showRoute: false
 };
 
 export const map = (state = initialState, action) => {
@@ -12,11 +28,77 @@ export const map = (state = initialState, action) => {
         case types.SET_USER_GEO:
             return {
                 ...state,
-                basicGeo: {
-                    ...state.basicGeo,
+                userWhere: {
+                    ...state.userWhere,
                     latitude: action.latitude,
-                    longitude: action.longitude
+                    longitude: action.longitude,
+                    accuracy: action.accuracy
                 }
+            };
+        case types.CREATE_NEW_POINT:
+            return {
+                ...state,
+                editorPointsList: [
+                    ...state.editorPointsList, 
+                    {
+                        latitude: action.latitude,
+                        longitude: action.longitude,
+                        selected: false
+                    }
+                ],
+                showRoute: false
+            };
+        case types.SET_CURRENT_MAP_INFO:
+            return {
+                ...state,
+                currentMap: {
+                    ...state.currentMap,
+                    center: [action.center[0], action.center[1]],
+                    zoom: action.zoom
+                }
+            };
+        case types.CHANGE_POINT_POSITION:
+            return {
+                ...state,
+                editorPointsList: [
+                    ...state.editorPointsList.slice(0, action.index),
+                    {
+                        ...state.editorPointsList[action.index],
+                        latitude: action.latitude, 
+                        longitude: action.longitude
+                    },
+                    ...state.editorPointsList.slice(action.index + 1)
+                ],
+                showRoute: false                
+            };
+        case types.CHANGE_POINT_TITLE:
+            return {
+                ...state,
+                editorPointsList: [
+                    ...state.editorPointsList.slice(0, action.index),
+                    {
+                        ...state.editorPointsList[action.index],
+                        title: action.title
+                    },
+                    ...state.editorPointsList.slice(action.index + 1)
+                ]
+            };
+        case types.CLEAR_EDITOR_POINTS:
+            return {
+                ...state,
+                editorPointsList: [],
+                showRoute: false  
+            };
+        case types.REMOVE_POINT:
+            return {
+                ...state,
+                editorPointsList: state.editorPointsList.filter((point, index) => index !== action.index),
+                showRoute: false
+            };
+        case types.SHOW_ROUTE:
+            return {
+                ...state,
+                showRoute: true
             };
         default:
             return state;

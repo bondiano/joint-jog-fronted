@@ -1,7 +1,8 @@
 import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import { withStyles, AppBar, Toolbar, Typography, Button, Hidden } from 'material-ui';
-import {logo} from '../../assets';
+import { logo } from '../../assets';
 import { NavbarStyles } from '../AppStyles';
 
 function Navbar({isAuth, logout, toProfile, toLogin,  toMap, classes}) {
@@ -11,8 +12,9 @@ function Navbar({isAuth, logout, toProfile, toLogin,  toMap, classes}) {
             <Toolbar>
             <Hidden xsDown>
                 <div className={classes.flex}>
-                    <img src={logo} alt="Logo" className={classes.logo}/>
-
+                    <Link to="/">
+                        <img src={logo} alt="Logo" className={classes.logo}/>
+                    </Link>
                     <Typography variant="title" color="inherit" className={classes.title}>
                         Joint Jog
                     </Typography>

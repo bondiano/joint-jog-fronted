@@ -9,6 +9,8 @@ import reducer from './reducer';
 import rootSaga from './saga';
 import App from './app/App';
 
+import 'typeface-roboto';
+
 const sagaMiddleware = createSagaMiddleware();
 const initialState = {};
 const store = createStore(
