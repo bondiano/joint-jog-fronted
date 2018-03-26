@@ -82,7 +82,7 @@ class ProfileForm extends React.Component {
     handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
-        this.setState({[name]: value});
+        this.setState({data: {[name]: value}});
     };
 
     render() {
