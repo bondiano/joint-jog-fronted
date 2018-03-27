@@ -42,7 +42,5 @@ const mapStateToProps = state => ({
     pointsList: state.map.pointsList
 });
 
-const mapDispatchToProps = {
-};
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PointsShowList));
+export default withRouter(connect(mapStateToProps, null)(PointsShowList));

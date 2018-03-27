@@ -1,13 +1,32 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import { withRouter } from 'react-router-dom';
 
+import HideModalButton from '../app/common/HideModalButton';
 import MapContainer from '../map/MapContainer';
+import EventInfoModal from './EventInfoModal';
 
 class EventInfoComponent extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            showModal: true
+        };
+    }
 
+    hideHandler = () => {
+        this.setState({
+            ...this.state,
+            showModal: !this.state.showModal
+        });
+    }
+    
     render() {
         return (
-            <MapContainer showOne/>
+            <Fragment>
+                <MapContainer showOne/>
+                <HideModalButton hideHandler={this.hideHandler} isHidden={!this.state.showModal}/>                
+                <EventInfoModal showEditor={this.state.showModal}/>
+            </Fragment>
         );
     }
 }

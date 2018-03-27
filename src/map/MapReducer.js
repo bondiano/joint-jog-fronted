@@ -20,6 +20,7 @@ const initialState = {
      * }
      */
     ],
+    currentEventPointsList: [],
     editorPointsList: [],
     showRoute: false
 };
@@ -105,6 +106,11 @@ export const map = (state = initialState, action) => {
             return {
                 ...state,
                 pointsList: [...action.pointsList]
+            };
+        case types.SET_CURRENT_EVENT_POINTS:
+            return {
+                ...state,
+                currentEventPointsList: [...action.pointsList]
             };
         default:
             return state;

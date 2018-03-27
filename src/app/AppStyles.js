@@ -4,7 +4,13 @@ export const AppStyles= theme => ({
         flexDirection: 'column',
         height: '100vh',
         overflow: 'hidden'
-    }
+    },
+    hideButton: {
+        position: 'absolute',
+        bottom: '25px',
+        left: '25px',
+        zIndex: 5        
+    },
 });
 
 export const NavbarStyles = theme => ({

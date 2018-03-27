@@ -49,3 +49,8 @@ export const setEventsPointOnMap = (pointsList) => ({
     type: types.SET_EVENTS_POINT_ON_MAP,
     pointsList
 });
+
+export const setCurrentEventPoints = (pointsList) => ({
+    type: types.SET_CURRENT_EVENT_POINTS,
+    pointsList
+});

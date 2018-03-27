@@ -14,8 +14,25 @@ function* unsubscribeSaga(action) {
         const response = yield call(xhr.post, '/event/unsub', {
             id: action.id
         });
-        if (response.success) {
+        if (response.data.success) {
             yield  put(actions.unsubscribeEventSuccess());
+            yield call(action.history.push, '/');
+        } else {
+            yield put(actions.unsubscribeEventError('Извините, произошла ошибка. Попробуйте позже.'));
+        }
+    } catch(err) {
+        yield put(actions.unsubscribeEventError('Извините, произошла ошибка. Попробуйте позже.'));
+    }
+}
+
+function* subscribeSaga(action) {
+    try {
+        const response = yield call(xhr.post, '/event/sub', {
+            id: action.id
+        });
+        if (response.data.success) {
+            yield  put(actions.subscribeEventSuccess());
+            yield call(action.history.push, '/');            
         } else {
             yield put(actions.unsubscribeEventError('Извините, произошла ошибка. Попробуйте позже.'));
         }
@@ -53,9 +70,25 @@ function* fetchEventsSaga() {
     }
 }
 
+function* fetchEventSaga(action) {
+    try {
+        const response = yield call(xhr.get, `/event/${action.id}`);
+        if (response.data.success) {
+            yield put(actions.fetchEventSuccess(response.data.payload));
+            yield put(mapActions.setCurrentEventPoints(response.data.payload.event.points));
+        } else {
+            yield put(actions.fetchEventError('Извините, произошла ошибка. Попробуйте позже.'));              
+        }
+    } catch(err) {
+        yield put(actions.fetchEventError('Извините, произошла ошибка. Попробуйте позже.'));  
+    }
+}
+
 export function* eventsRootSaga() {
     yield all([
-        yield takeLatest(types.UNSUBSCRIBE_EVENT, unsubscribeSaga),
-        yield takeLatest(types.FETCH_EVENTS_REQUEST, fetchEventsSaga)
+        yield takeLatest(types.UNSUBSCRIBE_EVENT_REQUEST, unsubscribeSaga),
+        yield takeLatest(types.SUBSCRIBE_EVENT_REQUEST, subscribeSaga),
+        yield takeLatest(types.FETCH_EVENTS_REQUEST, fetchEventsSaga),
+        yield takeLatest(types.FETCH_EVENT_REQUEST, fetchEventSaga)
     ]);
 }

@@ -1,11 +1,11 @@
 import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, Button, Hidden } from 'material-ui';
-import {EditorModalStyles} from '../EditorStyles';
+import { AppStyles } from '../AppStyles';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 
-const HideEditorButton = ({hideHandler, isHidden, classes}) => {
+const HideModalButton = ({hideHandler, isHidden, classes}) => {
     return (
         <Fragment>
             <Hidden mdUp>
@@ -27,17 +27,17 @@ const HideEditorButton = ({hideHandler, isHidden, classes}) => {
                     color="primary" 
                     aria-label="add"
                 >
-                    {isHidden ? 'Открыть редактор' : 'Скрыть редактор'}
+                    {isHidden ? 'Открыть панель' : 'Скрыть панель'}
                 </Button>
             </Hidden>
         </Fragment>
     );
 };
 
-HideEditorButton.propTypes = {
+HideModalButton.propTypes = {
     isHidden: PropTypes.bool.isRequired,
     hideHandler: PropTypes.func.isRequired,
     classes: PropTypes.object.isRequired
 };
 
-export default withStyles(EditorModalStyles)(HideEditorButton);
+export default withStyles(AppStyles)(HideModalButton);

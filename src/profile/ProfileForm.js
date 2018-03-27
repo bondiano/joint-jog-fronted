@@ -59,7 +59,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
     profileRequest: profileActions.profileRequest,
     profileUpdate: profileActions.profileUpdate,
-    removeEvent: eventsActions.unsubscribeEvent
+    removeEvent: eventsActions.unsubscribeEventRequest
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(ProfileStyles)(ProfileForm));
