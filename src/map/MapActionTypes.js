@@ -6,3 +6,4 @@ export const REMOVE_POINT = '@@map/REMOVE_POINT';
 export const CHANGE_POINT_TITLE = '@@map/CHANGE_POINT_TITLE';
 export const SHOW_ROUTE = '@@map/SHOW_ROUTE';
 export const CLEAR_EDITOR_POINTS = '@@map/CLEAR_EDITOR_POINTS';
+export const SET_EVENTS_POINT_ON_MAP = '@@map/SET_EVENTS_POINT_ON_MAP';

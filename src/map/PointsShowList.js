@@ -1,22 +1,48 @@
-import React, {Component} from 'react';
+import React, { PureComponent, Fragment } from 'react';
+import PropTypes from 'prop-types';
+import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 import { Placemark }from 'react-yandex-maps';
 
-class PointsShowList extends Component {
+class PointsShowList extends PureComponent {
+    static propTypes = {
+        history: PropTypes.object.isRequired,
+        pointsList: PropTypes.array.isRequired
+    }
+
+    setPlacemarkRef = (id) => (ref) => {
+        this[`placeMarkRef${id}`] = ref;
+        ref && ref.events.add('click', (event) => {
+            this.props.history.push(`/event/${id}`);
+        });
+    }
+
     render() {
         return (
-            <Placemark
-                geometry={{
-                    coordinates:  [54.98, 83]
-                }}
-                properties={{
-                    hintContent: 'PointsShowList'
-                }}
-                options={{
-                    preset: 'islands#blueRunIcon'
-                }}
-            />
+            <Fragment>
+            {this.props.pointsList.map((point, index) => {
+                return (
+                <Placemark
+                    key={point.id}
+                    geometry={{
+                        coordinates:  [point.latitude, point.longitude]
+                    }}
+                    options={{
+                        preset: 'islands#blueRunIcon'
+                    }}
+                    instanceRef = {this.setPlacemarkRef(point.id)}
+                />);
+            })}
+            </Fragment>
         );
     }
 }
 
-export default PointsShowList;
+const mapStateToProps = state => ({
+    pointsList: state.map.pointsList
+});
+
+const mapDispatchToProps = {
+};
+
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PointsShowList));

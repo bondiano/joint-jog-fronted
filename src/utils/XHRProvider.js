@@ -18,7 +18,7 @@ export default class XHRProvider {
             }],
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `bearer ${window.localStorage.getItem('token')}`
+                'Authorization': auth()
             }
         });
     }

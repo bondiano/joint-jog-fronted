@@ -12,6 +12,9 @@ import PointsEditorList from './PointsEditList';
 class MapContainer extends Component {
     static propTypes = {
         editorMode: PropTypes.bool,
+        showAll: PropTypes.bool,
+        showOne: PropTypes.bool,
+        showEvent: PropTypes.object,
         showRoute: PropTypes.bool.isRequired,
         userWhere: PropTypes.array.isRequired,
         editorPointsList: PropTypes.array.isRequired,
@@ -21,7 +24,10 @@ class MapContainer extends Component {
     }
 
     static defaultProps = {
-        editorMode: false
+        editorMode: false,
+        showAll: false,
+        showOne: false,
+        showEvent: {}
     }
 
     constructor(props) {
@@ -155,7 +161,9 @@ class MapContainer extends Component {
                             preset: 'islands#blueRunCircleIcon'
                         }}
                     />
-                    {this.props.editorMode ? <PointsEditorList/> : <PointsShowList/>}
+                    {this.props.editorMode && <PointsEditorList/>}
+                    {this.props.showAll && <PointsShowList/>}
+                    {this.props.showOne}
                 </Map>
             </YMaps>
         );
