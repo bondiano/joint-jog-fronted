@@ -33,10 +33,12 @@ class PointsEditList extends PureComponent {
                         }}
                         properties={{
                             hintContent: 'Перетащите на нужное место',
-                            balloonContent: point.title && point.title
+                            balloonContent: point.title && point.title,
+                            iconContent: index + 1
                         }}
                         options={{
-                            preset: point.selected ? 'islands#redRunIcon' : 'islands#blueRunIcon',
+                            preset: point.selected ? 'islands#redRunIcon' : 'islands#nightIcon',
+                            cursor: 'grab',
                             draggable: true
                         }}
                         onDragEnd = {this.handleDrag(point, index)}
