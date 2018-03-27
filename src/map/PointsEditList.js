@@ -1,4 +1,4 @@
-import React, {Component, Fragment} from 'react';
+import React, { PureComponent, Fragment } from 'react';
 import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
@@ -6,7 +6,7 @@ import { Placemark }from 'react-yandex-maps';
 
 import * as actions from './MapActions';
 
-class PointsEditList extends Component {
+class PointsEditList extends PureComponent {
     static propTypes = {
         editorPointsList: PropTypes.array.isRequired,
         changePointPosition: PropTypes.func.isRequired
@@ -25,24 +25,24 @@ class PointsEditList extends Component {
         return (
             <Fragment>
                 {this.props.editorPointsList.map((point, index) => {
-                        return (<Placemark
-                            key={index}
-                            geometry={{
-                                coordinates:  [point.latitude, point.longitude]
-                            }}
-                            properties={{
-                                hintContent: 'Перетащите на нужное место',
-                                balloonContent: point.title && point.title
-                            }}
-                            options={{
-                                preset: point.selected ? 'islands#redRunIcon' : 'islands#blueRunIcon',
-                                draggable: true
-                            }}
-                            onDragEnd = {this.handleDrag(point, index)}
-                            instanceRef = {this.setPlacemarkRef(index)}
-                        />);
-                    })
-                }
+                    return (
+                    <Placemark
+                        key={index}
+                        geometry={{
+                            coordinates:  [point.latitude, point.longitude]
+                        }}
+                        properties={{
+                            hintContent: 'Перетащите на нужное место',
+                            balloonContent: point.title && point.title
+                        }}
+                        options={{
+                            preset: point.selected ? 'islands#redRunIcon' : 'islands#blueRunIcon',
+                            draggable: true
+                        }}
+                        onDragEnd = {this.handleDrag(point, index)}
+                        instanceRef = {this.setPlacemarkRef(index)}
+                    />);
+                })}
             </Fragment>
         );
     }

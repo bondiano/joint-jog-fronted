@@ -6,10 +6,17 @@ import { connect } from 'react-redux';
 import MapContainer from '../map/MapContainer';
 import NewEventButton from './common/NewEventButton';
 
+import * as eventsActions from './EventsActions';
+
 class EventsContainer extends Component {
     static propTypes = {
-        isAuth: PropTypes.bool.isRequired,        
+        isAuth: PropTypes.bool.isRequired,  
+        fetchEvents: PropTypes.func.isRequired,      
         history: PropTypes.object.isRequired
+    }
+
+    componentDidMount() {
+        this.props.fetchEvents();
     }
 
     toCreateNewEvent = () => {
@@ -31,6 +38,7 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = {
+    fetchEvents: eventsActions.fetchEventsRequest
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EventsContainer));

@@ -13,6 +13,7 @@ const initialState = {
     pointsList: [
     /**
      * {
+            id:,
             latitude:,
             longitude:,
             title:
@@ -99,6 +100,11 @@ export const map = (state = initialState, action) => {
             return {
                 ...state,
                 showRoute: true
+            };
+        case types.SET_EVENTS_POINT_ON_MAP:
+            return {
+                ...state,
+                pointsList: [...action.pointsList]
             };
         default:
             return state;
