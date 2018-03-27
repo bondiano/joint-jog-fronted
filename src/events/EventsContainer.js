@@ -26,7 +26,7 @@ class EventsContainer extends Component {
     render() {
         return(
             <Fragment>
-                <MapContainer/>
+                <MapContainer showAll/>
                 {this.props.isAuth && <NewEventButton toCreateNewEvent={this.toCreateNewEvent}/>}
             </Fragment>
         );
