@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import { createPortal } from 'react-dom';
-import { withStyles } from 'material-ui';
+import { withStyles, Button } from 'material-ui';
 import PropTypes from 'prop-types';
+import CloseIcon from 'material-ui-icons/Close';
 
 import { EditorModalStyles } from './EditorStyles';
 const modalRoot = document.getElementById('modal');

@@ -105,12 +105,12 @@ export const map = (state = initialState, action) => {
         case types.SET_EVENTS_POINT_ON_MAP:
             return {
                 ...state,
-                pointsList: [...action.pointsList]
+                pointsList: action.pointsList
             };
         case types.SET_CURRENT_EVENT_POINTS:
             return {
                 ...state,
-                currentEventPointsList: [...action.pointsList]
+                currentEventPointsList: action.pointsList
             };
         default:
             return state;

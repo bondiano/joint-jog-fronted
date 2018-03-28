@@ -47,19 +47,15 @@ function* fetchEventsSaga() {
         if (response.data.success) {
             yield put(actions.fetchEventsSuccess(response.data.payload));
             const pointsList =  response.data.payload.reduce((acc, event) => {
-                if (!event.title 
-                    || !event.points.length
-                    || !event.points[0].latitude 
-                    || !event.points[0].longitude) {
+                if (!event.points.length) {
                         return acc;
-                    } else {
-                        return [...acc, ({
-                            id: event._id,
-                            title: event.title,
-                            latitude: event.points[0] && event.points[0].latitude,
-                            longitude: event.points[0] && event.points[0].longitude
-                        })];
-                    }
+                }
+                return [...acc, ({
+                     id: event._id,
+                     title: event.title,
+                     latitude: event.points[0].latitude,
+                     longitude: event.points[0].longitude
+                })];
             }, []);
             yield put(mapActions.setEventsPointOnMap(pointsList));
         } else {

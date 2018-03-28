@@ -68,9 +68,7 @@ class EventInfoModal extends Component {
 
     content = () => {
         const {classes, event: {event}} = this.props;
-        const usernames = this.props.event.usernames.reduce((acc, user) => {
-            return [...acc, user.username];
-        }, []);
+        const usernames = this.props.event.usernames.map(user => user.username);
         return (
             <ScrollArea>
                 <Typography className={classes.heading} variant="headline" component="h2">
@@ -93,9 +91,9 @@ class EventInfoModal extends Component {
                         <b>{index + 1}.</b> {username}
                     </Typography>
                 ))}
-                {event.points.length > 1 && <Button color="primary" className={classes.button} onClick={this.showRoute}>
-                    Показать маршрут
-                </Button>}
+                <Button color="primary" className={classes.button} onClick={this.showRoute}>
+                    {event.points.length > 1 ? 'Показать маршрут' : 'Показать точку старта'}
+                </Button>
                 {this.props.isAuth && usernames.includes(this.props.username) ? 
                     <Button color="secondary" variant="raised" className={classes.button} onClick={this.unsubscribe}>
                         Не пойду

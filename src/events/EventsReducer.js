@@ -10,10 +10,6 @@ const initialState = {
 export const events = (state = initialState, action) => {
     switch (action.type) {
         case types.UNSUBSCRIBE_EVENT_SUCCESS:
-            return {
-                ...state,
-                error: ''
-            };
         case types.SUBSCRIBE_EVENT_SUCCESS:
             return {
                 ...state,
@@ -23,7 +19,7 @@ export const events = (state = initialState, action) => {
             return {
                 ...state,
                 error: '',
-                events: [...action.events]
+                events: action.events
             };
         case types.FETCH_EVENT_REQUEST:
             return {
