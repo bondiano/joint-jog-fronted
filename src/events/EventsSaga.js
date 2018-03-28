@@ -32,7 +32,7 @@ function* subscribeSaga(action) {
         });
         if (response.data.success) {
             yield  put(actions.subscribeEventSuccess());
-            yield call(action.history.push, '/');            
+            yield fetchEventSaga({id: action.id});
         } else {
             yield put(actions.unsubscribeEventError('Извините, произошла ошибка. Попробуйте позже.'));
         }
