@@ -2,12 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Typography, Paper, withStyles, TextField, Button, InputLabel, Select, MenuItem, FormControl } from 'material-ui';
-import Table, { TableBody, TableCell, TableHead, TableRow } from 'material-ui/Table';
 
 import * as profileActions from './ProfileActions';
 import * as eventsActions from '../events/EventsActions';
 import { ProfileStyles } from './ProfileStyles';
-
+import EventsTableForm from "./EventsTableForm";
+import ProfileStaticForm from "./ProfileStaticForm";
+import ProfileEditorForm from "./ProfileEditorForm";
 
 class ProfileForm extends React.Component {
     static propTypes = {
@@ -15,7 +16,7 @@ class ProfileForm extends React.Component {
         classes: PropTypes.object.isRequired,
         profileRequest: PropTypes.func.isRequired,
         profileUpdate: PropTypes.func.isRequired,
-        removeEvent: PropTypes.func.isRequired,
+
         profileError: PropTypes.string.isRequired,
         unsubscribeEventError: PropTypes.string.isRequired,
         profileData: PropTypes.object.isRequired,
@@ -27,36 +28,7 @@ class ProfileForm extends React.Component {
         super(props);
 
         this.state = {
-            data: {
-                username: '',
-                email: '',
-                password: '',
-                check_password: '',
-                socialNetworks: '',
-                firstName: '',
-                lastName: '',
-                age: '',
-                sex: ''
-            },
-            errors: {
-                username: '',
-                email: '',
-                password: '',
-                check_password: '',
-                firstName: '',
-                lastName: '',
-                age: ''
-            },
-            isValid: {
-                username: true,
-                email: true,
-                password: true,
-                check_password: true,
-                firstName: true,
-                lastName: true,
-                age: true
-            },
-            iValidForm: true
+            isEditorForm: false
         };
     }
 
@@ -70,19 +42,18 @@ class ProfileForm extends React.Component {
             },})
     }
 
-    toEvent = (eventId) => {
-        this.props.history.push(`/event/${eventId}`);
-    };
 
-    unsubscribe(eventId) {
-        console.log(eventId);
-        this.props.removeEvent(eventId);
-    };
 
     handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
         this.setState({data: {[name]: value}});
+    };
+
+    changeFormType = () => {
+        this.setState((prevState, props) => {
+            return {isEditorForm: !prevState.isEditorForm}
+        })
     };
 
     render() {
@@ -91,137 +62,11 @@ class ProfileForm extends React.Component {
 
         return (
             <div className={classes.root}>
-                <Paper>
-                    <Typography className={classes.cardHeading} variant="headline" component="h2">Профиль</Typography>
-                    {isCurrentUser ?
-                    <div>
-                        <div className={classes.fieldLine}>
-                            <TextField
-                                onChange={this.handleChange}
-                                type="text"
-                                label="Логин"
-                                name="username"
-                                value={this.state.data.username}
-                                error={!this.state.isValid.username}
-                            />
-                            <Typography variant="caption" color="error" className={classes.errors}>{this.state.errors.username}</Typography>
-                        </div>
-                        <div className={classes.fieldLine}>
-                            <TextField
-                                onChange={this.handleChange}
-                                type="password"
-                                label="Пароль"
-                                name="password"
-                                value={this.state.data.password}
-                                error={!this.state.isValid.password}
-                            />
-                            <Typography variant="caption" color="error" className={classes.errors}>{this.state.errors.password}</Typography>
-                            <TextField
-                                onChange={this.handleChange}
-                                type="password"
-                                label="Старый пароль"
-                                name="check_password"
-                                value={this.state.data.check_password}
-                                error={!this.state.isValid.check_password}
-                            />
-                            <Typography variant="caption" color="error" className={classes.errors}>{this.state.errors.check_password}</Typography>
-                        </div>
-                        <div className={classes.fieldLine}>
-                            <TextField
-                                onChange={this.handleChange}
-                                type="text"
-                                label="Имя"
-                                name="firstName"
-                                value={this.state.data.firstName}
-                                error={!this.state.isValid.firstName}
-                            />
-                            <Typography variant="caption" color="error" className={classes.errors}>{this.state.errors.firstName}</Typography>
-                        </div>
-                        <div className={classes.fieldLine}>
-                            <TextField
-                                onChange={this.handleChange}
-                                type="text"
-                                label="Фамилия"
-                                name="lastName"
-                                value={this.state.data.lastName}
-                                error={!this.state.isValid.lastName}
-                            />
-                            <Typography variant="caption" color="error" className={classes.errors}>{this.state.errors.lastName}</Typography>
-                        </div>
-                        <div>
-                            <TextField
-                                onChange={this.handleChange}
-                                type="text"
-                                label="Возраст"
-                                name="age"
-                                value={this.state.data.age}
-                                error={!this.state.isValid.age}
-                            />
-                            <Typography variant="caption" color="error" className={classes.errors}>{this.state.errors.lastName}</Typography>
-                        </div>
-                        {/*<div>*/}
-                        {/*<FormControl className={classes.formControl}>*/}
-                            {/*<InputLabel>Age</InputLabel>*/}
-                            {/*<Select*/}
-                                {/*value={this.state.age}*/}
-                                {/*onChange={this.handleChange}*/}
-                                {/*inputProps={{*/}
-                                    {/*name: 'age'*/}
-                                {/*}}*/}
-                            {/*>*/}
-                                {/*<MenuItem value=''>*/}
-                                    {/*<em>None</em>*/}
-                                {/*</MenuItem>*/}
-                                {/*<MenuItem value="male">Мужской</MenuItem>*/}
-                                {/*<MenuItem value="female">Женский</MenuItem>*/}
-                            {/*</Select>*/}
-                        {/*</FormControl>*/}
-                        {/*</div>*/}
-                    </div>
-                    :
-                    <div>
-                        It's not your pa9e!
-                    </div>
-                    }
-                </Paper>
-                <Paper>
-                    <Typography className={classes.cardHeading} variant="headline" component="h2">Пробежки</Typography>
-                    <Table className={classes.table}>
-                        <TableBody>
-                            {this.props.profileEvents.map(ev => {
-                                return (
-                                    <TableRow key={ev._id}>
-                                        <TableCell>{ev.title}</TableCell>
-                                        <TableCell>{(new Date(ev.date)).toDateString()}</TableCell>
-                                        <TableCell>
-                                            <Button
-                                                variant="raised"
-                                                color="primary"
-                                                type="submit"
-                                                onClick={() => this.toEvent(ev._id)}
-                                            >
-                                                На карте
-                                            </Button>
-                                        </TableCell>
-                                        {isCurrentUser &&
-                                        <TableCell>
-                                            <Button
-                                                variant="raised"
-                                                color="secondary"
-                                                type="submit"
-                                                onClick={() => this.unsubscribe(ev._id)}
-                                            >
-                                                Не пойду
-                                            </Button>
-                                        </TableCell>}
-                                    </TableRow>
-                                );
-                            })}
-                        </TableBody>
-                    </Table>
-                </Paper>
-
-
+                {this.state.isEditorForm ?
+                    <ProfileEditorForm data={this.props.profileData} changeFormType={this.changeFormType} username={this.props.match.params.username}/> :
+                    <ProfileStaticForm data={this.props.profileData} isCurrentUser={isCurrentUser} changeFormType={this.changeFormType}/>
+                }
+                <EventsTableForm isCurrentUser={isCurrentUser} history={this.props.history} username={this.props.match.params.username}/>
             </div>
         );
     }
@@ -237,8 +82,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     profileRequest: profileActions.profileRequest,
-    profileUpdate: profileActions.profileUpdate,
-    removeEvent: eventsActions.unsubscribeEvent
+    removeEvent: eventsActions.unsubscribeEventRequest
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(ProfileStyles)(ProfileForm));

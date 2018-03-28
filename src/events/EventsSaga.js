@@ -9,24 +9,42 @@ const xhr = new XHRProvider();
 
 function* unsubscribeSaga(action) {
     try {
+        yield call(console.log, 'id', action.id);
         const response = yield call(xhr.post, '/event/unsub', {
             id: action.id
         });
-        if (response.success) {
-            yield  put(actions.unsubscribeEventSuccess());
+        if (response.data.success) {
+            yield  put(actions.unsubscribeEventRequestSuccess());
             yield call(console.log, '+++++++++');
         } else {
-            yield put(actions.unsubscribeEventError('Извините, произошла ошибка. Попробуйте позже.'));
-            yield call(console.log, '---------');
+            yield put(actions.unsubscribeEventRequestError('Извините, произошла ошибка. Попробуйте позже.'));
         }
     } catch(err) {
-        yield put(actions.unsubscribeEventError('Извините, произошла ошибка. Попробуйте позже.'));
+        yield put(actions.unsubscribeEventRequestError('Извините, произошла ошибка. Попробуйте позже.'));
+        yield call(console.log, err);
+    }
+}
+
+function* subscribeSaga(action) {
+    try {
+        yield call(console.log, 'id', action.id);
+        const response = yield call(xhr.post, '/event/sub', {
+            id: action.id
+        });
+        if (response.data.success) {
+            yield  put(actions.subscribeEventRequestSuccess());
+        } else {
+            yield put(actions.subscribeEventRequestError('Извините, произошла ошибка. Попробуйте позже.'));
+        }
+    } catch(err) {
+        yield put(actions.unsubscribeEventRequestError('Извините, произошла ошибка. Попробуйте позже.'));
         yield call(console.log, err);
     }
 }
 
 export function* eventsRootSaga() {
     yield all([
-        yield takeLatest(types.UNSUBSCRIBE_EVENT, unsubscribeSaga),
+        yield takeLatest(types.UNSUBSCRIBE_EVENT_REQUEST, unsubscribeSaga),
+        yield takeLatest(types.SUBSCRIBE_EVENT_REQUEST, subscribeSaga),
     ]);
 }
