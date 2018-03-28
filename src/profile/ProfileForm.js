@@ -16,9 +16,6 @@ class ProfileForm extends React.Component {
         classes: PropTypes.object.isRequired,
         profileRequest: PropTypes.func.isRequired,
         profileUpdate: PropTypes.func.isRequired,
-
-        profileError: PropTypes.string.isRequired,
-        unsubscribeEventError: PropTypes.string.isRequired,
         profileData: PropTypes.object.isRequired,
         profileEvents: PropTypes.array.isRequired,
         currentUserUsername: PropTypes.string.isRequired
@@ -36,20 +33,6 @@ class ProfileForm extends React.Component {
         this.props.profileRequest(this.props.match.params.username);
     }
 
-    componentWillReceiveProps(nextProps) {
-        this.setState({data: {
-                ...nextProps.profileData
-            },})
-    }
-
-
-
-    handleChange = (e) => {
-        const name = e.target.name;
-        const value = e.target.value;
-        this.setState({data: {[name]: value}});
-    };
-
     changeFormType = () => {
         this.setState((prevState, props) => {
             return {isEditorForm: !prevState.isEditorForm}
@@ -66,23 +49,20 @@ class ProfileForm extends React.Component {
                     <ProfileEditorForm data={this.props.profileData} changeFormType={this.changeFormType} username={this.props.match.params.username}/> :
                     <ProfileStaticForm data={this.props.profileData} isCurrentUser={isCurrentUser} changeFormType={this.changeFormType}/>
                 }
-                <EventsTableForm isCurrentUser={isCurrentUser} history={this.props.history} username={this.props.match.params.username}/>
+                <EventsTableForm events={this.props.profileEvents} isCurrentUser={isCurrentUser} history={this.props.history}/>
             </div>
         );
     }
 }
 
 const mapStateToProps = state => ({
-    profileError: state.profile.error,
-    unsubscribeEventError: state.events.error,
     profileData: state.profile.data,
     profileEvents: state.profile.events,
     currentUserUsername: state.auth.username
 });
 
 const mapDispatchToProps = {
-    profileRequest: profileActions.profileRequest,
-    removeEvent: eventsActions.unsubscribeEventRequest
+    profileRequest: profileActions.profileRequest
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(ProfileStyles)(ProfileForm));

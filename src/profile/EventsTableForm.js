@@ -30,10 +30,6 @@ class EventsTableForm extends React.Component {
         isCurrentUser: PropTypes.bool.isRequired
     };
 
-    componentWillMount() {
-        this.props.profileRequest(this.props.username);
-    }
-
     toEvent = (eventId) => {
         this.props.history.push(`/event/${eventId}`);
     };
@@ -41,12 +37,10 @@ class EventsTableForm extends React.Component {
     subEvent = (eventId) => {
         this.props.subscribeEvent(eventId);
         this.props.profileRequest(this.props.username);
-
     };
 
     unsubEvent = (eventId) => {
         this.props.unsubscribeEvent(eventId);
-        this.forceUpdate()
     };
 
     formatDate = (date) => {
@@ -111,13 +105,9 @@ class EventsTableForm extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({
-    unsubscribeEventError: state.events.error,
-    events: state.profile.events
-});
+const mapStateToProps = state => ({});
 
 const mapDispatchToProps = {
-    profileRequest: profileActions.profileRequest,
     unsubscribeEvent: eventsActions.unsubscribeEventRequest,
     subscribeEvent: eventsActions.subscribeEventRequest
 };
