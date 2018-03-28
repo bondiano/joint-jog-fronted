@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { withStyles, Button, Hidden } from 'material-ui';
 import AddIcon from 'material-ui-icons/Add';
 
-import {EventStyles} from '../EventsStyles';
+import {EventStyles} from './EventsStyles';
 
 const NewEventButton = ({classes, toCreateNewEvent}) => {
 
@@ -18,17 +18,6 @@ const NewEventButton = ({classes, toCreateNewEvent}) => {
                     onClick={toCreateNewEvent}
                 >
                     <AddIcon/>
-                </Button>
-            </Hidden>
-            <Hidden smDown>
-                <Button 
-                    variant="raised" 
-                    color="primary" 
-                    aria-label="add" 
-                    className={classes.newEvent} 
-                    onClick={toCreateNewEvent}
-                >
-                    Новая пробежка
                 </Button>
             </Hidden>
         </Fragment>

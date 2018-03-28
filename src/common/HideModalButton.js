@@ -1,7 +1,7 @@
 import React, {Fragment} from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, Button, Hidden } from 'material-ui';
-import { AppStyles } from '../AppStyles';
+import { HideButtonStyles } from './CommonStyles';
 import KeyboardArrowLeft from 'material-ui-icons/KeyboardArrowLeft';
 import KeyboardArrowRight from 'material-ui-icons/KeyboardArrowRight';
 
@@ -40,4 +40,4 @@ HideModalButton.propTypes = {
     classes: PropTypes.object.isRequired
 };
 
-export default withStyles(AppStyles)(HideModalButton);
+export default withStyles(HideButtonStyles)(HideModalButton);

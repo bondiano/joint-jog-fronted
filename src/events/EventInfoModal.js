@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router-dom';
-import { createPortal } from 'react-dom';
 import { withStyles, Typography, Button } from 'material-ui';
 import { CircularProgress } from 'material-ui/Progress';
 import PropTypes from 'prop-types';
@@ -8,12 +7,12 @@ import PropTypes from 'prop-types';
 import ScrollArea from 'react-scrollbar';
 import Slide from 'material-ui/transitions/Slide';
 
+import ModalComponent from '../common/ModalComponent';
 import * as actions from './EventsActions';
 import * as mapActions from '../map/MapActions';
 
 import { EventInfoModalStyles } from './EventsStyles';
 import { connect } from 'react-redux';
-const modalRoot = document.getElementById('modal');
 
 class EventInfoModal extends Component {
     static propTypes ={
@@ -29,6 +28,7 @@ class EventInfoModal extends Component {
         subscribe: PropTypes.func.isRequired,
         unsubscribe: PropTypes.func.isRequired,
         fetchEvent: PropTypes.func.isRequired,
+        hideRoute: PropTypes.func.isRequired,
         showRoute: PropTypes.func.isRequired
     }
 
@@ -39,6 +39,7 @@ class EventInfoModal extends Component {
     componentDidMount() {
         const id = this.props.match.params.id;
         this.props.fetchEvent(id);
+        this.props.hideRoute();
     }
 
     loader = () => {
@@ -74,9 +75,9 @@ class EventInfoModal extends Component {
                 <Typography className={classes.heading} variant="headline" component="h2">
                     {event.title}
                 </Typography>
-                <Typography className={classes.textLine}>
+                {event.describe && <Typography className={classes.textLine}>
                     <b>Описание:</b> {event.describe}
-                </Typography>
+                </Typography>}
                 <Typography className={classes.textLine}>
                     <b>Создатель:</b> {event.owner}
                 </Typography>
@@ -108,8 +109,8 @@ class EventInfoModal extends Component {
 
     render() {
         const {classes, showEditor} = this.props;
-        return createPortal(
-            <aside className={classes.modal}>
+        return (
+            <ModalComponent>
                 <Slide direction="left" mountOnEnter unmountOnExit in={showEditor}>
                     <div className={classes.root}>
                         {this.props.isSending 
@@ -117,8 +118,7 @@ class EventInfoModal extends Component {
                             || !this.props.event.event ? this.loader() : this.content()}
                     </div>
                 </Slide>
-            </aside>,
-            modalRoot
+            </ModalComponent>
         );
     }
 }
@@ -134,7 +134,8 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
     subscribe: actions.subscribeEventRequest,
     unsubscribe: actions.unsubscribeEventRequest,
-    showRoute: mapActions.showRoute,    
+    showRoute: mapActions.showRoute,
+    hideRoute: mapActions.hideRoute,
     fetchEvent: actions.fetchEventRequest
 };
 

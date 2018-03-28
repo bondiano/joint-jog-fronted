@@ -4,8 +4,8 @@ import { Route, Switch, withRouter } from 'react-router-dom';
 import MapContainer from '../map/MapContainer';
 import EventCreateForm from './EventCreateForm';
 import EventEditForm from './EventEditForm';
-import EditorModal from './EditorModal';
-import HideModalButton from '../app/common/HideModalButton';
+import ModalComponent from '../common/ModalComponent';
+import HideModalButton from '../common/HideModalButton';
 
 class EditorContainer extends Component {
     constructor(props) {
@@ -27,12 +27,12 @@ class EditorContainer extends Component {
             <Fragment>
                 <MapContainer editorMode/>
                 <HideModalButton hideHandler={this.hideHandler} isHidden={!this.state.showModal}/>
-                <EditorModal>
+                <ModalComponent>
                     <Switch>
                         <Route exact path="/editor/create" render={() => <EventCreateForm showEditor={this.state.showModal}/>}/>
                         <Route path="/editor/:id" component={EventEditForm}/>
                     </Switch>
-                </EditorModal>
+                </ModalComponent>
             </Fragment>
         );
     }

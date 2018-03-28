@@ -102,6 +102,11 @@ export const map = (state = initialState, action) => {
                 ...state,
                 showRoute: true
             };
+        case types.HIDE_ROUTE:
+            return {
+                ...state,
+                showRoute: false
+            };
         case types.SET_EVENTS_POINT_ON_MAP:
             return {
                 ...state,

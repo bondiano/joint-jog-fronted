@@ -33,7 +33,6 @@ class ProfileForm extends React.Component {
 
     render() {
         const { classes } = this.props;
-        console.log(this.props.profileData);
         return (
             <div className={classes.root}>
                 <Typography >Профиль</Typography>

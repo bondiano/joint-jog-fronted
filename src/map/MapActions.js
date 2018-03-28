@@ -45,6 +45,10 @@ export const showRoute = () => ({
     type: types.SHOW_ROUTE
 });
 
+export const hideRoute = () => ({
+    type: types.HIDE_ROUTE
+});
+
 export const setEventsPointOnMap = (pointsList) => ({
     type: types.SET_EVENTS_POINT_ON_MAP,
     pointsList

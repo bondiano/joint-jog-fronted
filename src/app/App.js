@@ -6,8 +6,8 @@ import { withStyles } from 'material-ui';
 import { MuiThemeProvider } from 'material-ui/styles';
 import { connect } from 'react-redux';
 
-import Navbar from './common/Navbar';
-import PrivateRouter from './common/PrivateRouter';
+import Navbar from '../common/Navbar';
+import PrivateRouter from '../common/PrivateRouter';
 import RegisterForm from '../auth/RegisterForm';
 import LoginForm from "../auth/LoginForm";
 import EventContainer from '../events/EventsContainer';
@@ -64,6 +64,10 @@ class App extends React.Component {
     toProfile = () => {
         this.props.history.push(`/profile/${this.props.currentUserUsername}`);
     }
+    
+    toCreateNewEvent = () => {
+        this.props.history.push('/editor/create');
+    }
 
     logout = () => {
         this.props.logout();
@@ -78,6 +82,7 @@ class App extends React.Component {
                         toMap={this.toMap}
                         toLogin={this.toLogin}
                         toProfile={this.toProfile}
+                        toCreateNewEvent={this.toCreateNewEvent}
                         logout={this.logout}
                         isAuth={this.props.isAuth}
                         username={this.props.currentUserUsername}

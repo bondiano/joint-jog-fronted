@@ -27,11 +27,11 @@ export const EventInfoModalStyles = theme => ({
         overflowY: 'auto',
         flexDirection: 'column',
         backgroundColor: '#fff',
-        textAlign: 'center',
         boxShadow: '0px 8px 10px -5px rgba(0, 0, 0, 0.2), 0px 16px 24px 2px rgba(0, 0, 0, 0.14), 0px 6px 30px 5px rgba(0, 0, 0, 0.12)'
     },
     heading: {
-        margin: '16px 8px 8px 8px'
+        margin: '16px 8px 8px 8px',
+        textAlign: 'center'
     },
     textLine: {
         margin: '4px 8px 4px 8px'
