@@ -12,7 +12,8 @@ import RegisterForm from '../auth/RegisterForm';
 import LoginForm from "../auth/LoginForm";
 import EventContainer from '../events/EventsContainer';
 import EditorContainer from '../editor/EditorContainer';
-import ProfileForm from "../profile/ProfileForm";
+import CurrentUserProfile from "../profile/CurrentUserProfile";
+import ForeignUserProfile from "../profile/ForeignUserProfile";
 
 import * as authActions from '../auth/AuthActions';
 
@@ -87,7 +88,8 @@ class App extends React.Component {
                         <Route path="/login" component={LoginForm} />
                         <Route path="/register" component={RegisterForm} />
                         <PrivateRouter path="/editor" isAuth={this.state.isAuth} component={EditorContainer}/>
-                        <Route path="/profile/:username" component={ProfileForm} />
+                        <Route exact path="/profile" component={CurrentUserProfile} />
+                        <Route path="/profile/:username" component={ForeignUserProfile} />
                     </Switch>
                 </MuiThemeProvider>
             </div>

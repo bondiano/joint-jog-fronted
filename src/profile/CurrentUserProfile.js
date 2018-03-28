@@ -1,14 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Typography, Paper, withStyles, TextField, Button, InputLabel, Select, MenuItem, FormControl } from 'material-ui';
+import { withStyles } from 'material-ui';
 
 import * as profileActions from './ProfileActions';
-import * as eventsActions from '../events/EventsActions';
 import { ProfileStyles } from './ProfileStyles';
-import EventsTableForm from "./EventsTable";
-import ProfileStaticForm from "./ProfileInfo";
-import ProfileEditorForm from "./ProfileEditor";
+import EventsTable from "./EventsTable";
+import ProfileInfo from "./ProfileInfo";
+import ProfileEditor from "./ProfileEditor";
 
 class ProfileForm extends React.Component {
     static propTypes = {
@@ -16,7 +15,9 @@ class ProfileForm extends React.Component {
         classes: PropTypes.object.isRequired,
         profileData: PropTypes.object.isRequired,
         profileEvents: PropTypes.array.isRequired,
-        currentUserUsername: PropTypes.string.isRequired
+        currentUserUsername: PropTypes.string.isRequired,
+        profileDataRequest: PropTypes.func.isRequired,
+        profileEventsRequest: PropTypes.func.isRequired
     };
 
     constructor(props) {
@@ -28,43 +29,36 @@ class ProfileForm extends React.Component {
     }
 
     componentWillMount() {
-        this.props.profileRequest(this.props.match.params.username);
-    }
-
-    getData = () => {
-        this.props.profileRequest(this.props.match.params.username);
+        this.props.profileDataRequest(this.props.currentUserUsername);
+        this.props.profileEventsRequest(this.props.currentUserUsername);
     }
 
     changeFormType = () => {
         this.setState((prevState, props) => {
-            return {isEditor: !prevState.isEditor}
-        })
+            return {isEditor: !prevState.isEditor};
+        });
     };
 
     render() {
         const { classes } = this.props;
-        const isCurrentUser = this.props.match.params.username === this.props.currentUserUsername;
 
         return (
             <div className={classes.root}>
                 {this.state.isEditor ?
-                    <ProfileEditorForm
+                    <ProfileEditor
                         data={this.props.profileData}
                         changeFormType={this.changeFormType}
-                        username={this.props.match.params.username}
-                        getData={this.getData}
                     /> :
-                    <ProfileStaticForm
+                    <ProfileInfo
                         data={this.props.profileData}
-                        isCurrentUser={isCurrentUser}
+                        isCurrentUser={true}
                         changeFormType={this.changeFormType}
                     />
                 }
-                <EventsTableForm
+                <EventsTable
                     events={this.props.profileEvents}
-                    isCurrentUser={isCurrentUser}
+                    isCurrentUser={true}
                     history={this.props.history}
-                    getData={this.getData}
                 />
             </div>
         );
@@ -78,7 +72,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    profileRequest: profileActions.profileRequest
+    profileDataRequest: profileActions.profileDataRequest,
+    profileEventsRequest: profileActions.profileEventsRequest
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(ProfileStyles)(ProfileForm));

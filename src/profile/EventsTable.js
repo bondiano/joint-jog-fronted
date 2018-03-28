@@ -5,7 +5,6 @@ import { Typography, Paper, withStyles, Button } from 'material-ui';
 import Table, { TableBody, TableCell, TableRow } from 'material-ui/Table';
 
 import * as eventsActions from '../events/EventsActions';
-import * as profileActions from './ProfileActions';
 
 const styles = theme => ({
     root: {
@@ -21,13 +20,12 @@ const styles = theme => ({
     },
 });
 
-class EventsTableForm extends React.Component {
+class EventsTable extends React.Component {
     static propTypes = {
         unsubscribeEvent: PropTypes.func.isRequired,
         subscribeEvent: PropTypes.func.isRequired,
         events: PropTypes.array.isRequired,
-        isCurrentUser: PropTypes.bool.isRequired,
-        getData: PropTypes.func.isRequired
+        isCurrentUser: PropTypes.bool.isRequired
     };
 
     toEvent = (eventId) => {
@@ -112,5 +110,5 @@ const mapDispatchToProps = {
     subscribeEvent: eventsActions.subscribeEventRequest
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(EventsTableForm));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(EventsTable));
 

@@ -2,16 +2,21 @@ import * as types from './ProfileActionTypes';
 
 const initialState = {
     error: '',
-    data: {},
+    profile: {},
     events: []
 };
 
 export const profile = (state = initialState, action) => {
     switch (action.type) {
-        case types.PROFILE_REQUEST_SUCCESS:
+        case types.PROFILE_DATA_REQUEST_SUCCESS:
             return {
                 ...state,
-                data: action.data,
+                profile: action.profile,
+                error: ''
+            };
+        case types.PROFILE_EVENTS_REQUEST_SUCCESS:
+            return {
+                ...state,
                 events: action.events,
                 error: ''
             };

@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import { Typography, Paper, withStyles, Input, Button } from 'material-ui';
+import { Typography, Card, withStyles, Input, Button, TextField } from 'material-ui';
 
 import { vk, tw, fb } from '../assets';
 
@@ -26,64 +26,86 @@ const socialNetworks = {
     twitter: (url) => <a href={url}><img src={tw} alt="tw"/></a>
 };
 
-class ProfileStaticForm extends React.Component {
+class ProfileInfo extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
         data: PropTypes.object.isRequired,
         isCurrentUser: PropTypes.bool.isRequired,
-        changeFormType: PropTypes.func.isRequired,
+        changeFormType: PropTypes.func
     };
 
     render() {
         const {classes} = this.props;
-        console.log(this.props.data);
+        console.log(this.props.profile);
         return (
-            <Paper className={classes.root}>
+            <Card className={classes.root}>
                 <div>
                     <Typography className={classes.heading} variant="headline" component="h2">Профиль</Typography>
                 </div>
+
                 <div>
-                    <Input
-                        value={this.props.data.username}
+                    <TextField
+                        label={this.props.data.username}
+                        type="text"
+                        margin="normal"
                         disabled
                     />
-                    <Typography>Логин</Typography>
                 </div>
+
+                <div>
+                    <TextField
+                        label={this.props.data.firstName}
+                        type="text"
+                        margin="normal"
+                        disabled
+                    />
+                </div>
+
+                <div>
+                    <TextField
+                        label={this.props.data.lastName}
+                        type="text"
+                        margin="normal"
+                        disabled
+                    />
+                </div>
+
+
                 <div>
                     <Input
-                        value={this.props.data.firstName}
+                        defaultValue={this.props.profile.firstName}
                         disabled
                     />
                     <Typography>Имя</Typography>
                 </div>
                 <div>
                     <Input
-                        value={this.props.data.lastName}
+                        defaultValue={this.props.data.lastName}
                         disabled
                     />
                     <Typography>Фамилия</Typography>
                 </div>
                 <div>
                     {this.props.data.sex === 'female' && <Input
-                        value='женский'
+                        defaultValue='женский'
                         disabled
                     />}
                     {this.props.data.sex === 'male' && <Input
-                        value='мужской'
+                        defaultValue='мужской'
                         disabled
                     />}
                     <Typography>Пол</Typography>
                 </div>
                 <div>
                     <Input
-                        value={this.props.data.age}
+                        defaultValue={this.props.data.age}
                         disabled
                     />
                     <Typography>Возраст</Typography>
                 </div>
 
                 <div>
-                    {this.props.data.socialNetworks.map((sc) => socialNetworks[sc.type](sc.url))}
+                    {this.props.profile.socialNetworks && this.props.profile.socialNetworks.map((sc) => socialNetworks[sc.type](sc.url))}
                 </div>
 
 
@@ -99,12 +121,12 @@ class ProfileStaticForm extends React.Component {
                     </Button>
                 </div>}
 
-            </Paper>
+            </Card>
         );
     }
 }
 
 
-export default withStyles(styles)(ProfileStaticForm);
+export default withStyles(styles)(ProfileInfo);
 
 

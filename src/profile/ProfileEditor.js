@@ -25,13 +25,17 @@ const USERNAME_VALID_ERROR = 'Логин должен быть больше 4 и
 const EMAIL_VALID_ERROR = 'Неверный формат электронной почты.';
 const AGE_VALID_ERROR = 'Это поле должно содержать только цифры. Вы должны быть старше 11.';
 
+/*TODO
+переделать, чтобы через стор, а не через стэйт. когда останется время
+ */
+
+
 class ProfileEditorForm extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
         profileUpdate: PropTypes.func.isRequired,
         data: PropTypes.object.isRequired,
-        changeFormType: PropTypes.func.isRequired,
-        getData: PropTypes.func.isRequired
+        changeFormType: PropTypes.func
     };
 
     constructor(props) {
@@ -57,12 +61,12 @@ class ProfileEditorForm extends React.Component {
 
     componentWillMount() {
         this.setState({
-            username: this.props.data.username,
-            socialNetworks: this.props.data.socialNetworks,
-            firstName: this.props.data.firstName,
-            lastName: this.props.data.lastName,
-            age: this.props.data.age,
-            sex: this.props.data.sex,
+            username: this.props.profile.username,
+            socialNetworks: this.props.profile.socialNetworks,
+            firstName: this.props.profile.firstName,
+            lastName: this.props.profile.lastName,
+            age: this.props.profile.age,
+            sex: this.props.profile.sex,
         })
     }
 
@@ -81,7 +85,7 @@ class ProfileEditorForm extends React.Component {
             lastName: this.state.lastName,
             age: this.state.age,
             sex: this.state.sex,
-        }, this.props.getData);
+        });
 
     };
 
