@@ -9,11 +9,6 @@ import * as profileActions from './ProfileActions';
 const styles = theme => ({
     root: {
         marginTop: theme.spacing.unit * 3,
-        // overflowX: 'auto',
-        // display: 'flex',
-        // flexWrap: 'nowrap',
-        // justifyContent: 'center',
-        // flexDirection: 'column',
         alignItems: 'center',
         minWidth: 700,
     },
@@ -36,6 +31,7 @@ class ProfileEditorForm extends React.Component {
         profileUpdate: PropTypes.func.isRequired,
         data: PropTypes.object.isRequired,
         changeFormType: PropTypes.func.isRequired,
+        getData: PropTypes.func.isRequired
     };
 
     constructor(props) {
@@ -85,7 +81,7 @@ class ProfileEditorForm extends React.Component {
             lastName: this.state.lastName,
             age: this.state.age,
             sex: this.state.sex,
-        });
+        }, this.props.getData);
 
     };
 

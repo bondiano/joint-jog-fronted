@@ -25,9 +25,9 @@ class EventsTableForm extends React.Component {
     static propTypes = {
         unsubscribeEvent: PropTypes.func.isRequired,
         subscribeEvent: PropTypes.func.isRequired,
-        unsubscribeEventError: PropTypes.string.isRequired,
         events: PropTypes.array.isRequired,
-        isCurrentUser: PropTypes.bool.isRequired
+        isCurrentUser: PropTypes.bool.isRequired,
+        getData: PropTypes.func.isRequired
     };
 
     toEvent = (eventId) => {
@@ -36,11 +36,11 @@ class EventsTableForm extends React.Component {
 
     subEvent = (eventId) => {
         this.props.subscribeEvent(eventId);
-        this.props.profileRequest(this.props.username);
+
     };
 
     unsubEvent = (eventId) => {
-        this.props.unsubscribeEvent(eventId);
+        this.props.unsubscribeEvent(eventId, this.props.getData);
     };
 
     formatDate = (date) => {

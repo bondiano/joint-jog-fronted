@@ -14,8 +14,6 @@ class ProfileForm extends React.Component {
     static propTypes = {
         history: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired,
-        profileRequest: PropTypes.func.isRequired,
-        profileUpdate: PropTypes.func.isRequired,
         profileData: PropTypes.object.isRequired,
         profileEvents: PropTypes.array.isRequired,
         currentUserUsername: PropTypes.string.isRequired
@@ -33,6 +31,10 @@ class ProfileForm extends React.Component {
         this.props.profileRequest(this.props.match.params.username);
     }
 
+    getData = () => {
+        this.props.profileRequest(this.props.match.params.username);
+    }
+
     changeFormType = () => {
         this.setState((prevState, props) => {
             return {isEditorForm: !prevState.isEditorForm}
@@ -46,10 +48,24 @@ class ProfileForm extends React.Component {
         return (
             <div className={classes.root}>
                 {this.state.isEditorForm ?
-                    <ProfileEditorForm data={this.props.profileData} changeFormType={this.changeFormType} username={this.props.match.params.username}/> :
-                    <ProfileStaticForm data={this.props.profileData} isCurrentUser={isCurrentUser} changeFormType={this.changeFormType}/>
+                    <ProfileEditorForm
+                        data={this.props.profileData}
+                        changeFormType={this.changeFormType}
+                        username={this.props.match.params.username}
+                        getData={this.getData}
+                    /> :
+                    <ProfileStaticForm
+                        data={this.props.profileData}
+                        isCurrentUser={isCurrentUser}
+                        changeFormType={this.changeFormType}
+                    />
                 }
-                <EventsTableForm events={this.props.profileEvents} isCurrentUser={isCurrentUser} history={this.props.history}/>
+                <EventsTableForm
+                    events={this.props.profileEvents}
+                    isCurrentUser={isCurrentUser}
+                    history={this.props.history}
+                    getData={this.getData}
+                />
             </div>
         );
     }

@@ -15,7 +15,7 @@ function* unsubscribeSaga(action) {
         });
         if (response.data.success) {
             yield  put(actions.unsubscribeEventRequestSuccess());
-            yield call(console.log, '+++++++++');
+            yield action.getData();
         } else {
             yield put(actions.unsubscribeEventRequestError('Извините, произошла ошибка. Попробуйте позже.'));
         }

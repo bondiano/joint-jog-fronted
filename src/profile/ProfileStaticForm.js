@@ -20,6 +20,12 @@ const styles = theme => ({
     },
 });
 
+const socialNetworks = {
+    vk: (url) => <a href={url}><img src={vk} alt="vk"/></a>,
+    facebook: (url) => <a href={url}><img src={fb} alt="fb"/></a>,
+    twitter: (url) => <a href={url}><img src={tw} alt="tw"/></a>
+};
+
 class ProfileStaticForm extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
@@ -58,10 +64,14 @@ class ProfileStaticForm extends React.Component {
                     <Typography>Фамилия</Typography>
                 </div>
                 <div>
-                    <Input
-                        value={this.props.data.sex}
+                    {this.props.data.sex === 'female' && <Input
+                        value='женский'
                         disabled
-                    />
+                    />}
+                    {this.props.data.sex === 'male' && <Input
+                        value='мужской'
+                        disabled
+                    />}
                     <Typography>Пол</Typography>
                 </div>
                 <div>
@@ -72,18 +82,10 @@ class ProfileStaticForm extends React.Component {
                     <Typography>Возраст</Typography>
                 </div>
 
-                {/*<div>*/}
-                    {/*{this.props.data.socialNetworks.find(sc => sc.type === 'vk') &&*/}
-                    {/*<a href={this.props.data.socialNetworks.url}><img src={vk} alt="vk" className={classes.logo}/></a>}*/}
-                {/*</div>*/}
-                {/*<div>*/}
-                    {/*{this.props.data.socialNetworks.find(sc => sc.type === 'facebook') &&*/}
-                    {/*<a href={this.props.data.socialNetworks.url}><img src={vk} alt="fb" className={classes.logo}/></a>}*/}
-                {/*</div>*/}
-                {/*<div>*/}
-                    {/*{this.props.data.socialNetworks.find(sc => sc.type === 'twitter') &&*/}
-                    {/*<a href={this.props.data.socialNetworks.url}><img src={vk} alt="tw" className={classes.logo}/></a>}*/}
-                {/*</div>*/}
+                <div>
+                    {this.props.data.socialNetworks.map((sc) => socialNetworks[sc.type](sc.url))}
+                </div>
+
 
                 {this.props.isCurrentUser && <div>
                     <Button

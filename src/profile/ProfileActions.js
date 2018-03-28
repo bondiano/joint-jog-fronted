@@ -16,9 +16,10 @@ export const profileRequestError = (error) => ({
     error
 });
 
-export const profileUpdate = (data) => ({
+export const profileUpdate = (data, getData) => ({
     type: types.PROFILE_UPDATE,
-    data
+    data,
+    getData
 });
 
 export const profileUpdateSuccess = () => ({

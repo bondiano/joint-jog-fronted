@@ -1,8 +1,9 @@
 import * as types from './EventsActionTypes';
 
-export const unsubscribeEventRequest = (id) => ({
+export const unsubscribeEventRequest = (id, getData) => ({
     type: types.UNSUBSCRIBE_EVENT_REQUEST,
-    id
+    id,
+    getData
 });
 
 export const unsubscribeEventRequestSuccess = () => ({
