@@ -2,21 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types'
 import { Typography, Card, withStyles, CardContent, CardActions, CardHeader, Avatar, IconButton } from 'material-ui';
 
+import { ProfileStyles } from './ProfileStyles';
 import {vk, tw, fb, setIcon} from '../assets';
-
-const styles = theme => ({
-    root: {
-        minWidth: 300,
-    },
-    buttonLine:{
-        margin: 16
-    },
-    icon: {
-        marginTop: 10,
-        marginLeft: 10
-    },
-
-});
 
 const socialNetworks = {
     vk: (url) => <a href={url}><img src={vk} alt="vk"/></a>,
@@ -37,10 +24,10 @@ class ProfileInfo extends React.Component {
         const {classes} = this.props;
         console.log(this.props.data);
         return (
-            <Card className={classes.root}>
+            <Card className={classes.rootInfo}>
                 <CardHeader
                     avatar={
-                        <Avatar className={classes.avatar}>
+                        <Avatar>
                             {!!this.props.data.firstName && this.props.data.firstName.charAt(0)}
                         </Avatar>
                     }
@@ -49,17 +36,17 @@ class ProfileInfo extends React.Component {
                             <img src={setIcon} alt="Edit" />
                         </IconButton>
                     }
-                    title={`${this.props.data.firstName} ${this.props.data.lastName}`}
+                    title={`${!!this.props.data.firstName ? this.props.data.firstName : ''} ${!!this.props.data.lastName ? this.props.data.lastName : ''}`}
                     subheader={this.props.data.username}
                 />
                 <CardContent>
-                    <Typography><b>Возраст:</b> {this.props.data.age}</Typography>
+                    {this.props.data.age && <Typography><b>Возраст:</b> {this.props.data.age}</Typography>}
                     {this.props.data.sex === 'female' && <Typography><b>Пол:</b> женский</Typography>}
                     {this.props.data.sex === 'male' && <Typography><b>Пол:</b> мужской</Typography>}
                 </CardContent>
-                <CardActions className={classes.actions} disableActionSpacing>
+                <CardActions disableActionSpacing>
                     <div>
-                        {!this.props.isSending && this.props.data.socialNetworks && this.props.data.socialNetworks.map((sc) => socialNetworks[sc.type](sc.url))}
+                        {!this.props.isSending && this.props.data.socialNetworks && (() => this.props.data.socialNetworks.map((sc) => socialNetworks[sc.type](sc.url)))}
                     </div>
                 </CardActions>
 
@@ -71,6 +58,6 @@ class ProfileInfo extends React.Component {
 }
 
 
-export default withStyles(styles)(ProfileInfo);
+export default withStyles(ProfileStyles)(ProfileInfo);
 
 

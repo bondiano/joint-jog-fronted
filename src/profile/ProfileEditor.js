@@ -4,22 +4,8 @@ import { connect } from 'react-redux';
 import { Typography, Paper, withStyles, TextField, Button, InputLabel, Select, MenuItem, FormControl, FormLabel, FormControlLabel, FormHelperText } from 'material-ui';
 import Radio, { RadioGroup } from 'material-ui/Radio';
 
+import { ProfileStyles } from './ProfileStyles';
 import * as profileActions from './ProfileActions';
-
-const styles = theme => ({
-    root: {
-        marginTop: theme.spacing.unit * 3,
-        alignItems: 'center',
-        minWidth: 700,
-    },
-    cardHeading: {
-        margin: 8
-    },
-    fieldLine: {
-        margin: 8
-    },
-
-});
 
 const USERNAME_VALID_ERROR = 'Логин должен быть больше 4 и меньше 16 символов.';
 const EMAIL_VALID_ERROR = 'Неверный формат электронной почты.';
@@ -28,7 +14,6 @@ const AGE_VALID_ERROR = 'Это поле должно содержать тол�
 /*TODO
 переделать, чтобы через стор, а не через стэйт. когда останется время
  */
-
 
 class ProfileEditorForm extends React.Component {
     static propTypes = {
@@ -45,7 +30,7 @@ class ProfileEditorForm extends React.Component {
         this.state = {
             username: '',
             email: '',
-            socialNetworks: '',
+            socialNetworks: [],
             firstName: '',
             lastName: '',
             age: '',
@@ -81,9 +66,11 @@ class ProfileEditorForm extends React.Component {
     handleChangeSocial = (e) => {
         const name = e.target.name;
         const value = e.target.value;
+        value.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm) &&
         this.setState((prevState, props) => {
            return {socialNetworks: prevState.socialNetworks.push({type: name, url: value})};
         });
+        console.log(this.state.socialNetworks);
     };
 
     updateData = () => {
@@ -132,7 +119,7 @@ class ProfileEditorForm extends React.Component {
     render() {
         const { classes } = this.props;
         return (
-            <Paper  className={classes.root}>
+            <Paper  className={classes.rootEditor}>
                 <Typography className={classes.heading} variant="headline" component="h2">Профиль</Typography>
 
                 <div className={classes.fieldLine}>
@@ -200,38 +187,38 @@ class ProfileEditorForm extends React.Component {
                     </RadioGroup>
                 </FormControl>
 
-                {/*<div className={classes.fieldLine}>*/}
-                    {/*<TextField*/}
-                        {/*onBlur={this.handleChangeSocial}*/}
-                        {/*type="text"*/}
-                        {/*label="Вы в VK(ссылка):"*/}
-                        {/*name="vk"*/}
-                        {/*value={this.state.socialNetworks.find(sc => sc.type === 'vk') &&*/}
-                        {/*this.state.socialNetworks.find(sc => sc.type === 'vk').url}*/}
-                    {/*/>*/}
-                {/*</div>*/}
+                <div className={classes.fieldLine}>
+                    <TextField
+                        onBlur={this.handleChangeSocial}
+                        type="text"
+                        label="Вы в VK(ссылка):"
+                        name="vk"
+                        value={(() => this.state.socialNetworks.filter(sc => sc.type === 'vk'))[0] &&
+                        (() => this.state.socialNetworks.filter(sc => sc.type === 'vk'))[0].url}
+                    />
+                </div>
 
-                {/*<div className={classes.fieldLine}>*/}
-                    {/*<TextField*/}
-                        {/*onBlur={this.handleChangeSocial}*/}
-                        {/*type="text"*/}
-                        {/*label="Вы в facebook(ссылка):"*/}
-                        {/*name="facebook"*/}
-                        {/*value={this.state.socialNetworks.find(sc => sc.type === 'facebook') &&*/}
-                        {/*this.state.socialNetworks.find(sc => sc.type === 'facebook').url}*/}
-                    {/*/>*/}
-                {/*</div>*/}
+                <div className={classes.fieldLine}>
+                    <TextField
+                        onBlur={this.handleChangeSocial}
+                        type="text"
+                        label="Вы в facebook(ссылка):"
+                        name="facebook"
+                        value={(() => this.state.socialNetworks.filter(sc => sc.type === 'facebook'))[0] &&
+                        (() => this.state.socialNetworks.filter(sc => sc.type === 'facebook'))[0].url}
+                    />
+                </div>
 
-                {/*<div className={classes.fieldLine}>*/}
-                    {/*<TextField*/}
-                        {/*onBlur={this.handleChangeSocial}*/}
-                        {/*type="text"*/}
-                        {/*label="Вы в VK(ссылка):"*/}
-                        {/*name="twitter"*/}
-                        {/*value={this.state.socialNetworks.find(sc => sc.type === 'twitter') &&*/}
-                        {/*this.state.socialNetworks.find(sc => sc.type === 'twitter').url}*/}
-                    {/*/>*/}
-                {/*</div>*/}
+                <div className={classes.fieldLine}>
+                    <TextField
+                        onBlur={this.handleChangeSocial}
+                        type="text"
+                        label="Вы в twitter(ссылка):"
+                        name="twitter"
+                        value={(() => this.state.socialNetworks.find(sc => sc.type === 'twitter')) &&
+                        (() => this.state.socialNetworks.find(sc => sc.type === 'twitter')).url}
+                    />
+                </div>
 
                 <Button
                     variant="raised"
@@ -265,5 +252,5 @@ const mapDispatchToProps = {
     profileUpdate: profileActions.profileUpdate
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ProfileEditorForm));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(ProfileStyles)(ProfileEditorForm));
 

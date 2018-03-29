@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router-dom';
-import { withStyles, Typography, Button } from 'material-ui';
+import { withStyles, Typography, Button, Chip } from 'material-ui';
 import { CircularProgress } from 'material-ui/Progress';
 import PropTypes from 'prop-types';
 
@@ -67,6 +67,10 @@ class EventInfoModal extends Component {
         this.props.showRoute();
     };
 
+    toProfile = (username) => {
+        this.props.history.push(`/profile/${username}`);
+    }
+
     content = () => {
         const {classes, event: {event}} = this.props;
         const usernames = this.props.event.usernames.map(user => user.username);
@@ -79,7 +83,7 @@ class EventInfoModal extends Component {
                     <b>Описание:</b> {event.describe}
                 </Typography>}
                 <Typography className={classes.textLine}>
-                    <b>Создатель:</b> {event.owner}
+                    <b>Создатель:</b> <Chip label={event.owner} onClick={() => this.toProfile(event.owner)}/>
                 </Typography>
                 <Typography className={classes.textLine}>
                     <b>Дата и время:</b> {new Date(event.date).toLocaleString('ru')}
@@ -89,7 +93,7 @@ class EventInfoModal extends Component {
                 </Typography>
                 {usernames.map((username, index) => (
                     <Typography className={classes.textLine} key={index}>
-                        <b>{index + 1}.</b> {username}
+                        <b>{index + 1}.</b> <Chip label={username} onClick={() => this.toProfile(username)}/>
                     </Typography>
                 ))}
                 <div className={classes.wrapButton}>
