@@ -51,21 +51,21 @@ function* fetchEventsSaga() {
             yield put(actions.fetchEventsSuccess(response.data.payload));
             const pointsList =  response.data.payload.reduce((acc, event) => {
                 if (!event.points.length) {
-                        return acc;
+                    return acc;
                 }
                 return [...acc, ({
-                     id: event._id,
-                     title: event.title,
-                     latitude: event.points[0].latitude,
-                     longitude: event.points[0].longitude
+                    id: event._id,
+                    title: event.title,
+                    latitude: event.points[0].latitude,
+                    longitude: event.points[0].longitude
                 })];
             }, []);
             yield put(mapActions.setEventsPointOnMap(pointsList));
         } else {
-            yield put(actions.fetchEventsError('Извините, произошла ошибка. Попробуйте позже.'));              
+            yield put(actions.fetchEventsError('Извините, произошла ошибка. Попробуйте позже.'));
         }
     } catch(err) {
-        yield put(actions.fetchEventsError('Извините, произошла ошибка. Попробуйте позже.'));  
+        yield put(actions.fetchEventsError('Извините, произошла ошибка. Попробуйте позже.'));
     }
 }
 
@@ -76,10 +76,10 @@ function* fetchEventSaga(action) {
             yield put(actions.fetchEventSuccess(response.data.payload));
             yield put(mapActions.setCurrentEventPoints(response.data.payload.event.points));
         } else {
-            yield put(actions.fetchEventError('Извините, произошла ошибка. Попробуйте позже.'));              
+            yield put(actions.fetchEventError('Извините, произошла ошибка. Попробуйте позже.'));
         }
     } catch(err) {
-        yield put(actions.fetchEventError('Извините, произошла ошибка. Попробуйте позже.'));  
+        yield put(actions.fetchEventError('Извините, произошла ошибка. Попробуйте позже.'));
     }
 }
 
