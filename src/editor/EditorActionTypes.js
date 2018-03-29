@@ -1,3 +1,9 @@
 export const CREATE_NEW_EVENT_REQUEST = '@@editor/CREATE_NEW_EVENT_REQUEST';
 export const CREATE_NEW_EVENT_SUCCESS = '@@editor/CREATE_NEW_EVENT_SUCCESS';
 export const CREATE_NEW_EVENT_ERROR = '@@editor/CREATE_NEW_EVENT_ERROR';
+export const EDIT_EVENT_REQUEST = '@@editor/EDIT_EVENT_REQUEST';
+export const EDIT_EVENT_SUCCESS = '@@editor/EDIT_EVENT_SUCCESS';
+export const EDIT_EVENT_ERROR = '@@editor/EDIT_EVENT_ERROR';
+export const FETCH_EVENT_REQUEST = '@@editor/FETCH_EVENT_REQUEST';
+export const FETCH_EVENT_SUCCESS = '@@editor/FETCH_EVENT_SUCCESS';
+export const FETCH_EVENT_ERROR = '@@editor/FETCH_EVENT_ERROR';
