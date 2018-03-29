@@ -33,6 +33,7 @@ const AGE_VALID_ERROR = 'Это поле должно содержать тол�
 class ProfileEditorForm extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
+        history: PropTypes.object.isRequired,
         profileUpdate: PropTypes.func.isRequired,
         data: PropTypes.object.isRequired,
         changeFormType: PropTypes.func
@@ -67,7 +68,7 @@ class ProfileEditorForm extends React.Component {
             lastName: this.props.data.lastName,
             age: this.props.data.age,
             sex: this.props.data.sex,
-        })
+        });
     }
 
     handleChange = (e) => {
@@ -75,6 +76,14 @@ class ProfileEditorForm extends React.Component {
         const value = e.target.value;
         this.setState({[name]: value},
             () => { this.validateField(name, value); });
+    };
+
+    handleChangeSocial = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        this.setState((prevState, props) => {
+           return {socialNetworks: prevState.socialNetworks.push({type: name, url: value})};
+        });
     };
 
     updateData = () => {
@@ -86,6 +95,7 @@ class ProfileEditorForm extends React.Component {
             age: this.state.age,
             sex: this.state.sex,
         });
+        this.props.changeFormType();
 
     };
 
@@ -189,6 +199,39 @@ class ProfileEditorForm extends React.Component {
                         <FormControlLabel value="male" control={<Radio />} label="Мужской" />
                     </RadioGroup>
                 </FormControl>
+
+                {/*<div className={classes.fieldLine}>*/}
+                    {/*<TextField*/}
+                        {/*onBlur={this.handleChangeSocial}*/}
+                        {/*type="text"*/}
+                        {/*label="Вы в VK(ссылка):"*/}
+                        {/*name="vk"*/}
+                        {/*value={this.state.socialNetworks.find(sc => sc.type === 'vk') &&*/}
+                        {/*this.state.socialNetworks.find(sc => sc.type === 'vk').url}*/}
+                    {/*/>*/}
+                {/*</div>*/}
+
+                {/*<div className={classes.fieldLine}>*/}
+                    {/*<TextField*/}
+                        {/*onBlur={this.handleChangeSocial}*/}
+                        {/*type="text"*/}
+                        {/*label="Вы в facebook(ссылка):"*/}
+                        {/*name="facebook"*/}
+                        {/*value={this.state.socialNetworks.find(sc => sc.type === 'facebook') &&*/}
+                        {/*this.state.socialNetworks.find(sc => sc.type === 'facebook').url}*/}
+                    {/*/>*/}
+                {/*</div>*/}
+
+                {/*<div className={classes.fieldLine}>*/}
+                    {/*<TextField*/}
+                        {/*onBlur={this.handleChangeSocial}*/}
+                        {/*type="text"*/}
+                        {/*label="Вы в VK(ссылка):"*/}
+                        {/*name="twitter"*/}
+                        {/*value={this.state.socialNetworks.find(sc => sc.type === 'twitter') &&*/}
+                        {/*this.state.socialNetworks.find(sc => sc.type === 'twitter').url}*/}
+                    {/*/>*/}
+                {/*</div>*/}
 
                 <Button
                     variant="raised"

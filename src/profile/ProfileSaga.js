@@ -42,6 +42,7 @@ function* profileUpdateSaga(action) {
         });
         if (response.data.success) {
             yield put(actions.profileUpdateSuccess());
+            yield put(actions.profileDataRequest(action.profile.username));
         } else {
             yield put(actions.profileUpdateError('Извините, произошла ошибка. Попробуйте позже.'));
         }
@@ -55,6 +56,6 @@ export function* profileRootSaga() {
     yield all([
         yield takeLatest(types.PROFILE_DATA_REQUEST, profileDataRequestSaga),
         yield takeLatest(types.PROFILE_EVENTS_REQUEST, profileEventsRequestSaga),
-        yield takeLatest(types.PROFILE_UPDATE, profileUpdateSaga)
+        yield takeLatest(types.PROFILE_UPDATE_REQUEST, profileUpdateSaga)
     ]);
 }

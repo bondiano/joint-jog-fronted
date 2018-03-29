@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import { withRouter } from 'react-router-dom';
 
-import HideModalButton from '../app/common/HideModalButton';
+import HideModalButton from '../common/HideModalButton';
 import MapContainer from '../map/MapContainer';
 import EventInfoModal from './EventInfoModal';
 

@@ -25,6 +25,7 @@ class EventsTable extends React.Component {
         unsubscribeEvent: PropTypes.func.isRequired,
         subscribeEvent: PropTypes.func.isRequired,
         events: PropTypes.array.isRequired,
+        username: PropTypes.string,
         isCurrentUser: PropTypes.bool.isRequired
     };
 
@@ -38,7 +39,7 @@ class EventsTable extends React.Component {
     };
 
     unsubEvent = (eventId) => {
-        this.props.unsubscribeEvent(eventId, this.props.getData);
+        this.props.unsubscribeEvent(eventId, null, this.props.username);
     };
 
     formatDate = (date) => {

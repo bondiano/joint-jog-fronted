@@ -12,6 +12,7 @@ class ProfileForm extends React.Component {
     static propTypes = {
         history: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired,
+        isSending: PropTypes.bool.isRequired,
         profileData: PropTypes.object.isRequired,
         profileEvents: PropTypes.array.isRequired,
         currentUserUsername: PropTypes.string.isRequired,
@@ -34,6 +35,7 @@ class ProfileForm extends React.Component {
                 <ProfileInfo
                     data={this.props.profileData}
                     isCurrentUser={false}
+                    isSending={this.props.isSending}
                 />
                 <EventsTable
                     events={this.props.profileEvents}
@@ -48,6 +50,7 @@ class ProfileForm extends React.Component {
 const mapStateToProps = state => ({
     profileData: state.profile.profile,
     profileEvents: state.profile.events,
+    isSending: state.profile.isSending,
     currentUserUsername: state.auth.username
 });
 

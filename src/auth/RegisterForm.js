@@ -52,10 +52,6 @@ class RegisterForm extends React.Component {
             () => { this.validateField(name, value); });
     }
 
-    toLogin = () => {
-        this.props.history.push('/login');
-    }
-
     validateField(fieldName, value) {
         let fieldValidErrors = this.state.errors;
         let usernameValid = this.state.usernameValid;
@@ -145,16 +141,6 @@ class RegisterForm extends React.Component {
                         disabled={!this.state.formValid || this.props.isSending}
                     >
                         Зарегистрироваться
-                    </Button>
-
-                    <Button 
-                        variant="raised" 
-                        color="secondary" 
-                        onClick={this.toLogin} 
-                        className={classes.buttonLine}
-                        disabled={this.props.isSending}                        
-                    >
-                        Войти
                     </Button>
                 </form>
                 </Card>

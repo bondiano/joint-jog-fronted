@@ -1,12 +1,11 @@
 import React, {Component, Fragment} from 'react';
 import { Route, Switch, withRouter } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 import MapContainer from '../map/MapContainer';
 import EventCreateForm from './EventCreateForm';
 import EventEditForm from './EventEditForm';
-import EditorModal from './EditorModal';
-import HideEditorButton from './common/HideEditorButton';
+import ModalComponent from '../common/ModalComponent';
+import HideModalButton from '../common/HideModalButton';
 
 class EditorContainer extends Component {
     constructor(props) {
@@ -27,22 +26,16 @@ class EditorContainer extends Component {
         return(
             <Fragment>
                 <MapContainer editorMode/>
-                <HideEditorButton hideHandler={this.hideHandler} isHidden={!this.state.showModal}/>
-                <EditorModal>
+                <HideModalButton hideHandler={this.hideHandler} isHidden={!this.state.showModal}/>
+                <ModalComponent>
                     <Switch>
                         <Route exact path="/editor/create" render={() => <EventCreateForm showEditor={this.state.showModal}/>}/>
                         <Route path="/editor/:id" component={EventEditForm}/>
                     </Switch>
-                </EditorModal>
+                </ModalComponent>
             </Fragment>
         );
     }
 }
 
-const mapStateToProps = (state) => ({
-});
-
-const mapDispatchToProps = {
-};
-
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(EditorContainer));
+export default withRouter(EditorContainer);

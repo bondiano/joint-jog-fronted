@@ -1,7 +1,8 @@
 import purple from 'material-ui/colors/purple';
 export const AuthStyles = theme => ({
     container: {
-        textAlign: 'center'
+        textAlign: 'center',
+        minWidth: 300
     },
     cardHeading: {
         margin: 8

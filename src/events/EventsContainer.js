@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import MapContainer from '../map/MapContainer';
-import NewEventButton from './common/NewEventButton';
+import NewEventButton from './NewEventButton';
 
 class EventsContainer extends Component {
     static propTypes = {

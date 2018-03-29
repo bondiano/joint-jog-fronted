@@ -94,7 +94,7 @@ class MapContainer extends Component {
     }
 
     hideRoute() {
-        this.mapControl.geoObjects.remove(this.route);
+        this.mapControl && this.mapControl.geoObjects.remove(this.route);
     }
     
     addMapEventListeners() {

@@ -12,7 +12,7 @@ export const profileEventsRequest = (username) => ({
 
 export const profileDataRequestSuccess = (profile) => ({
     type: types.PROFILE_DATA_REQUEST_SUCCESS,
-    profile: profile
+    profile
 });
 
 export const profileEventsRequestSuccess = (events) => ({
@@ -26,16 +26,16 @@ export const profileRequestError = (error) => ({
 });
 
 export const profileUpdate = (profile) => ({
-    type: types.PROFILE_UPDATE,
-    profile: profile
+    type: types.PROFILE_UPDATE_REQUEST,
+    profile
 });
 
 export const profileUpdateSuccess = () => ({
-    type: types.PROFILE_UPDATE_SUCCESS,
+    type: types.PROFILE_UPDATE_REQUEST_SUCCESS,
 });
 
 export const profileUpdateError = (error) => ({
-    type: types.PROFILE_UPDATE_ERROR,
+    type: types.PROFILE_UPDATE_REQUEST_ERROR,
     error
 });
 

@@ -27,6 +27,7 @@ const socialNetworks = {
 class ProfileInfo extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
+        isSending: PropTypes.bool.isRequired,
         data: PropTypes.object.isRequired,
         isCurrentUser: PropTypes.bool.isRequired,
         changeFormType: PropTypes.func
@@ -57,20 +58,12 @@ class ProfileInfo extends React.Component {
                     {this.props.data.sex === 'male' && <Typography><b>Пол:</b> мужской</Typography>}
                 </CardContent>
                 <CardActions className={classes.actions} disableActionSpacing>
-                    <IconButton aria-label="vk">
-
-                    </IconButton>
-                    <IconButton aria-label="fb">
-
-                    </IconButton>
-                    <IconButton aria-label="tw">
-
-                    </IconButton>
+                    <div>
+                        {!this.props.isSending && this.props.data.socialNetworks && this.props.data.socialNetworks.map((sc) => socialNetworks[sc.type](sc.url))}
+                    </div>
                 </CardActions>
 
-                {/*<div>*/}
-                    {/*{this.props.data.socialNetworks && this.props.data.socialNetworks.map((sc) => socialNetworks[sc.type](sc.url))}*/}
-                {/*</div>*/}
+
 
             </Card>
         );

@@ -13,12 +13,14 @@ const initialState = {
     pointsList: [
     /**
      * {
+            id:,
             latitude:,
             longitude:,
             title:
      * }
      */
     ],
+    currentEventPointsList: [],
     editorPointsList: [],
     showRoute: false
 };
@@ -99,6 +101,21 @@ export const map = (state = initialState, action) => {
             return {
                 ...state,
                 showRoute: true
+            };
+        case types.HIDE_ROUTE:
+            return {
+                ...state,
+                showRoute: false
+            };
+        case types.SET_EVENTS_POINT_ON_MAP:
+            return {
+                ...state,
+                pointsList: action.pointsList
+            };
+        case types.SET_CURRENT_EVENT_POINTS:
+            return {
+                ...state,
+                currentEventPointsList: action.pointsList
             };
         default:
             return state;
