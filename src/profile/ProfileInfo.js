@@ -1,23 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types'
-import { Typography, Card, withStyles, Input, Button, TextField } from 'material-ui';
+import { Typography, Card, withStyles, CardContent, CardActions, CardHeader, Avatar, IconButton } from 'material-ui';
 
-import { vk, tw, fb } from '../assets';
+import {vk, tw, fb, setIcon} from '../assets';
 
 const styles = theme => ({
     root: {
-        marginTop: theme.spacing.unit * 3,
-        // overflowX: 'auto',
-        display: 'flex',
-        //flexWrap: 'nowrap',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        alignItems: 'center',
-        minWidth: 700,
+        minWidth: 300,
     },
     buttonLine:{
         margin: 16
     },
+    icon: {
+        marginTop: 10,
+        marginLeft: 10
+    },
+
 });
 
 const socialNetworks = {
@@ -36,90 +34,43 @@ class ProfileInfo extends React.Component {
 
     render() {
         const {classes} = this.props;
-        console.log(this.props.profile);
+        console.log(this.props.data);
         return (
             <Card className={classes.root}>
-                <div>
-                    <Typography className={classes.heading} variant="headline" component="h2">Профиль</Typography>
-                </div>
+                <CardHeader
+                    avatar={
+                        <Avatar className={classes.avatar}>
+                            {!!this.props.data.firstName && this.props.data.firstName.charAt(0)}
+                        </Avatar>
+                    }
+                    action={
+                        <IconButton className={classes.icon} onClick={this.props.changeFormType}>
+                            <img src={setIcon} alt="Edit" />
+                        </IconButton>
+                    }
+                    title={`${this.props.data.firstName} ${this.props.data.lastName}`}
+                    subheader={this.props.data.username}
+                />
+                <CardContent>
+                    <Typography><b>Возраст:</b> {this.props.data.age}</Typography>
+                    {this.props.data.sex === 'female' && <Typography><b>Пол:</b> женский</Typography>}
+                    {this.props.data.sex === 'male' && <Typography><b>Пол:</b> мужской</Typography>}
+                </CardContent>
+                <CardActions className={classes.actions} disableActionSpacing>
+                    <IconButton aria-label="vk">
 
-                <div>
-                    <TextField
-                        label={this.props.data.username}
-                        type="text"
-                        margin="normal"
-                        disabled
-                    />
-                </div>
+                    </IconButton>
+                    <IconButton aria-label="fb">
 
-                <div>
-                    <TextField
-                        label={this.props.data.firstName}
-                        type="text"
-                        margin="normal"
-                        disabled
-                    />
-                </div>
+                    </IconButton>
+                    <IconButton aria-label="tw">
 
-                <div>
-                    <TextField
-                        label={this.props.data.lastName}
-                        type="text"
-                        margin="normal"
-                        disabled
-                    />
-                </div>
+                    </IconButton>
+                </CardActions>
 
-
-                <div>
-                    <Input
-                        defaultValue={this.props.profile.firstName}
-                        disabled
-                    />
-                    <Typography>Имя</Typography>
-                </div>
-                <div>
-                    <Input
-                        defaultValue={this.props.data.lastName}
-                        disabled
-                    />
-                    <Typography>Фамилия</Typography>
-                </div>
-                <div>
-                    {this.props.data.sex === 'female' && <Input
-                        defaultValue='женский'
-                        disabled
-                    />}
-                    {this.props.data.sex === 'male' && <Input
-                        defaultValue='мужской'
-                        disabled
-                    />}
-                    <Typography>Пол</Typography>
-                </div>
-                <div>
-                    <Input
-                        defaultValue={this.props.data.age}
-                        disabled
-                    />
-                    <Typography>Возраст</Typography>
-                </div>
-
-                <div>
-                    {this.props.profile.socialNetworks && this.props.profile.socialNetworks.map((sc) => socialNetworks[sc.type](sc.url))}
-                </div>
-
-
-                {this.props.isCurrentUser && <div>
-                    <Button
-                        variant="raised"
-                        color="primary"
-                        type="submit"
-                        className={classes.buttonLine}
-                        onClick={this.props.changeFormType}
-                    >
-                        Редактировать
-                    </Button>
-                </div>}
+                {/*<div>*/}
+                    {/*{this.props.data.socialNetworks && this.props.data.socialNetworks.map((sc) => socialNetworks[sc.type](sc.url))}*/}
+                {/*</div>*/}
 
             </Card>
         );

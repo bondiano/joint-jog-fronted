@@ -61,12 +61,12 @@ class ProfileEditorForm extends React.Component {
 
     componentWillMount() {
         this.setState({
-            username: this.props.profile.username,
-            socialNetworks: this.props.profile.socialNetworks,
-            firstName: this.props.profile.firstName,
-            lastName: this.props.profile.lastName,
-            age: this.props.profile.age,
-            sex: this.props.profile.sex,
+            username: this.props.data.username,
+            socialNetworks: this.props.data.socialNetworks,
+            firstName: this.props.data.firstName,
+            lastName: this.props.data.lastName,
+            age: this.props.data.age,
+            sex: this.props.data.sex,
         })
     }
 

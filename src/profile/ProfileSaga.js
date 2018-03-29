@@ -10,8 +10,8 @@ const xhr = new XHRProvider();
 function* profileDataRequestSaga(action) {
     try {
         const response = yield call(xhr.get, `/user/profile/${action.username}`, true);
-        if (response.profile.success) {
-            yield put(actions.profileDataRequestSuccess(response.profile.payload.user_info));
+        if (response.data.success) {
+            yield put(actions.profileDataRequestSuccess(response.data.payload.user_info));
         } else {
             yield put(actions.profileRequestError('Извините, произошла ошибка. Попробуйте позже.'));
         }
@@ -24,8 +24,8 @@ function* profileDataRequestSaga(action) {
 function* profileEventsRequestSaga(action) {
     try {
         const response = yield call(xhr.get, `/user/profile/${action.username}`, true);
-        if (response.profile.success) {
-            yield put(actions.profileEventsRequestSuccess(response.profile.payload.events));
+        if (response.data.success) {
+            yield put(actions.profileEventsRequestSuccess(response.data.payload.events));
         } else {
             yield put(actions.profileRequestError('Извините, произошла ошибка. Попробуйте позже.'));
         }
@@ -40,9 +40,8 @@ function* profileUpdateSaga(action) {
         const response = yield call(xhr.patch, '/user/profile', {
             ...action.profile
         });
-        if (response.profile.success) {
-            const currentUser = yield call(xhr.get, '/user/profile');
-            yield put(actions.profileUpdateSuccess(currentUser.profile.payload.user_info, currentUser.profile.payload.events));
+        if (response.data.success) {
+            yield put(actions.profileUpdateSuccess());
         } else {
             yield put(actions.profileUpdateError('Извините, произошла ошибка. Попробуйте позже.'));
         }
