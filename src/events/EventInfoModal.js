@@ -92,17 +92,18 @@ class EventInfoModal extends Component {
                         <b>{index + 1}.</b> {username}
                     </Typography>
                 ))}
-                <Button color="primary" className={classes.button} onClick={this.showRoute}>
-                    {event.points.length > 1 ? 'Показать маршрут' : 'Показать точку старта'}
-                </Button>
-                {this.props.isAuth && usernames.includes(this.props.username) ? 
-                    <Button color="secondary" variant="raised" className={classes.button} onClick={this.unsubscribe}>
-                        Не пойду
+                <div className={classes.wrapButton}>
+                    <Button color="primary" className={classes.button} onClick={this.showRoute}>
+                        {event.points.length > 1 ? 'Показать маршрут' : 'Показать точку старта'}
                     </Button>
-                : <Button color="primary" variant="raised" className={classes.button} onClick={this.subscribe}>
-                    Тоже пойду
-                </Button>}
-                
+                    {this.props.isAuth && (usernames.includes(this.props.username) ? 
+                        <Button color="secondary" variant="raised" className={classes.button} onClick={this.unsubscribe}>
+                            Не пойду
+                        </Button>
+                    : <Button color="primary" variant="raised" className={classes.button} onClick={this.subscribe}>
+                        Тоже пойду
+                    </Button>)}
+                </div>
             </ScrollArea>
         );
     }

@@ -46,5 +46,9 @@ export const EventInfoModalStyles = theme => ({
     },
     button: {
         margin: 4
+    },
+    wrapButton: {
+        display: 'flex',
+        justifyContent: 'space-between'
     }
 });
