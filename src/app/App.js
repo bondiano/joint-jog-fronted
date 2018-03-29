@@ -62,7 +62,7 @@ class App extends React.Component {
     }
 
     toProfile = () => {
-        this.props.history.push(`/profile/${this.props.currentUserUsername}`);
+        this.props.history.push(`/profile`);
     }
     
     toCreateNewEvent = () => {
