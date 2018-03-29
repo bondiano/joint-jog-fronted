@@ -12,13 +12,14 @@ import RegisterForm from '../auth/RegisterForm';
 import LoginForm from "../auth/LoginForm";
 import EventContainer from '../events/EventsContainer';
 import EditorContainer from '../editor/EditorContainer';
-import CurrentUserProfile from "../profile/CurrentUserProfile";
-import ForeignUserProfile from "../profile/ForeignUserProfile";
+import EventInfoComponent from '../events/EventInfoComponent';
 
 import * as authActions from '../auth/AuthActions';
 
 import theme from '../theme';
 import {AppStyles} from './AppStyles';
+import CurrentUserProfile from "../profile/CurrentUserProfile";
+import ForeignUserProfile from "../profile/ForeignUserProfile";
 
 class App extends React.Component {
     static propTypes = {
@@ -62,7 +63,7 @@ class App extends React.Component {
     }
 
     toProfile = () => {
-        this.props.history.push(`/profile`);
+        this.props.history.push(`/profile/${this.props.currentUserUsername}`);
     }
     
     toCreateNewEvent = () => {
@@ -89,11 +90,12 @@ class App extends React.Component {
                     />
                     <Switch>
                         <Route exact path="/" component={EventContainer} />
-                        <Route path="/events" component={EventContainer} />                   
+                        <Route path="/events" component={EventContainer} />
+                        <Route path="/event/:id" component={EventInfoComponent} />                                   
                         <Route path="/login" component={LoginForm} />
                         <Route path="/register" component={RegisterForm} />
-                        <PrivateRouter path="/editor" isAuth={this.state.isAuth} component={EditorContainer}/>
-                        <Route exact path="/profile" component={CurrentUserProfile} />
+                        <PrivateRouter path="/editor" isAuth={this.state.isAuth} component={EditorContainer} />
+                        <Route exact path="/profile/" component={CurrentUserProfile} />
                         <Route path="/profile/:username" component={ForeignUserProfile} />
                     </Switch>
                 </MuiThemeProvider>
