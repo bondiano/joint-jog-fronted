@@ -1,28 +1,14 @@
 {
-    "short_name": "Joint Jog",
-    "name": "Joint Jog app",
-    "start_url": ".",
+    "short_name": "Join Jog",
+    "name": "Join Jog app",
+    "start_url": "index.html",
     "display": "standalone",
     "theme_color": "#3f51b5",
     "background_color": "#ffffff",
     "version_name": "0.1 beta",
-    "icons": [
-      {
-        "src": "logo.png",
-        "sizes": "512x512",
-        "type": "image/png"
-      },
-      {
-        "src": "logo192.png",
-        "sizes": "192x192",
-        "type": "image/png"
-      },
-      {
-        "src": "favicon.ico",
-        "sizes": "64x64 32x32 24x24 16x16",
-        "type": "image/x-icon"
-      }
-    ],
+    "icons": [{
+      "192": "logo192.png"
+    }],
     "web_accessible_resources": ["logo.png"],
     "default_locale": "ru",
     "lang": "ru-RU"

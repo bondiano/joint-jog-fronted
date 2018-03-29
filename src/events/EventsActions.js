@@ -1,9 +1,10 @@
 import * as types from './EventsActionTypes';
 
-export const unsubscribeEventRequest = (id, history) => ({
+export const unsubscribeEventRequest = (id, history, username) => ({
     type: types.UNSUBSCRIBE_EVENT_REQUEST,
     id,
-    history
+    history,
+    username
 });
 
 export const unsubscribeEventSuccess = () => ({
@@ -58,3 +59,6 @@ export const fetchEventError = (error) => ({
     type: types.FETCH_EVENT_ERROR,
     error
 });
+
+
+

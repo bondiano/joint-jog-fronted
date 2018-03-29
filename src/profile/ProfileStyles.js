@@ -13,12 +13,16 @@ export const ProfileStyles = theme => ({
     },
     root: {
         display: 'flex',
-        flexWrap: 'wrap',
+        flexWrap: 'nowrap',
         listStyle: 'none',
         justifyContent: 'center',
         flexDirection: 'column',
         height: '100%',
-        alignItems: 'center   '
+        overflowX: 'auto',
+        alignItems: 'center'
+    },
+    table: {
+        minWidth: 700,
     },
     error: {
         color: 'red',

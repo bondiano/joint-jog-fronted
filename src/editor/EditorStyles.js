@@ -50,6 +50,12 @@ export const CreateEventFormStyles = theme => ({
         alignItems: 'center',
         flexDirection: 'column'
     },
+    hideButton: {
+        position: 'absolute',
+        bottom: '25px',
+        left: '25px',
+        zIndex: 5        
+    },
     pointEdit: {
         display: 'flex',
         width: '100%',
