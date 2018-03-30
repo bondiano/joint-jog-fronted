@@ -58,3 +58,7 @@ export const setCurrentEventPoints = (pointsList) => ({
     type: types.SET_CURRENT_EVENT_POINTS,
     pointsList
 });
+
+export const editCurrentPoints = () => ({
+    type: types.EDIT_CURRENT_POINTS,
+});

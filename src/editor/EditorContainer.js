@@ -30,7 +30,7 @@ class EditorContainer extends Component {
                 <ModalComponent>
                     <Switch>
                         <Route exact path="/editor/create" render={() => <EventCreateForm showEditor={this.state.showModal}/>}/>
-                        <Route path="/editor/:id" component={EventEditForm}/>
+                        <Route path="/editor/:id" render={() => <EventEditForm showEditor={this.state.showModal}/>}/>
                     </Switch>
                 </ModalComponent>
             </Fragment>

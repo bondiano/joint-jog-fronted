@@ -21,7 +21,7 @@ class EventInfoModal extends Component {
         event: PropTypes.object.isRequired,
         isAuth: PropTypes.bool.isRequired,
         username: PropTypes.string.isRequired,
-        isSending: PropTypes.bool.isRequired,
+        isLoading: PropTypes.bool.isRequired,
         history: PropTypes.object.isRequired,
         match: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired,
@@ -51,21 +51,26 @@ class EventInfoModal extends Component {
                 </Typography>
             </div>
         );
-    }
+    };
 
     subscribe = () => {
-        const id = this.props.match.params.id;        
+        const id = this.props.match.params.id; 
         this.props.subscribe(id, this.props.history);
-    }
+    };
 
     unsubscribe = () => {
-        const id = this.props.match.params.id;        
+        const id = this.props.match.params.id;    
         this.props.unsubscribe(id, this.props.history);
     }
 
     showRoute = () => {
         this.props.showRoute();
     };
+
+    toEditor = () => {
+        const id = this.props.match.params.id;        
+        this.props.history.push(`/editor/${id}`);
+    }
 
     content = () => {
         const {classes, event: {event}} = this.props;
@@ -104,6 +109,10 @@ class EventInfoModal extends Component {
                         Тоже пойду
                     </Button>)}
                 </div>
+                {this.props.isAuth && this.props.username === event.owner
+                && <Button color="secondary" className={classes.button} onClick={this.toEditor}>
+                    Редактировать
+                </Button>}
             </ScrollArea>
         );
     }
@@ -114,7 +123,7 @@ class EventInfoModal extends Component {
             <ModalComponent>
                 <Slide direction="left" mountOnEnter unmountOnExit in={showEditor}>
                     <div className={classes.root}>
-                        {this.props.isSending 
+                        {this.props.isLoading 
                             || this.props.error 
                             || !this.props.event.event ? this.loader() : this.content()}
                     </div>
@@ -125,7 +134,7 @@ class EventInfoModal extends Component {
 }
 
 const mapStateToProps = (state) => ({
-    isSending: state.events.isSending,
+    isLoading: state.events.isLoading,
     event: state.events.currentEvent,
     error: state.events.error,
     isAuth: state.auth.isAuth,

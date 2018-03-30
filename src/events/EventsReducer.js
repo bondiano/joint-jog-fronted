@@ -1,7 +1,7 @@
 import * as types from './EventsActionTypes';
 
 const initialState = {
-    isSending: false,
+    isLoading: false,
     events: [],
     currentEvent: {},
     error: ''
@@ -24,14 +24,14 @@ export const events = (state = initialState, action) => {
         case types.FETCH_EVENT_REQUEST:
             return {
                 ...state,
-                isSending: true
+                isLoading: true
             };
         case types.FETCH_EVENT_SUCCESS:
             return {
                 ...state,
                 error: '',
                 currentEvent: action.event,
-                isSending: false
+                isLoading: false
             };
         case types.FETCH_EVENT_ERROR:
         case types.FETCH_EVENTS_ERROR:
@@ -40,7 +40,7 @@ export const events = (state = initialState, action) => {
             return {
                 ...state,
                 error: action.error,
-                isSending: false
+                isLoading: false
             };
         default:
             return state;
