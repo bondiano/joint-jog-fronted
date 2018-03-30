@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import { withRouter } from 'react-router-dom';
-import { withStyles, Typography, Button } from 'material-ui';
+import { withStyles, Typography, Button, Chip } from 'material-ui';
 import { CircularProgress } from 'material-ui/Progress';
 import PropTypes from 'prop-types';
 
@@ -54,12 +54,12 @@ class EventInfoModal extends Component {
     };
 
     subscribe = () => {
-        const id = this.props.match.params.id; 
+        const id = this.props.match.params.id;
         this.props.subscribe(id, this.props.history);
     };
 
     unsubscribe = () => {
-        const id = this.props.match.params.id;    
+        const id = this.props.match.params.id;
         this.props.unsubscribe(id, this.props.history);
     }
 
@@ -68,8 +68,12 @@ class EventInfoModal extends Component {
     };
 
     toEditor = () => {
-        const id = this.props.match.params.id;        
+        const id = this.props.match.params.id;
         this.props.history.push(`/editor/${id}`);
+    }
+
+    toProfile = (username) => {
+        this.props.history.push(`/profile/${username}`);
     }
 
     content = () => {
@@ -84,7 +88,7 @@ class EventInfoModal extends Component {
                     <b>Описание:</b> {event.describe}
                 </Typography>}
                 <Typography className={classes.textLine}>
-                    <b>Создатель:</b> {event.owner}
+                    <b>Создатель:</b> <Chip label={event.owner} onClick={() => this.toProfile(event.owner)} component="span"/>
                 </Typography>
                 <Typography className={classes.textLine}>
                     <b>Дата и время:</b> {new Date(event.date).toLocaleString('ru')}
@@ -94,7 +98,7 @@ class EventInfoModal extends Component {
                 </Typography>
                 {usernames.map((username, index) => (
                     <Typography className={classes.textLine} key={index}>
-                        <b>{index + 1}.</b> {username}
+                        <b>{index + 1}.</b> <Chip label={username} onClick={() => this.toProfile(username)} component="span"/>
                     </Typography>
                 ))}
                 <div className={classes.wrapButton}>
