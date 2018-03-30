@@ -22,13 +22,12 @@ class ProfileInfo extends React.Component {
 
     render() {
         const {classes} = this.props;
-        console.log(this.props.data);
         return (
             <Card className={classes.rootInfo}>
                 <CardHeader
                     avatar={
                         <Avatar>
-                            {!!this.props.data.firstName && this.props.data.firstName.charAt(0)}
+                            {this.props.data.username && this.props.data.username.charAt(0)}
                         </Avatar>
                     }
                     action={

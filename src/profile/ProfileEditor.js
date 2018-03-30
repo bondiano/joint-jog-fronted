@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Typography, Paper, withStyles, TextField, Button, InputLabel, Select, MenuItem, FormControl, FormLabel, FormControlLabel, FormHelperText } from 'material-ui';
+import { Typography, Paper, withStyles, TextField, Button, FormControl, FormLabel, FormControlLabel } from 'material-ui';
 import Radio, { RadioGroup } from 'material-ui/Radio';
 
 import { ProfileStyles } from './ProfileStyles';
@@ -10,6 +10,7 @@ import * as profileActions from './ProfileActions';
 const USERNAME_VALID_ERROR = 'Логин должен быть больше 4 и меньше 16 символов.';
 const EMAIL_VALID_ERROR = 'Неверный формат электронной почты.';
 const AGE_VALID_ERROR = 'Это поле должно содержать только цифры. Вы должны быть старше 11.';
+const SOCIAL_VALID_ERROR = 'Введите корректный адрес вашей страницы.';
 
 class ProfileEditorForm extends React.Component {
     static propTypes = {
@@ -34,7 +35,8 @@ class ProfileEditorForm extends React.Component {
             isValid: {
                 username: true,
                 email: true,
-                age: true
+                age: true,
+                social: true
             },
             iValidForm: true,
             isEditorForm: false
@@ -59,19 +61,26 @@ class ProfileEditorForm extends React.Component {
             () => { this.validateField(name, value); });
     };
 
-    // handleChangeSocial = (e) => {
-    //     const name = e.target.name;
-    //     const value = e.target.value;
-    //     value.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm) &&
-    //     this.setState((prevState, props) => {
-    //         if (this.state.socialNetworks.filter(sc => sc.type === name)[0]) {
-    //             (this.state.socialNetworks.filter(sc => sc.type === name)[0]).url = value;
-    //         } else {
-    //             return {socialNetworks: prevState.socialNetworks.push({type: name, url: value})};
-    //         }
-    //     });
-    //     console.log(this.state.socialNetworks);
-    // };
+    handleChangeSocial = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        let socialValid = value.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm) || value === '';
+
+        if (socialValid && value !== '') {
+            this.setState((prevState, props) => {
+                if (this.state.socialNetworks.find(sc => sc.type === name)) {
+                    (this.state.socialNetworks.find(sc => sc.type === name)).url = value;
+                } else {
+                    return {socialNetworks: [...prevState.socialNetworks,{type: name, url: value}]};
+                }
+            });
+        }
+
+        this.setState({isValid: {
+                ...this.state.isValid,
+                social: socialValid
+            }}, this.validateForm);
+    };
 
     updateData = () => {
         this.props.profileUpdate({
@@ -93,19 +102,20 @@ class ProfileEditorForm extends React.Component {
 
         switch(fieldName) {
             case 'email':
-                emailValid = (value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) || value == false);
+                emailValid = (value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) || value === '');
                 break;
             case 'username':
                 usernameValid = (value.length >= 4) && (value.length <= 16);
                 break;
             case 'age':
-                ageValid = +value > 11;
+                ageValid = (+value > 11) || value === '';
                 break;
             default:
                 break;
         }
 
         this.setState({isValid: {
+                ...this.state.isValid,
                 username: usernameValid,
                 email: emailValid,
                 age: ageValid
@@ -113,7 +123,7 @@ class ProfileEditorForm extends React.Component {
     }
 
     validateForm() {
-        this.setState({isValidForm: this.state.isValid.username && this.state.isValid.email && this.state.isValid.age});
+        this.setState({isValidForm: this.state.isValid.username && this.state.isValid.email && this.state.isValid.age && this.state.isValid.social});
     }
 
     render() {
@@ -187,38 +197,40 @@ class ProfileEditorForm extends React.Component {
                     </RadioGroup>
                 </FormControl>
 
-                {/*<div className={classes.fieldLine}>*/}
-                    {/*<TextField*/}
-                        {/*onBlur={this.handleChangeSocial}*/}
-                        {/*type="text"*/}
-                        {/*label="Вы в VK(ссылка):"*/}
-                        {/*name="vk"*/}
-                        {/*value={(() => this.state.socialNetworks.filter(sc => sc.type === 'vk'))[0] &&*/}
-                        {/*(() => this.state.socialNetworks.filter(sc => sc.type === 'vk'))[0].url}*/}
-                    {/*/>*/}
-                {/*</div>*/}
+                <div className={classes.fieldLine}>
+                    <TextField
+                        onBlur={this.handleChangeSocial}
+                        type="text"
+                        label="Вы в VK(ссылка):"
+                        name="vk"
+                        value={(() => this.state.socialNetworks.find(sc => sc.type === 'vk')) &&
+                        (() => this.state.socialNetworks.find(sc => sc.type === 'vk')).url}
+                    />
+                </div>
 
-                {/*<div className={classes.fieldLine}>*/}
-                    {/*<TextField*/}
-                        {/*onBlur={this.handleChangeSocial}*/}
-                        {/*type="text"*/}
-                        {/*label="Вы в facebook(ссылка):"*/}
-                        {/*name="facebook"*/}
-                        {/*value={(() => this.state.socialNetworks.filter(sc => sc.type === 'facebook'))[0] &&*/}
-                        {/*(() => this.state.socialNetworks.filter(sc => sc.type === 'facebook'))[0].url}*/}
-                    {/*/>*/}
-                {/*</div>*/}
+                <div className={classes.fieldLine}>
+                    <TextField
+                        onBlur={this.handleChangeSocial}
+                        type="text"
+                        label="Вы в facebook(ссылка):"
+                        name="facebook"
+                        value={(() => this.state.socialNetworks.find(sc => sc.type === 'facebook')) &&
+                        (() => this.state.socialNetworks.find(sc => sc.type === 'facebook')).url}
+                    />
+                </div>
 
-                {/*<div className={classes.fieldLine}>*/}
-                    {/*<TextField*/}
-                        {/*onBlur={this.handleChangeSocial}*/}
-                        {/*type="text"*/}
-                        {/*label="Вы в twitter(ссылка):"*/}
-                        {/*name="twitter"*/}
-                        {/*value={(() => this.state.socialNetworks.find(sc => sc.type === 'twitter')) &&*/}
-                        {/*(() => this.state.socialNetworks.find(sc => sc.type === 'twitter')).url}*/}
-                    {/*/>*/}
-                {/*</div>*/}
+                <div className={classes.fieldLine}>
+                    <TextField
+                        onBlur={this.handleChangeSocial}
+                        type="text"
+                        label="Вы в twitter(ссылка):"
+                        name="twitter"
+                        value={(() => this.state.socialNetworks.find(sc => sc.type === 'twitter')) &&
+                        (() => this.state.socialNetworks.find(sc => sc.type === 'twitter')).url}
+                    />
+                </div>
+
+                <Typography variant="caption" color="error">{!this.state.isValid.social && SOCIAL_VALID_ERROR}</Typography>
 
                 <Button
                     variant="raised"

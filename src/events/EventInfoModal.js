@@ -94,7 +94,7 @@ class EventInfoModal extends Component {
                     <b>Дата и время:</b> {new Date(event.date).toLocaleString('ru')}
                 </Typography>
                 <Typography className={classes.heading}>
-                    <b>Также пойдут:</b>
+                    <b>Участники:</b>
                 </Typography>
                 {usernames.map((username, index) => (
                     <Typography className={classes.textLine} key={index}>

@@ -38,6 +38,7 @@ function* profileEventsRequestSaga(action) {
 
 function* profileUpdateSaga(action) {
     try {
+        console.log(action.profile);
         const response = yield call(xhr.patch, '/user/profile', {
             ...action.profile
         });

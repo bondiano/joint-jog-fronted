@@ -38,4 +38,7 @@ export const ProfileStyles = theme => ({
         marginBottom: theme.spacing.unit * 3,
         textAlign: 'center',
     },
+    fabProgress: {
+        marginTop: 90,
+    }
 });
