@@ -11,10 +11,6 @@ const USERNAME_VALID_ERROR = 'Логин должен быть больше 4 и
 const EMAIL_VALID_ERROR = 'Неверный формат электронной почты.';
 const AGE_VALID_ERROR = 'Это поле должно содержать только цифры. Вы должны быть старше 11.';
 
-/*TODO
-переделать, чтобы через стор, а не через стэйт. когда останется время
- */
-
 class ProfileEditorForm extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
@@ -63,15 +59,19 @@ class ProfileEditorForm extends React.Component {
             () => { this.validateField(name, value); });
     };
 
-    handleChangeSocial = (e) => {
-        const name = e.target.name;
-        const value = e.target.value;
-        value.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm) &&
-        this.setState((prevState, props) => {
-           return {socialNetworks: prevState.socialNetworks.push({type: name, url: value})};
-        });
-        console.log(this.state.socialNetworks);
-    };
+    // handleChangeSocial = (e) => {
+    //     const name = e.target.name;
+    //     const value = e.target.value;
+    //     value.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm) &&
+    //     this.setState((prevState, props) => {
+    //         if (this.state.socialNetworks.filter(sc => sc.type === name)[0]) {
+    //             (this.state.socialNetworks.filter(sc => sc.type === name)[0]).url = value;
+    //         } else {
+    //             return {socialNetworks: prevState.socialNetworks.push({type: name, url: value})};
+    //         }
+    //     });
+    //     console.log(this.state.socialNetworks);
+    // };
 
     updateData = () => {
         this.props.profileUpdate({
@@ -93,7 +93,7 @@ class ProfileEditorForm extends React.Component {
 
         switch(fieldName) {
             case 'email':
-                emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+                emailValid = (value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) || value == false);
                 break;
             case 'username':
                 usernameValid = (value.length >= 4) && (value.length <= 16);
@@ -113,7 +113,7 @@ class ProfileEditorForm extends React.Component {
     }
 
     validateForm() {
-        this.setState({iValidForm: this.state.isValid.username && this.state.isValid.email && this.state.isValid.age});
+        this.setState({isValidForm: this.state.isValid.username && this.state.isValid.email && this.state.isValid.age});
     }
 
     render() {
@@ -187,38 +187,38 @@ class ProfileEditorForm extends React.Component {
                     </RadioGroup>
                 </FormControl>
 
-                <div className={classes.fieldLine}>
-                    <TextField
-                        onBlur={this.handleChangeSocial}
-                        type="text"
-                        label="Вы в VK(ссылка):"
-                        name="vk"
-                        value={(() => this.state.socialNetworks.filter(sc => sc.type === 'vk'))[0] &&
-                        (() => this.state.socialNetworks.filter(sc => sc.type === 'vk'))[0].url}
-                    />
-                </div>
+                {/*<div className={classes.fieldLine}>*/}
+                    {/*<TextField*/}
+                        {/*onBlur={this.handleChangeSocial}*/}
+                        {/*type="text"*/}
+                        {/*label="Вы в VK(ссылка):"*/}
+                        {/*name="vk"*/}
+                        {/*value={(() => this.state.socialNetworks.filter(sc => sc.type === 'vk'))[0] &&*/}
+                        {/*(() => this.state.socialNetworks.filter(sc => sc.type === 'vk'))[0].url}*/}
+                    {/*/>*/}
+                {/*</div>*/}
 
-                <div className={classes.fieldLine}>
-                    <TextField
-                        onBlur={this.handleChangeSocial}
-                        type="text"
-                        label="Вы в facebook(ссылка):"
-                        name="facebook"
-                        value={(() => this.state.socialNetworks.filter(sc => sc.type === 'facebook'))[0] &&
-                        (() => this.state.socialNetworks.filter(sc => sc.type === 'facebook'))[0].url}
-                    />
-                </div>
+                {/*<div className={classes.fieldLine}>*/}
+                    {/*<TextField*/}
+                        {/*onBlur={this.handleChangeSocial}*/}
+                        {/*type="text"*/}
+                        {/*label="Вы в facebook(ссылка):"*/}
+                        {/*name="facebook"*/}
+                        {/*value={(() => this.state.socialNetworks.filter(sc => sc.type === 'facebook'))[0] &&*/}
+                        {/*(() => this.state.socialNetworks.filter(sc => sc.type === 'facebook'))[0].url}*/}
+                    {/*/>*/}
+                {/*</div>*/}
 
-                <div className={classes.fieldLine}>
-                    <TextField
-                        onBlur={this.handleChangeSocial}
-                        type="text"
-                        label="Вы в twitter(ссылка):"
-                        name="twitter"
-                        value={(() => this.state.socialNetworks.find(sc => sc.type === 'twitter')) &&
-                        (() => this.state.socialNetworks.find(sc => sc.type === 'twitter')).url}
-                    />
-                </div>
+                {/*<div className={classes.fieldLine}>*/}
+                    {/*<TextField*/}
+                        {/*onBlur={this.handleChangeSocial}*/}
+                        {/*type="text"*/}
+                        {/*label="Вы в twitter(ссылка):"*/}
+                        {/*name="twitter"*/}
+                        {/*value={(() => this.state.socialNetworks.find(sc => sc.type === 'twitter')) &&*/}
+                        {/*(() => this.state.socialNetworks.find(sc => sc.type === 'twitter')).url}*/}
+                    {/*/>*/}
+                {/*</div>*/}
 
                 <Button
                     variant="raised"
@@ -234,6 +234,7 @@ class ProfileEditorForm extends React.Component {
                     color="primary"
                     onClick={this.updateData}
                     className={classes.buttonLine}
+                    disabled={!this.state.isValidForm}
                 >
                     Сохранить
                 </Button>

@@ -1,15 +1,27 @@
 export const ProfileStyles = theme => ({
-    container: {
-        textAlign: 'center'
+    root: {
+        display: 'flex',
+        flexWrap: 'nowrap',
+        flexDirection: 'column',
+        height: '100%',
+        overflowX: 'auto',
+        alignItems: 'center'
     },
-    cardHeading: {
-        margin: 8
+    rootEditor: {
+        marginTop: 90,
+        textAlign: 'center',
+        minWidth: 250,
+    },
+    rootInfo: {
+        marginTop: 90,
+        minWidth: 250,
+    },
+    heading: {
+        margin: 8,
+        align: 'center'
     },
     fieldLine: {
         margin: 8
-    },
-    rootInfo: {
-        minWidth: 300,
     },
     buttonLine:{
         margin: 16
@@ -18,36 +30,12 @@ export const ProfileStyles = theme => ({
         marginTop: 10,
         marginLeft: 10
     },
-    rootEditor: {
-        marginTop: theme.spacing.unit * 3,
-        alignItems: 'center',
-        minWidth: 300,
-    },
-    root: {
-        display: 'flex',
-        flexWrap: 'nowrap',
-        listStyle: 'none',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        height: '100%',
-        overflowX: 'auto',
-        alignItems: 'center'
-    },
-    table: {
-        minWidth: 700,
-    },
     error: {
         color: 'red',
     },
     rootTable: {
         marginTop: theme.spacing.unit * 3,
-        display: 'flex',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        alignItems: 'center',
-        minWidth: 700,
-    },
-    heading: {
-        margin: 8
+        marginBottom: theme.spacing.unit * 3,
+        textAlign: 'center',
     },
 });

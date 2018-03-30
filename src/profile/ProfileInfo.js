@@ -46,7 +46,7 @@ class ProfileInfo extends React.Component {
                 </CardContent>
                 <CardActions disableActionSpacing>
                     <div>
-                        {!this.props.isSending && this.props.data.socialNetworks && (() => this.props.data.socialNetworks.map((sc) => socialNetworks[sc.type](sc.url)))}
+                        {/*{!this.props.isSending && this.props.data.socialNetworks && (() => this.props.data.socialNetworks.map((sc) => socialNetworks[sc.type](sc.url)))}*/}
                     </div>
                 </CardActions>
 

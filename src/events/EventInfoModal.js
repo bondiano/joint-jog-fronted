@@ -83,7 +83,7 @@ class EventInfoModal extends Component {
                     <b>Описание:</b> {event.describe}
                 </Typography>}
                 <Typography className={classes.textLine}>
-                    <b>Создатель:</b> <Chip label={event.owner} onClick={() => this.toProfile(event.owner)}/>
+                    <b>Создатель:</b> <Chip label={event.owner} onClick={() => this.toProfile(event.owner)} component="span"/>
                 </Typography>
                 <Typography className={classes.textLine}>
                     <b>Дата и время:</b> {new Date(event.date).toLocaleString('ru')}
@@ -93,7 +93,7 @@ class EventInfoModal extends Component {
                 </Typography>
                 {usernames.map((username, index) => (
                     <Typography className={classes.textLine} key={index}>
-                        <b>{index + 1}.</b> <Chip label={username} onClick={() => this.toProfile(username)}/>
+                        <b>{index + 1}.</b> <Chip label={username} onClick={() => this.toProfile(username)} component="span"/>
                     </Typography>
                 ))}
                 <div className={classes.wrapButton}>
