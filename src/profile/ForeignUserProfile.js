@@ -20,15 +20,21 @@ class ProfileForm extends React.Component {
         profileEventsRequest: PropTypes.func.isRequired
     };
 
-    componentWillMount() {
-        this.props.profileDataRequest(this.props.match.params.username);
-        this.props.profileEventsRequest(this.props.match.params.username);
-    }
+    constructor(props) {
+        super(props);
 
-    render() {
         if (this.props.match.params.username === this.props.currentUserUsername) {
             this.props.history.push('/profile');
         }
+    }
+
+    componentWillMount() {
+        this.props.profileDataRequest(this.props.match.params.username);
+        this.props.profileEventsRequest(this.props.match.params.username);
+
+    }
+
+    render() {
         const { classes } = this.props;
         return (
             <div className={classes.root}>

@@ -24,7 +24,6 @@ import ForeignUserProfile from "../profile/ForeignUserProfile";
 class App extends React.Component {
     static propTypes = {
         isAuth: PropTypes.bool.isRequired,
-        currentUserUsername: PropTypes.string.isRequired,
         logout: PropTypes.func.isRequired,
         checkJWT: PropTypes.func.isRequired,
         history: PropTypes.object.isRequired,
@@ -63,7 +62,7 @@ class App extends React.Component {
     }
 
     toProfile = () => {
-        this.props.history.push(`/profile/${this.props.currentUserUsername}`);
+        this.props.history.push('/profile/');
     }
     
     toCreateNewEvent = () => {
@@ -106,7 +105,6 @@ class App extends React.Component {
 
 const mapStateToProps = (state) => ({
     isAuth: state.auth.isAuth,
-    currentUserUsername: state.auth.username
 });
 
 const mapDispatchToProps = {

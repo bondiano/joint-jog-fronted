@@ -31,6 +31,7 @@ class ProfileInfo extends React.Component {
                         </Avatar>
                     }
                     action={
+                        this.props.isCurrentUser &&
                         <IconButton className={classes.icon} onClick={this.props.changeFormType}>
                             <img src={setIcon} alt="Edit" />
                         </IconButton>
@@ -42,10 +43,31 @@ class ProfileInfo extends React.Component {
                     {this.props.data.age && <Typography><b>Возраст:</b> {this.props.data.age}</Typography>}
                     {this.props.data.sex === 'female' && <Typography><b>Пол:</b> женский</Typography>}
                     {this.props.data.sex === 'male' && <Typography><b>Пол:</b> мужской</Typography>}
+                    <div>
+                    </div>
                 </CardContent>
                 <CardActions disableActionSpacing>
                     <div>
-                        {/*{!this.props.isSending && this.props.data.socialNetworks && (() => this.props.data.socialNetworks.map((sc) => socialNetworks[sc.type](sc.url)))}*/}
+                        {this.props.data.socialNetworks &&
+                        (this.props.data.socialNetworks.find(sc => sc.type === 'vk')) &&
+                        <a href={(this.props.data.socialNetworks.find(sc => sc.type === 'vk')).url}>
+                            <img width="32" src={vk} alt="vk"/>
+                        </a>}
+
+                    </div>
+                    <div>
+                        {this.props.data.socialNetworks &&
+                        (this.props.data.socialNetworks.find(sc => sc.type === 'facebook')) &&
+                        <a href={(this.props.data.socialNetworks.find(sc => sc.type === 'facebook')).url}>
+                            <img width="32" src={fb} alt="facebook"/>
+                        </a>}
+                    </div>
+                    <div>
+                        {this.props.data.socialNetworks &&
+                        (this.props.data.socialNetworks.find(sc => sc.type === 'twitter')) &&
+                        <a href={(this.props.data.socialNetworks.find(sc => sc.type === 'twitter')).url}>
+                            <img width="32" src={tw} alt="vk"/>
+                        </a>}
                     </div>
                 </CardActions>
 
