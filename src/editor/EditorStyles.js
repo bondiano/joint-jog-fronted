@@ -17,7 +17,8 @@ export const CreateEventFormStyles = theme => ({
         margin: '4px 12px 4px 12px'
     },
     heading: {
-        margin: '16px 8px 8px 8px'
+        margin: '16px 8px 8px 8px',
+        textAlign: 'center'        
     },
     submitButton: {
         margin: 8        
@@ -39,18 +40,8 @@ export const CreateEventFormStyles = theme => ({
     routeButton: {
         display: 'flex',
         marginLeft: 8
-    }
-});
-
-export const EditorModalStyles = thene => ({
-    root: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        zIndex: 3,
-        display: 'flex',
     },
-    heading: {
+    modalHeading: {
         margin: '0px 8px 8px 8px'
     },
     pointsListContainer: {
@@ -59,12 +50,6 @@ export const EditorModalStyles = thene => ({
         alignItems: 'center',
         flexDirection: 'column'
     },
-    hideButton: {
-        position: 'absolute',
-        bottom: '25px',
-        left: '25px',
-        zIndex: 5        
-    },
     pointEdit: {
         display: 'flex',
         width: '100%',
@@ -72,5 +57,13 @@ export const EditorModalStyles = thene => ({
     },
     pointButton: {
         minWidth: 32
+    },
+    loader: {
+        minWidth: 200,
+        display: 'flex',
+        justifyContent: 'center'
+    },
+    progress: {
+        color: purple[500]
     }
 });

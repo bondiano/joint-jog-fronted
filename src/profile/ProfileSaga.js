@@ -3,6 +3,7 @@ import { takeLatest, all, put, call } from 'redux-saga/effects';
 import XHRProvider from '../utils/XHRProvider';
 
 import * as actions from './ProfileActions';
+import {loginSuccess} from "../auth/AuthActions";
 import * as types from './ProfileActionTypes';
 
 const xhr = new XHRProvider();
@@ -37,11 +38,14 @@ function* profileEventsRequestSaga(action) {
 
 function* profileUpdateSaga(action) {
     try {
+        console.log(action.profile);
         const response = yield call(xhr.patch, '/user/profile', {
             ...action.profile
         });
         if (response.data.success) {
             yield put(actions.profileUpdateSuccess());
+            yield put(actions.profileDataRequest(action.profile.username));
+            yield put(loginSuccess(action.profile.username));
         } else {
             yield put(actions.profileUpdateError('Извините, произошла ошибка. Попробуйте позже.'));
         }
@@ -55,6 +59,6 @@ export function* profileRootSaga() {
     yield all([
         yield takeLatest(types.PROFILE_DATA_REQUEST, profileDataRequestSaga),
         yield takeLatest(types.PROFILE_EVENTS_REQUEST, profileEventsRequestSaga),
-        yield takeLatest(types.PROFILE_UPDATE, profileUpdateSaga)
+        yield takeLatest(types.PROFILE_UPDATE_REQUEST, profileUpdateSaga)
     ]);
 }

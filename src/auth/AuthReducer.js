@@ -11,14 +11,24 @@ const initialState = {
 export const auth = (state = initialState, action) => {
     switch (action.type) {
         case types.LOGIN_SUCCESS:
-            return {
-                ...state,
-                username: action.username,
-                id: action.id,
-                isAuth: true,
-                isSending: false,
-                errors: ''
-            };
+            if (action.id) {
+                return {
+                    ...state,
+                    username: action.username,
+                    id: action.id,
+                    isAuth: true,
+                    isSending: false,
+                    errors: ''
+                };
+            } else {
+                return {
+                    ...state,
+                    username: action.username,
+                    isAuth: true,
+                    isSending: false,
+                    errors: ''
+                };
+            }
         case types.REGISTER_SUCCESS:
             return {
                 ...state,

@@ -12,6 +12,7 @@ class ProfileForm extends React.Component {
     static propTypes = {
         history: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired,
+        isSending: PropTypes.bool.isRequired,
         profileData: PropTypes.object.isRequired,
         profileEvents: PropTypes.array.isRequired,
         currentUserUsername: PropTypes.string.isRequired,
@@ -19,21 +20,28 @@ class ProfileForm extends React.Component {
         profileEventsRequest: PropTypes.func.isRequired
     };
 
-    componentWillMount() {
-        this.props.profileDataRequest(this.props.match.params.username);
-        this.props.profileEventsRequest(this.props.match.params.username);
-    }
+    constructor(props) {
+        super(props);
 
-    render() {
         if (this.props.match.params.username === this.props.currentUserUsername) {
             this.props.history.push('/profile');
         }
+    }
+
+    componentWillMount() {
+        this.props.profileDataRequest(this.props.match.params.username);
+        this.props.profileEventsRequest(this.props.match.params.username);
+
+    }
+
+    render() {
         const { classes } = this.props;
         return (
             <div className={classes.root}>
                 <ProfileInfo
                     data={this.props.profileData}
                     isCurrentUser={false}
+                    isSending={this.props.isSending}
                 />
                 <EventsTable
                     events={this.props.profileEvents}
@@ -48,6 +56,7 @@ class ProfileForm extends React.Component {
 const mapStateToProps = state => ({
     profileData: state.profile.profile,
     profileEvents: state.profile.events,
+    isSending: state.profile.isSending,
     currentUserUsername: state.auth.username
 });
 

@@ -4,27 +4,15 @@ import { connect } from 'react-redux';
 import { Typography, Paper, withStyles, Button } from 'material-ui';
 import Table, { TableBody, TableCell, TableRow } from 'material-ui/Table';
 
+import { ProfileStyles } from './ProfileStyles';
 import * as eventsActions from '../events/EventsActions';
-
-const styles = theme => ({
-    root: {
-        marginTop: theme.spacing.unit * 3,
-        display: 'flex',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        alignItems: 'center',
-        minWidth: 700,
-    },
-    heading: {
-        margin: 8
-    },
-});
 
 class EventsTable extends React.Component {
     static propTypes = {
         unsubscribeEvent: PropTypes.func.isRequired,
         subscribeEvent: PropTypes.func.isRequired,
         events: PropTypes.array.isRequired,
+        username: PropTypes.string,
         isCurrentUser: PropTypes.bool.isRequired
     };
 
@@ -38,7 +26,7 @@ class EventsTable extends React.Component {
     };
 
     unsubEvent = (eventId) => {
-        this.props.unsubscribeEvent(eventId, this.props.getData);
+        this.props.unsubscribeEvent(eventId, null, this.props.username);
     };
 
     formatDate = (date) => {
@@ -52,7 +40,7 @@ class EventsTable extends React.Component {
     render() {
         const { classes } = this.props;
         return (
-            <Paper className={classes.root}>
+            <Paper className={classes.rootTable}>
                 <Typography className={classes.heading} variant="headline" component="h2">Пробежки</Typography>
                 <Table>
                     <TableBody>
@@ -110,5 +98,5 @@ const mapDispatchToProps = {
     subscribeEvent: eventsActions.subscribeEventRequest
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(EventsTable));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(ProfileStyles)(EventsTable));
 

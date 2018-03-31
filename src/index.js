@@ -1,5 +1,6 @@
 import React from 'react';
 import createSagaMiddleware from 'redux-saga';
+import * as serviceWorker from './serviceWorker';
 import { render } from 'react-dom';
 import { createStore, applyMiddleware }  from 'redux';
 import { Provider } from 'react-redux';
@@ -30,3 +31,5 @@ render((
         </Provider>),
     document.getElementById('app')
 );
+
+serviceWorker.register();

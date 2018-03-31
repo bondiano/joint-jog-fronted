@@ -1,38 +1,21 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Typography, Paper, withStyles, TextField, Button, InputLabel, Select, MenuItem, FormControl, FormLabel, FormControlLabel, FormHelperText } from 'material-ui';
+import { Typography, Paper, withStyles, TextField, Button, FormControl, FormLabel, FormControlLabel } from 'material-ui';
 import Radio, { RadioGroup } from 'material-ui/Radio';
 
+import { ProfileStyles } from './ProfileStyles';
 import * as profileActions from './ProfileActions';
-
-const styles = theme => ({
-    root: {
-        marginTop: theme.spacing.unit * 3,
-        alignItems: 'center',
-        minWidth: 700,
-    },
-    cardHeading: {
-        margin: 8
-    },
-    fieldLine: {
-        margin: 8
-    },
-
-});
 
 const USERNAME_VALID_ERROR = 'Логин должен быть больше 4 и меньше 16 символов.';
 const EMAIL_VALID_ERROR = 'Неверный формат электронной почты.';
 const AGE_VALID_ERROR = 'Это поле должно содержать только цифры. Вы должны быть старше 11.';
-
-/*TODO
-переделать, чтобы через стор, а не через стэйт. когда останется время
- */
-
+const SOCIAL_VALID_ERROR = 'Введите корректный адрес вашей страницы.';
 
 class ProfileEditorForm extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
+        history: PropTypes.object.isRequired,
         profileUpdate: PropTypes.func.isRequired,
         data: PropTypes.object.isRequired,
         changeFormType: PropTypes.func
@@ -44,7 +27,7 @@ class ProfileEditorForm extends React.Component {
         this.state = {
             username: '',
             email: '',
-            socialNetworks: '',
+            socialNetworks: [],
             firstName: '',
             lastName: '',
             age: '',
@@ -52,7 +35,8 @@ class ProfileEditorForm extends React.Component {
             isValid: {
                 username: true,
                 email: true,
-                age: true
+                age: true,
+                social: true
             },
             iValidForm: true,
             isEditorForm: false
@@ -67,7 +51,7 @@ class ProfileEditorForm extends React.Component {
             lastName: this.props.data.lastName,
             age: this.props.data.age,
             sex: this.props.data.sex,
-        })
+        });
     }
 
     handleChange = (e) => {
@@ -75,6 +59,27 @@ class ProfileEditorForm extends React.Component {
         const value = e.target.value;
         this.setState({[name]: value},
             () => { this.validateField(name, value); });
+    };
+
+    handleChangeSocial = (e) => {
+        const name = e.target.name;
+        const value = e.target.value;
+        let socialValid = value.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm) || value === '';
+
+        if (socialValid && value !== '') {
+            this.setState((prevState, props) => {
+                if (this.state.socialNetworks.find(sc => sc.type === name)) {
+                    (this.state.socialNetworks.find(sc => sc.type === name)).url = value;
+                } else {
+                    return {socialNetworks: [...prevState.socialNetworks,{type: name, url: value}]};
+                }
+            });
+        }
+
+        this.setState({isValid: {
+                ...this.state.isValid,
+                social: socialValid
+            }}, this.validateForm);
     };
 
     updateData = () => {
@@ -86,6 +91,7 @@ class ProfileEditorForm extends React.Component {
             age: this.state.age,
             sex: this.state.sex,
         });
+        this.props.changeFormType();
 
     };
 
@@ -96,19 +102,20 @@ class ProfileEditorForm extends React.Component {
 
         switch(fieldName) {
             case 'email':
-                emailValid = value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i);
+                emailValid = (value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) || value === '');
                 break;
             case 'username':
                 usernameValid = (value.length >= 4) && (value.length <= 16);
                 break;
             case 'age':
-                ageValid = +value > 11;
+                ageValid = (+value > 11) || value === '';
                 break;
             default:
                 break;
         }
 
         this.setState({isValid: {
+                ...this.state.isValid,
                 username: usernameValid,
                 email: emailValid,
                 age: ageValid
@@ -116,13 +123,13 @@ class ProfileEditorForm extends React.Component {
     }
 
     validateForm() {
-        this.setState({iValidForm: this.state.isValid.username && this.state.isValid.email && this.state.isValid.age});
+        this.setState({isValidForm: this.state.isValid.username && this.state.isValid.email && this.state.isValid.age && this.state.isValid.social});
     }
 
     render() {
         const { classes } = this.props;
         return (
-            <Paper  className={classes.root}>
+            <Paper  className={classes.rootEditor}>
                 <Typography className={classes.heading} variant="headline" component="h2">Профиль</Typography>
 
                 <div className={classes.fieldLine}>
@@ -190,6 +197,41 @@ class ProfileEditorForm extends React.Component {
                     </RadioGroup>
                 </FormControl>
 
+                <div className={classes.fieldLine}>
+                    <TextField
+                        onBlur={this.handleChangeSocial}
+                        type="text"
+                        label="Вы в VK(ссылка):"
+                        name="vk"
+                        value={(() => this.state.socialNetworks.find(sc => sc.type === 'vk')) &&
+                        (() => this.state.socialNetworks.find(sc => sc.type === 'vk')).url}
+                    />
+                </div>
+
+                <div className={classes.fieldLine}>
+                    <TextField
+                        onBlur={this.handleChangeSocial}
+                        type="text"
+                        label="Вы в facebook(ссылка):"
+                        name="facebook"
+                        value={(() => this.state.socialNetworks.find(sc => sc.type === 'facebook')) &&
+                        (() => this.state.socialNetworks.find(sc => sc.type === 'facebook')).url}
+                    />
+                </div>
+
+                <div className={classes.fieldLine}>
+                    <TextField
+                        onBlur={this.handleChangeSocial}
+                        type="text"
+                        label="Вы в twitter(ссылка):"
+                        name="twitter"
+                        value={(() => this.state.socialNetworks.find(sc => sc.type === 'twitter')) &&
+                        (() => this.state.socialNetworks.find(sc => sc.type === 'twitter')).url}
+                    />
+                </div>
+
+                <Typography variant="caption" color="error">{!this.state.isValid.social && SOCIAL_VALID_ERROR}</Typography>
+
                 <Button
                     variant="raised"
                     color="secondary"
@@ -204,6 +246,7 @@ class ProfileEditorForm extends React.Component {
                     color="primary"
                     onClick={this.updateData}
                     className={classes.buttonLine}
+                    disabled={!this.state.isValidForm}
                 >
                     Сохранить
                 </Button>
@@ -222,5 +265,5 @@ const mapDispatchToProps = {
     profileUpdate: profileActions.profileUpdate
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(ProfileEditorForm));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(ProfileStyles)(ProfileEditorForm));
 

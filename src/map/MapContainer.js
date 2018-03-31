@@ -8,12 +8,17 @@ import * as actions from './MapActions';
 
 import PointsShowList from './PointsShowList';
 import PointsEditorList from './PointsEditList';
+import EventPointsList from './EventPointsList';
 
 class MapContainer extends Component {
     static propTypes = {
         editorMode: PropTypes.bool,
+        showAll: PropTypes.bool,
+        showOne: PropTypes.bool,
+        showEvent: PropTypes.object,
         showRoute: PropTypes.bool.isRequired,
         userWhere: PropTypes.array.isRequired,
+        currentEventPointsList: PropTypes.array.isRequired,
         editorPointsList: PropTypes.array.isRequired,
         currentMap: PropTypes.object.isRequired,
         setCurrentMapInfo: PropTypes.func.isRequired,
@@ -21,7 +26,10 @@ class MapContainer extends Component {
     }
 
     static defaultProps = {
-        editorMode: false
+        editorMode: false,
+        showAll: false,
+        showOne: false,
+        showEvent: {}
     }
 
     constructor(props) {
@@ -76,8 +84,9 @@ class MapContainer extends Component {
     }
 
     showRoute() {
+        const points = this.props.showOne ? this.props.currentEventPointsList : this.props.editorPointsList;
         this.route = new this.ymaps.multiRouter.MultiRoute({
-            referencePoints: this.props.editorPointsList.map((el) => [el.latitude, el.longitude]),
+            referencePoints: points.map((el) => [el.latitude, el.longitude]),
             params: {
                 routingMode: 'pedestrian',
                 results: 1
@@ -94,7 +103,7 @@ class MapContainer extends Component {
     }
 
     hideRoute() {
-        this.mapControl.geoObjects.remove(this.route);
+        this.mapControl && this.mapControl.geoObjects.remove(this.route);
     }
     
     addMapEventListeners() {
@@ -155,7 +164,9 @@ class MapContainer extends Component {
                             preset: 'islands#blueRunCircleIcon'
                         }}
                     />
-                    {this.props.editorMode ? <PointsEditorList/> : <PointsShowList/>}
+                    {this.props.editorMode && <PointsEditorList/>}
+                    {this.props.showAll && <PointsShowList/>}
+                    {this.props.showOne && <EventPointsList/>}
                 </Map>
             </YMaps>
         );
@@ -179,7 +190,8 @@ const zoomControlOptions = {
 };
 
 const mapStateToProps = state => ({
-    editorPointsList: state.map.editorPointsList,    
+    editorPointsList: state.map.editorPointsList,
+    currentEventPointsList: state.map.currentEventPointsList,
     currentMap: state.map.currentMap,
     showRoute: state.map.showRoute,
     userWhere: [state.map.userWhere.latitude, state.map.userWhere.longitude]

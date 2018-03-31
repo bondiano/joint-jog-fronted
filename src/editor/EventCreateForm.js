@@ -9,7 +9,7 @@ import { CircularProgress } from 'material-ui/Progress';
 import * as mapActions from '../map/MapActions';
 import * as editorActions from './EditorActions';
 
-import PointsList from './common/PointsList';
+import PointsList from './PointsList';
 import { CreateEventFormStyles } from './EditorStyles';
 
 class EventCreateForm extends Component {

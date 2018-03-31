@@ -2,13 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles, Typography, TextField, Button, Tooltip } from 'material-ui';
 import List, { ListItem } from 'material-ui/List';
-import { EditorModalStyles } from '../EditorStyles';
+import { CreateEventFormStyles } from './EditorStyles';
 import DeleteIcon from 'material-ui-icons/Delete';
 
 
 const PointsList = ({pointsList, removePointHandler, handlePointTitleChange, classes}) => (
     <List className={classes.pointsListContainer}>
-        <Typography className={classes.heading} variant="headline" component="h2">
+        <Typography className={classes.modalHeading} variant="headline" component="h2">
             Маршрут
         </Typography>
             {pointsList.map((point, index) => {
@@ -45,4 +45,4 @@ PointsList.propTypes = {
     classes: PropTypes.object.isRequired
 };
 
-export default withStyles(EditorModalStyles)(PointsList);
+export default withStyles(CreateEventFormStyles)(PointsList);
