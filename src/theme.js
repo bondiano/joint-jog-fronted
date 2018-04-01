@@ -15,16 +15,6 @@ const theme = createMuiTheme({
                 display: 'flex',
                 alignItem: 'center'
             }
-        },
-        MuiInput: {
-            disabled: {
-                color: 'rgba(0, 0, 0, 0.87)',
-            },
-            underline: {
-                '&$disabled:before': {
-                    backgroundColor: 'rgba(0, 0, 0, 0.87)'
-                }
-            }
         }
     },
     palette: {

@@ -10,11 +10,26 @@ export const ProfileStyles = theme => ({
     rootEditor: {
         marginTop: 90,
         textAlign: 'center',
-        minWidth: 250,
+        display: 'flex',
+        flexWrap: 'nowrap',
+        flexDirection: 'column',
+        alignItems: 'center',
+        [theme.breakpoints.up('md')]: {
+            width: 700,
+        },
+        [theme.breakpoints.down('sm')]: {
+            width: 300,
+        },
     },
     rootInfo: {
         marginTop: 90,
-        minWidth: 250,
+        [theme.breakpoints.up('md')]: {
+            width: 700,
+            textAlign: 'center',
+        },
+        [theme.breakpoints.down('sm')]: {
+            width: 300,
+        },
     },
     heading: {
         margin: 8,
@@ -37,8 +52,24 @@ export const ProfileStyles = theme => ({
         marginTop: theme.spacing.unit * 3,
         marginBottom: theme.spacing.unit * 3,
         textAlign: 'center',
+        [theme.breakpoints.up('md')]: {
+            width: 700,
+        },
+        [theme.breakpoints.down('sm')]: {
+            width: 300,
+        },
+
     },
     fabProgress: {
         marginTop: 90,
+    },
+    cell: {
+        [theme.breakpoints.up('md')]: {
+            paddingLeft: 50
+        },
+        [theme.breakpoints.down('sm')]: {
+            paddingLeft: 5
+        },
+
     }
 });

@@ -1,4 +1,5 @@
 import React from 'react';
+
 import PropTypes from 'prop-types';
 import { Typography, Card, withStyles, CardContent, CardActions, CardHeader, Avatar, IconButton } from 'material-ui';
 
@@ -30,19 +31,20 @@ class ProfileInfo extends React.Component {
                         </Avatar>
                     }
                     action={
-                        this.props.isCurrentUser &&
                         <IconButton className={classes.icon} onClick={this.props.changeFormType}>
-                            <img src={setIcon} alt="Edit" />
+                            {this.props.isCurrentUser && <img src={setIcon} alt="Edit"/>}
                         </IconButton>
                     }
-                    title={`${this.props.data.firstName || ''} ${this.props.data.lastName || ''}`}
+                    title={<b>{`${this.props.data.firstName || ''} ${this.props.data.lastName || ''}`}</b>}
                     subheader={this.props.data.username}
                 />
+
                 <CardContent>
                     {this.props.data.age && <Typography><b>Возраст:</b> {this.props.data.age}</Typography>}
                     {this.props.data.sex && <Typography><b>Пол:</b> {this.props.data.sex === 'male' ? 'мужской' : 'женский'} </Typography>}
                 </CardContent>
-                <CardActions disableActionSpacing>
+
+                <CardActions>
                     {this.props.data.socialNetworks && this.props.data.socialNetworks.map((sc, index) => {
                         return socialNetworks[sc.type] && 
                         (<div key={`${sc.type}-${index}`}>
