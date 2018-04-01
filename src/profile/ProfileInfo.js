@@ -44,7 +44,7 @@ class ProfileInfo extends React.Component {
                     {this.props.data.sex && <Typography><b>Пол:</b> {this.props.data.sex === 'male' ? 'мужской' : 'женский'} </Typography>}
                 </CardContent>
 
-                <CardActions disableActionSpacing>
+                <CardActions>
                     {this.props.data.socialNetworks && this.props.data.socialNetworks.map((sc, index) => {
                         return socialNetworks[sc.type] && 
                         (<div key={`${sc.type}-${index}`}>
