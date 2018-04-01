@@ -5321,10 +5321,6 @@ lodash.cond@^4.3.0:
   version "4.5.2"
   resolved "https://registry.yarnpkg.com/lodash.cond/-/lodash.cond-4.5.2.tgz#f471a1da486be60f6ab955d17115523dd1d255d5"
 
-lodash.debounce@^4.0.8:
-  version "4.0.8"
-  resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
-
 lodash.defaults@^4.2.0:
   version "4.2.0"
   resolved "https://registry.yarnpkg.com/lodash.defaults/-/lodash.defaults-4.2.0.tgz#d09178716ffea4dde9e5fb7b37f6f0802274580c"
@@ -7127,6 +7123,13 @@ readdirp@^2.0.0:
     minimatch "^3.0.2"
     readable-stream "^2.0.2"
     set-immediate-shim "^1.0.1"
+
+reapop@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/reapop/-/reapop-1.2.0.tgz#baa3ee52c69a0ac31dd2f9f2e94480678603c08d"
+  dependencies:
+    prop-types "^15.6.0"
+    react-transition-group "^2.2.1"
 
 recast@^0.12.5:
   version "0.12.9"

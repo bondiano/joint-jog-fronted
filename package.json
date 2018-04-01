@@ -39,6 +39,7 @@
     "react-scripts": "1.1.1",
     "react-scrollbar": "^0.5.4",
     "react-yandex-maps": "^2.1.4",
+    "reapop": "^1.2.0",
     "redux": "^3.7.2",
     "redux-saga": "^0.16.0",
     "typeface-roboto": "^0.0.54"
