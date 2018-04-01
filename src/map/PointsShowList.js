@@ -27,8 +27,12 @@ class PointsShowList extends PureComponent {
                     geometry={{
                         coordinates:  [point.latitude, point.longitude]
                     }}
+                    properties={{
+                        balloonContent: point.title && point.title,
+                        iconContent: index + 1
+                    }}
                     options={{
-                        preset: 'islands#blueRunIcon'
+                        preset: 'islands#darkBlueRunIcon'
                     }}
                     instanceRef = {this.setPlacemarkRef(point.id)}
                 />);

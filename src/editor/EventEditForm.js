@@ -33,7 +33,8 @@ class EventEditForm extends Component {
         pointsList: PropTypes.array.isRequired,
         error: PropTypes.string.isRequired,
         match: PropTypes.object.isRequired,
-        classes: PropTypes.object.isRequired
+        classes: PropTypes.object.isRequired,
+        history: PropTypes.object.isRequired
     };
 
     static defaultProps = {
@@ -43,8 +44,8 @@ class EventEditForm extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            title: props.currentEvent.event ? props.currentEvent.event.title : '',
-            description: props.currentEvent.event ? props.currentEvent.event.description : '',
+            title: props.currentEvent.event && props.currentEvent.event.title,
+            description: props.currentEvent.event && props.currentEvent.event.describe,
             date: props.currentEvent.event ?
                 new Date(props.currentEvent.event.date).toISOString().substring(0, 16) :
                 new Date().toISOString().substring(0, 16)
@@ -67,7 +68,7 @@ class EventEditForm extends Component {
             this.setState({
                 ...this.state,
                 title: event.title,
-                description: event.description,
+                description: event.describe,
                 date: new Date(event.date).toISOString().substring(0, 16)
             });
         }
@@ -88,7 +89,7 @@ class EventEditForm extends Component {
             description = this.state.description, 
             date = this.state.date, 
             pointsList = this.props.pointsList;
-        this.props.editEventRequest(id, title, description, date, pointsList);
+        this.props.editEventRequest(id, title, description, date, pointsList, this.props.history);
     };
 
     addNewPoint = (e) => {
@@ -96,7 +97,10 @@ class EventEditForm extends Component {
         this.props.createNewPoint(latitude, longitude);
     };
 
-    handlePointTitleChange = (index) => (e) => { 
+    handlePointTitleChange = (index, pervTitle) => (e) => {
+        if(!e.target.value || pervTitle === e.target.value) {
+            return;
+        }
         this.props.changePointTitle(index, e.target.value);
     };
 

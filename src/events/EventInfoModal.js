@@ -18,10 +18,16 @@ class EventInfoModal extends Component {
     static propTypes ={
         showEditor: PropTypes.bool,
         error: PropTypes.string.isRequired,
-        event: PropTypes.object.isRequired,
+        eventTitle: PropTypes.string.isRequired, 
+        eventDescribe: PropTypes.string.isRequired, 
+        eventOwner: PropTypes.string.isRequired, 
+        eventSubscribers: PropTypes.array.isRequired, 
+        eventDate: PropTypes.string.isRequired, 
+        eventPoints: PropTypes.array.isRequired,
         isAuth: PropTypes.bool.isRequired,
         username: PropTypes.string.isRequired,
         isLoading: PropTypes.bool.isRequired,
+        isSubscribing: PropTypes.bool.isRequired,
         history: PropTypes.object.isRequired,
         match: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired,
@@ -39,7 +45,6 @@ class EventInfoModal extends Component {
     componentDidMount() {
         const id = this.props.match.params.id;
         this.props.fetchEvent(id);
-        this.props.hideRoute();
     }
 
     loader = () => {
@@ -72,48 +77,50 @@ class EventInfoModal extends Component {
         this.props.history.push(`/editor/${id}`);
     }
 
-    toProfile = (username) => {
+    toProfile = (username) => (e) => {
         this.props.history.push(`/profile/${username}`);
     }
 
     content = () => {
-        const {classes, event: {event}} = this.props;
-        const usernames = this.props.event.usernames.map(user => user.username);
+        const {classes, eventTitle, eventDescribe, eventOwner, eventSubscribers, eventDate, eventPoints} = this.props;
         return (
             <ScrollArea>
                 <Typography className={classes.heading} variant="headline" component="h2">
-                    {event.title}
+                    {eventTitle}
                 </Typography>
-                {event.describe && <Typography className={classes.textLine}>
-                    <b>Описание:</b> {event.describe}
+                {eventDescribe && <Typography className={classes.textLine}>
+                    <b>Описание:</b> {eventDescribe}
                 </Typography>}
                 <Typography className={classes.textLine}>
-                    <b>Создатель:</b> <Chip label={event.owner} onClick={() => this.toProfile(event.owner)} component="span"/>
+                    <b>Создатель:</b> <Chip label={eventOwner} onClick={this.toProfile(eventOwner)} component="span"/>
                 </Typography>
                 <Typography className={classes.textLine}>
-                    <b>Дата и время:</b> {new Date(event.date).toLocaleString('ru')}
+                    <b>Дата и время:</b> {eventDate}
                 </Typography>
                 <Typography className={classes.heading}>
                     <b>Участники:</b>
                 </Typography>
-                {usernames.map((username, index) => (
+                {eventSubscribers.map((username, index) => (
                     <Typography className={classes.textLine} key={index}>
-                        <b>{index + 1}.</b> <Chip label={username} onClick={() => this.toProfile(username)} component="span"/>
+                        <b>{index + 1}.</b> <Chip label={username} onClick={this.toProfile(username)} component="span"/>
                     </Typography>
                 ))}
                 <div className={classes.wrapButton}>
                     <Button color="primary" className={classes.button} onClick={this.showRoute}>
-                        {event.points.length > 1 ? 'Показать маршрут' : 'Показать точку старта'}
+                        {eventPoints.length > 1 ? 'Показать маршрут' : 'Показать точку старта'}
                     </Button>
-                    {this.props.isAuth && (usernames.includes(this.props.username) ? 
+                    {this.props.isAuth && (eventSubscribers.includes(this.props.username) ? 
                         <Button color="secondary" variant="raised" className={classes.button} onClick={this.unsubscribe}>
                             Не пойду
                         </Button>
-                    : <Button color="primary" variant="raised" className={classes.button} onClick={this.subscribe}>
-                        Тоже пойду
-                    </Button>)}
+                    : <div className={classes.wrapper}>
+                        <Button color="primary" variant="raised" className={classes.button} disabled={this.props.isSubscribing} onClick={this.subscribe}>
+                            Тоже пойду
+                        </Button>
+                        {this.props.isSubscribing && <CircularProgress size={32} className={classes.fabProgress}/>}                        
+                    </div>)}
                 </div>
-                {this.props.isAuth && this.props.username === event.owner
+                {this.props.isAuth && this.props.username === eventOwner
                 && <Button color="secondary" className={classes.button} onClick={this.toEditor}>
                     Редактировать
                 </Button>}
@@ -128,8 +135,7 @@ class EventInfoModal extends Component {
                 <Slide direction="left" mountOnEnter unmountOnExit in={showEditor}>
                     <div className={classes.root}>
                         {this.props.isLoading 
-                            || this.props.error 
-                            || !this.props.event.event ? this.loader() : this.content()}
+                            || this.props.error ? this.loader() : this.content()}
                     </div>
                 </Slide>
             </ModalComponent>
@@ -139,7 +145,14 @@ class EventInfoModal extends Component {
 
 const mapStateToProps = (state) => ({
     isLoading: state.events.isLoading,
+    isSubscribing: state.events.isSubscribing,
     event: state.events.currentEvent,
+    eventTitle: state.events.currentEvent.event.title,
+    eventDescribe: state.events.currentEvent.event.describe,
+    eventOwner: state.events.currentEvent.event.owner,
+    eventDate: new Date(state.events.currentEvent.event.date).toLocaleString('ru'),
+    eventSubscribers: state.events.currentEvent.usernames.map(user => user.username),
+    eventPoints: state.events.currentEvent.event.points,
     error: state.events.error,
     isAuth: state.auth.isAuth,
     username: state.auth.username

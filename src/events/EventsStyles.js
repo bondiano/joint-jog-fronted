@@ -50,5 +50,15 @@ export const EventInfoModalStyles = theme => ({
     wrapButton: {
         display: 'flex',
         justifyContent: 'space-between'
+    },
+    fabProgress: {
+        color: purple[500],
+        position: 'absolute',
+        top: 6,
+        left: 48,
+        zIndex: 1,
+    },
+    wrapper: {
+        position: 'relative'
     }
 });

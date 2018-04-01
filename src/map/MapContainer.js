@@ -93,11 +93,11 @@ class MapContainer extends Component {
             }
         },{
             editorDrawOver: false,
-            routeStrokeColor: "000088",
-            routeActiveStrokeColor: "ff0000",
-            pinIconFillColor: "ff0000",
+            routeStrokeColor: '3f51b5',
+            routeActiveStrokeColor: '3f51b5',
+            pinIconFillColor: '3f51b5',
             boundsAutoApply: true,
-            zoomMargin: 30
+            zoomMargin: 68
         });
         this.mapControl.geoObjects.add(this.route);
     }
@@ -158,10 +158,11 @@ class MapContainer extends Component {
                             coordinates: this.props.userWhere
                         }}
                         properties={{
-                            hintContent: 'Вы тут'
+                            hintContent: 'Вы тут',
+                            iconContent: 'Я'
                         }}
                         options={{
-                            preset: 'islands#blueRunCircleIcon'
+                            preset: 'islands#nightCircleIcon'
                         }}
                     />
                     {this.props.editorMode && <PointsEditorList/>}

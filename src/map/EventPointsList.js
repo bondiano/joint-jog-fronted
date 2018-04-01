@@ -21,7 +21,7 @@ class EventPointsList extends PureComponent {
                         iconContent: index + 1
                     }}
                     options={{
-                        preset: 'islands#nightIcon'
+                        preset: 'islands#darkBlueIcon'
                     }}
                     key={point._id}
             />))}

@@ -19,7 +19,7 @@ const PointsList = ({pointsList, removePointHandler, handlePointTitleChange, cla
                             label={point.title ? point.title : `Название точки ${index + 1}`}
                             name="pointTitle"
                             margin="dense"
-                            onBlur={handlePointTitleChange(index)}
+                            onBlur={handlePointTitleChange(index, point.title)}
                         />
                         <Tooltip id="tooltip-fab" title="Удалить" placement="top">
                             <Button 

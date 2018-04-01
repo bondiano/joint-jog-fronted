@@ -17,13 +17,14 @@ export const createNewEventError = (error) => ({
     error
 });
 
-export const editEventRequest = (id, title, description, date, pointsList) => ({
+export const editEventRequest = (id, title, description, date, pointsList, history) => ({
     type: types.EDIT_EVENT_REQUEST,
     id, 
     title, 
     description, 
     date, 
-    pointsList
+    pointsList,
+    history
 });
 
 export const editEventSuccess = () => ({

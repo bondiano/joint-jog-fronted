@@ -59,7 +59,8 @@ function* editEventSaga(action) {
         });
         if (response.data.success) {
             yield put(actions.editEventSuccess());
-            yield fetchEventSaga({id: action.id});            
+            yield fetchEventSaga({id: action.id});
+            yield call(action.history.push, '/');
         } else {
             yield put(actions.editEventError('Извините, произошла ошибка. Попробуйте позже.'));              
         }

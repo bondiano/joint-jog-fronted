@@ -3,7 +3,7 @@ import { takeLatest, all, put, call } from 'redux-saga/effects';
 import XHRProvider from '../utils/XHRProvider';
 
 import * as actions from './EventsActions';
-import { profileEventsRequest } from '../profile/ProfileActions'
+import { profileEventsRequest } from '../profile/ProfileActions';
 import * as types from './EventsActionTypes';
 
 
@@ -17,9 +17,9 @@ function* unsubscribeSaga(action) {
             id: action.id
         });
         if (response.data.success) {
+            yield call(action.history.push, '/');
             yield put(actions.unsubscribeEventSuccess());
             yield put(profileEventsRequest(action.username));
-            yield call(action.history.push, '/');
         } else {
             yield put(actions.unsubscribeEventError('Извините, произошла ошибка. Попробуйте позже.'));
         }
@@ -71,6 +71,7 @@ function* fetchEventsSaga() {
 
 function* fetchEventSaga(action) {
     try {
+        yield put(mapActions.clearCurrentEventPoints());        
         const response = yield call(xhr.get, `/event/${action.id}`);
         if (response.data.success) {
             yield put(actions.fetchEventSuccess(response.data.payload));

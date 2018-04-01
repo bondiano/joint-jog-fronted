@@ -2,8 +2,18 @@ import * as types from './EventsActionTypes';
 
 const initialState = {
     isLoading: false,
+    isSubscribing: false,
     events: [],
-    currentEvent: {},
+    currentEvent: {
+        event: {
+            title: '',
+            describe: '',
+            owner: '',
+            date: new Date(),
+            points: []
+        },
+        usernames: []
+    },
     error: ''
 };
 
@@ -13,7 +23,14 @@ export const events = (state = initialState, action) => {
         case types.SUBSCRIBE_EVENT_SUCCESS:
             return {
                 ...state,
-                error: ''
+                error: '',
+                isSubscribing: false
+            };
+        case types.SUBSCRIBE_EVENT_REQUEST:
+            return {
+                ...state,
+                error: '',
+                isSubscribing: true
             };
         case types.FETCH_EVENTS_SUCCESS:
             return {
@@ -40,7 +57,8 @@ export const events = (state = initialState, action) => {
             return {
                 ...state,
                 error: action.error,
-                isLoading: false
+                isLoading: false,
+                isSubscribing: false
             };
         default:
             return state;

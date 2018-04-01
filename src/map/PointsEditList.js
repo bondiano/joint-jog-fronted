@@ -37,7 +37,7 @@ class PointsEditList extends PureComponent {
                             iconContent: index + 1
                         }}
                         options={{
-                            preset: point.selected ? 'islands#redRunIcon' : 'islands#nightIcon',
+                            preset: point.selected ? 'islands#redRunIcon' : 'islands#darkBlueIcon',
                             cursor: 'grab',
                             draggable: true
                         }}

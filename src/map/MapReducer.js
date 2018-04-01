@@ -91,6 +91,12 @@ export const map = (state = initialState, action) => {
                 editorPointsList: [],
                 showRoute: false  
             };
+        case types.CLEAR_CURRENT_EVENT_POINTS:
+            return {
+                ...state,
+                currentEventPointsList: [],
+                showRoute: false
+            };
         case types.REMOVE_POINT:
             return {
                 ...state,

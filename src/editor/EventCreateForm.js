@@ -62,7 +62,10 @@ class EventCreateForm extends Component {
         this.props.createNewPoint(latitude, longitude);
     };
 
-    handlePointTitleChange = (index) => (e) => { 
+    handlePointTitleChange = (index, pervTitle) => (e) => {
+        if(!e.target.value || pervTitle === e.target.value) {
+            return;
+        }
         this.props.changePointTitle(index, e.target.value);
     };
 

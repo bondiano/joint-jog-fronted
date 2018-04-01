@@ -35,6 +35,10 @@ export const clearEditorPoints = () => ({
     type: types.CLEAR_EDITOR_POINTS
 });
 
+export const clearCurrentEventPoints = () => ({
+    type: types.CLEAR_CURRENT_EVENT_POINTS
+});
+
 export const changePointTitle = (index, title) => ({
     type: types.CHANGE_POINT_TITLE,
     index,
