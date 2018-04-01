@@ -9,7 +9,6 @@ import {vk, tw, fb, setIcon} from '../assets';
 class ProfileInfo extends React.Component {
     static propTypes = {
         classes: PropTypes.object.isRequired,
-        isSending: PropTypes.bool.isRequired,
         data: PropTypes.object.isRequired,
         isCurrentUser: PropTypes.bool.isRequired,
         changeFormType: PropTypes.func

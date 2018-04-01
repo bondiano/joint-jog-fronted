@@ -58,7 +58,6 @@ class ProfileForm extends React.Component {
                             data={this.props.profileData}
                             isCurrentUser={true}
                             changeFormType={this.changeFormType}
-                            isSending={this.props.isSending}
                         />
                     }</div>
                 }
