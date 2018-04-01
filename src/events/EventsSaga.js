@@ -17,7 +17,6 @@ function* unsubscribeSaga(action) {
             id: action.id
         });
         if (response.data.success) {
-            yield call(action.history.push, '/');
             yield put(actions.unsubscribeEventSuccess());
             yield put(profileEventsRequest(action.username));
         } else {
