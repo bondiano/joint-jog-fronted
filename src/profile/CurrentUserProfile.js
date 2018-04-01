@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles } from 'material-ui';
+import { withStyles, CircularProgress } from 'material-ui';
 
 import * as profileActions from './ProfileActions';
 import { ProfileStyles } from './ProfileStyles';
@@ -13,7 +13,8 @@ class ProfileForm extends React.Component {
     static propTypes = {
         history: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired,
-        isSending: PropTypes.bool.isRequired,
+        isLoadingData: PropTypes.bool.isRequired,
+        isLoadingEvents: PropTypes.bool.isRequired,
         profileData: PropTypes.object.isRequired,
         profileEvents: PropTypes.array.isRequired,
         currentUserUsername: PropTypes.string.isRequired,
@@ -45,25 +46,30 @@ class ProfileForm extends React.Component {
 
         return (
             <div className={classes.root}>
-                {this.state.isEditor ?
-                    <ProfileEditor
-                        data={this.props.profileData}
-                        changeFormType={this.changeFormType}
-                        history={this.props.history}
-                    /> :
-                    <ProfileInfo
-                        data={this.props.profileData}
-                        isCurrentUser={true}
-                        changeFormType={this.changeFormType}
-                        isSending={this.props.isSending}
-                    />
+                {this.props.isLoadingData ?
+                    <CircularProgress size={32} className={classes.fabProgress}/> :
+                    <div>{this.state.isEditor ?
+                        <ProfileEditor
+                            data={this.props.profileData}
+                            changeFormType={this.changeFormType}
+                            history={this.props.history}
+                        /> :
+                        <ProfileInfo
+                            data={this.props.profileData}
+                            isCurrentUser={true}
+                            changeFormType={this.changeFormType}
+                            isSending={this.props.isSending}
+                        />
+                    }</div>
                 }
-                <EventsTable
-                    events={this.props.profileEvents}
-                    isCurrentUser={true}
-                    history={this.props.history}
-                    username={this.props.currentUserUsername}
-                />
+                {this.props.isLoadingEvents ?
+                    <CircularProgress size={32} className={classes.fabProgress}/> :
+                    <EventsTable
+                        events={this.props.profileEvents}
+                        isCurrentUser={true}
+                        history={this.props.history}
+                        username={this.props.currentUserUsername}
+                    />}
             </div>
         );
     }
@@ -72,7 +78,8 @@ class ProfileForm extends React.Component {
 const mapStateToProps = state => ({
     profileData: state.profile.profile,
     profileEvents: state.profile.events,
-    isSending: state.profile.isSending,
+    isLoadingData: state.profile.isLoadingData,
+    isLoadingEvents: state.profile.isLoadingEvents,
     currentUserUsername: state.auth.username
 });
 
