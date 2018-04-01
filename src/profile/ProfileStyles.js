@@ -10,7 +10,16 @@ export const ProfileStyles = theme => ({
     rootEditor: {
         marginTop: 90,
         textAlign: 'center',
-        minWidth: 250,
+        display: 'flex',
+        flexWrap: 'nowrap',
+        flexDirection: 'column',
+        alignItems: 'center',
+        [theme.breakpoints.up('md')]: {
+            width: 700,
+        },
+        [theme.breakpoints.down('sm')]: {
+            width: 300,
+        },
     },
     rootInfo: {
         marginTop: 90,
