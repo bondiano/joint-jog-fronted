@@ -19,6 +19,7 @@ function* unsubscribeSaga(action) {
         if (response.data.success) {
             yield put(actions.unsubscribeEventSuccess());
             yield put(profileEventsRequest(action.username));
+            yield fetchEventSaga({id: action.id});            
         } else {
             yield put(actions.unsubscribeEventError('Извините, произошла ошибка. Попробуйте позже.'));
         }
@@ -33,7 +34,7 @@ function* subscribeSaga(action) {
             id: action.id
         });
         if (response.data.success) {
-            yield  put(actions.subscribeEventSuccess());
+            yield put(actions.subscribeEventSuccess());
             yield fetchEventSaga({id: action.id});
         } else {
             yield put(actions.unsubscribeEventError('Извините, произошла ошибка. Попробуйте позже.'));

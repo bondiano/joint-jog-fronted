@@ -5,6 +5,7 @@ import { withStyles, TextField, Typography, Button } from 'material-ui';
 import ScrollArea from 'react-scrollbar';
 import Slide from 'material-ui/transitions/Slide';
 import { CircularProgress } from 'material-ui/Progress';
+import { withRouter } from 'react-router-dom';
 
 import * as mapActions from '../map/MapActions';
 import * as editorActions from './EditorActions';
@@ -24,7 +25,8 @@ class EventCreateForm extends Component {
         createNewPointRequest: PropTypes.func.isRequired,
         currentMapCenter: PropTypes.array.isRequired,
         pointsList: PropTypes.array.isRequired,
-        classes: PropTypes.object.isRequired
+        classes: PropTypes.object.isRequired,
+        history: PropTypes.object.isRequired
     };
 
     static defaultProps = {
@@ -54,7 +56,7 @@ class EventCreateForm extends Component {
             description = this.state.description, 
             date = this.state.date, 
             pointsList = this.props.pointsList;
-        this.props.createNewPointRequest(title, description, date, pointsList);
+        this.props.createNewPointRequest(title, description, date, pointsList, this.props.history);
     };
 
     addNewPoint = (e) => {
@@ -189,4 +191,4 @@ const mapDispatchToProps = {
     createNewPointRequest: editorActions.createNewEventRequest,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(CreateEventFormStyles)(EventCreateForm));
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(withStyles(CreateEventFormStyles)(EventCreateForm)));

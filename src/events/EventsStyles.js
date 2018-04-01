@@ -51,11 +51,18 @@ export const EventInfoModalStyles = theme => ({
         display: 'flex',
         justifyContent: 'space-between'
     },
-    fabProgress: {
+    fabProgressSub: {
         color: purple[500],
         position: 'absolute',
         top: 6,
         left: 48,
+        zIndex: 1,
+    },
+    fabProgressUnsub: {
+        color: purple[500],
+        position: 'absolute',
+        top: 6,
+        left: 40,
         zIndex: 1,
     },
     wrapper: {

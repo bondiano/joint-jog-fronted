@@ -110,14 +110,17 @@ class EventInfoModal extends Component {
                         {eventPoints.length > 1 ? 'Показать маршрут' : 'Показать точку старта'}
                     </Button>
                     {this.props.isAuth && (eventSubscribers.includes(this.props.username) ? 
-                        <Button color="secondary" variant="raised" className={classes.button} onClick={this.unsubscribe}>
+                    <div className={classes.wrapper}>
+                        <Button color="secondary" variant="raised" className={classes.button} disabled={this.props.isSubscribing} onClick={this.unsubscribe}>
                             Не пойду
                         </Button>
+                        {this.props.isSubscribing && <CircularProgress size={32} className={classes.fabProgressUnsub}/>}                        
+                    </div>
                     : <div className={classes.wrapper}>
                         <Button color="primary" variant="raised" className={classes.button} disabled={this.props.isSubscribing} onClick={this.subscribe}>
                             Тоже пойду
                         </Button>
-                        {this.props.isSubscribing && <CircularProgress size={32} className={classes.fabProgress}/>}                        
+                        {this.props.isSubscribing && <CircularProgress size={32} className={classes.fabProgressSub}/>}                        
                     </div>)}
                 </div>
                 {this.props.isAuth && this.props.username === eventOwner

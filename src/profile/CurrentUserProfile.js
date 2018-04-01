@@ -58,9 +58,8 @@ class CurrentUserProfile extends React.Component {
                             /> :
                             <ProfileInfo
                                 data={this.props.profileData}
-                                isCurrentUser={true}
+                                isCurrentUser
                                 changeFormType={this.changeFormType}
-                                isSending={this.props.isSending}
                             />
                         }</div>
                     }
@@ -68,7 +67,7 @@ class CurrentUserProfile extends React.Component {
                         <CircularProgress size={32} className={classes.fabProgress}/> :
                         <EventsTable
                             events={this.props.profileEvents}
-                            isCurrentUser={true}
+                            isCurrentUser
                             history={this.props.history}
                             username={this.props.currentUserUsername}
                         />}

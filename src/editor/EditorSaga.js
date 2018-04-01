@@ -21,6 +21,7 @@ function* createNewEventSaga(action) {
         if (response.data.success) {
             yield put(actions.createNewEventSuccess());            
             yield put(mapActions.clearEditorPoints());
+            yield call(action.history.push, '/');            
         } else {
             if (response.data.payload[0].errorOnField === 'date') {
                 yield put(actions.createNewEventError('Пожалуйста, выберите дату')); 

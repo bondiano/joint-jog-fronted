@@ -26,6 +26,7 @@ export const events = (state = initialState, action) => {
                 error: '',
                 isSubscribing: false
             };
+        case types.UNSUBSCRIBE_EVENT_REQUEST:
         case types.SUBSCRIBE_EVENT_REQUEST:
             return {
                 ...state,
