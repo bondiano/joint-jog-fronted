@@ -9,7 +9,7 @@ import { ProfileStyles } from './ProfileStyles';
 import EventsTable from "./EventsTable";
 import ProfileInfo from "./ProfileInfo";
 
-class ProfileForm extends React.Component {
+class ForeignUserProfile extends React.Component {
     static propTypes = {
         match: PropTypes.object.isRequired,
         history: PropTypes.object.isRequired,
@@ -68,5 +68,5 @@ const mapDispatchToProps = {
     profileEventsRequest: profileActions.profileEventsRequest
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(ProfileStyles)(ProfileForm));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(ProfileStyles)(ForeignUserProfile));
 
