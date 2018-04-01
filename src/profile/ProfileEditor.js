@@ -57,19 +57,15 @@ class ProfileEditorForm extends React.Component {
     handleChange = (e) => {
         const name = e.target.name;
         const value = e.target.value;
-        this.setState({
-            [name]: value
-        },
-        () => { 
-            this.validateField(name, value); 
-        });
+        this.setState({[name]: value},
+            () => { this.validateField(name, value); });
     };
 
     handleChangeSocial = (e) => {
         const name = e.target.name;
         const value = e.target.value;
-        // eslint-disable-next-line 
-        const socialValid = value.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm) || value === '';
+        //eslint-disable-next-line
+        let socialValid = value.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm) || value === '';
 
         if (socialValid && value !== '') {
             this.setState((prevState, props) => {
@@ -128,12 +124,7 @@ class ProfileEditorForm extends React.Component {
     }
 
     validateForm() {
-        this.setState({
-            isValidForm: this.state.isValid.username 
-                && this.state.isValid.email 
-                && this.state.isValid.age 
-                && this.state.isValid.social
-        });
+        this.setState({isValidForm: this.state.isValid.username && this.state.isValid.email && this.state.isValid.age && this.state.isValid.social});
     }
 
     render() {
@@ -141,6 +132,7 @@ class ProfileEditorForm extends React.Component {
         return (
             <Paper  className={classes.rootEditor}>
                 <Typography className={classes.heading} variant="headline" component="h2">Профиль</Typography>
+
                 <div className={classes.fieldLine}>
                     <TextField
                         onChange={this.handleChange}
@@ -150,9 +142,7 @@ class ProfileEditorForm extends React.Component {
                         value={this.state.username}
                         error={!this.state.isValid.username}
                     />
-                    <Typography variant="caption" color="error">
-                        {!this.state.isValid.username && USERNAME_VALID_ERROR}
-                    </Typography>
+                    <Typography variant="caption" color="error">{!this.state.isValid.username && USERNAME_VALID_ERROR}</Typography>
                 </div>
                 <div className={classes.fieldLine}>
                     <TextField
@@ -163,9 +153,7 @@ class ProfileEditorForm extends React.Component {
                         value={this.state.email}
                         error={!this.state.isValid.email}
                     />
-                    <Typography variant="caption" color="error">
-                        {!this.state.isValid.email && EMAIL_VALID_ERROR}
-                    </Typography>
+                    <Typography variant="caption" color="error">{!this.state.isValid.email && EMAIL_VALID_ERROR}</Typography>
                 </div>
                 <div className={classes.fieldLine}>
                     <TextField
@@ -194,9 +182,7 @@ class ProfileEditorForm extends React.Component {
                         value={this.state.age}
                         error={!this.state.isValid.age}
                     />
-                    <Typography variant="caption" color="error">
-                        {!this.state.isValid.age && AGE_VALID_ERROR}
-                    </Typography>
+                    <Typography variant="caption" color="error">{!this.state.isValid.age && AGE_VALID_ERROR}</Typography>
                 </div>
 
 
@@ -218,7 +204,7 @@ class ProfileEditorForm extends React.Component {
                         type="text"
                         label="Вы в VK(ссылка):"
                         name="vk"
-                        defaultValue={(() => this.state.socialNetworks.find(sc => sc.type === 'vk')) &&
+                        value={(() => this.state.socialNetworks.find(sc => sc.type === 'vk')) &&
                         (() => this.state.socialNetworks.find(sc => sc.type === 'vk')).url}
                     />
                 </div>
@@ -229,7 +215,7 @@ class ProfileEditorForm extends React.Component {
                         type="text"
                         label="Вы в facebook(ссылка):"
                         name="facebook"
-                        defaultValue={(() => this.state.socialNetworks.find(sc => sc.type === 'facebook')) &&
+                        value={(() => this.state.socialNetworks.find(sc => sc.type === 'facebook')) &&
                         (() => this.state.socialNetworks.find(sc => sc.type === 'facebook')).url}
                     />
                 </div>
@@ -240,7 +226,7 @@ class ProfileEditorForm extends React.Component {
                         type="text"
                         label="Вы в twitter(ссылка):"
                         name="twitter"
-                        defaultValue={(() => this.state.socialNetworks.find(sc => sc.type === 'twitter')) &&
+                        value={(() => this.state.socialNetworks.find(sc => sc.type === 'twitter')) &&
                         (() => this.state.socialNetworks.find(sc => sc.type === 'twitter')).url}
                     />
                 </div>
