@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles} from 'material-ui';
+import ScrollArea from 'react-scrollbar';
 
 import * as profileActions from './ProfileActions';
 import { ProfileStyles } from './ProfileStyles';
@@ -10,6 +11,7 @@ import ProfileInfo from "./ProfileInfo";
 
 class ProfileForm extends React.Component {
     static propTypes = {
+        match: PropTypes.object.isRequired,
         history: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired,
         isSending: PropTypes.bool.isRequired,
@@ -17,7 +19,7 @@ class ProfileForm extends React.Component {
         profileEvents: PropTypes.array.isRequired,
         currentUserUsername: PropTypes.string.isRequired,
         profileDataRequest: PropTypes.func.isRequired,
-        profileEventsRequest: PropTypes.func.isRequired
+        profileEventsRequest: PropTypes.func.isRequired,
     };
 
     constructor(props) {
@@ -31,24 +33,25 @@ class ProfileForm extends React.Component {
     componentWillMount() {
         this.props.profileDataRequest(this.props.match.params.username);
         this.props.profileEventsRequest(this.props.match.params.username);
-
     }
 
     render() {
         const { classes } = this.props;
         return (
-            <div className={classes.root}>
-                <ProfileInfo
-                    data={this.props.profileData}
-                    isCurrentUser={false}
-                    isSending={this.props.isSending}
-                />
-                <EventsTable
-                    events={this.props.profileEvents}
-                    isCurrentUser={false}
-                    history={this.props.history}
-                />
-            </div>
+            <ScrollArea>
+                <div className={classes.root}>
+                    <ProfileInfo
+                        data={this.props.profileData}
+                        isCurrentUser={false}
+                        isSending={this.props.isSending}
+                    />
+                    <EventsTable
+                        events={this.props.profileEvents}
+                        isCurrentUser={false}
+                        history={this.props.history}
+                    />
+                </div>
+            </ScrollArea>
         );
     }
 }

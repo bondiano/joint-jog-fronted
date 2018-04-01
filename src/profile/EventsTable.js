@@ -16,19 +16,20 @@ class EventsTable extends React.Component {
         subscribeEvent: PropTypes.func.isRequired,
         events: PropTypes.array.isRequired,
         username: PropTypes.string,
-        isCurrentUser: PropTypes.bool.isRequired
+        isCurrentUser: PropTypes.bool.isRequired,
+        history: PropTypes.object.isRequired,
+        classes: PropTypes.object.isRequired
     };
 
-    toEvent = (eventId) => {
+    toEvent = (eventId) => (e) => {
         this.props.history.push(`/event/${eventId}`);
     };
 
-    subEvent = (eventId) => {
+    subEvent = (eventId) => (e) => {
         this.props.subscribeEvent(eventId);
-
     };
 
-    unsubEvent = (eventId) => {
+    unsubEvent = (eventId) => (e) => {
         this.props.unsubscribeEvent(eventId, null, this.props.username);
     };
 
@@ -57,9 +58,8 @@ class EventsTable extends React.Component {
                                             <Button
                                                 variant="raised"
                                                 color="primary"
-                                                onClick={() => this.toEvent(ev._id)}
-                                                size="small"
-                                            >
+                                                onClick={this.toEvent(ev._id)}
+                                                size="small">
                                                 На карте
                                             </Button>
                                         </Hidden>
@@ -68,7 +68,7 @@ class EventsTable extends React.Component {
                                                 variant="fab"
                                                 mini
                                                 color="primary"
-                                                onClick={() => this.toEvent(ev._id)}>
+                                                onClick={this.toEvent(ev._id)}>
                                                 <img src={onMap} alt="On map"/>
                                             </Button>
                                         </Hidden>
@@ -80,7 +80,7 @@ class EventsTable extends React.Component {
                                                     variant="raised"
                                                     color="secondary"
                                                     type="submit"
-                                                    onClick={() => this.unsubEvent(ev._id)}
+                                                    onClick={this.unsubEvent(ev._id)}
                                                     size="small"
                                                 >
                                                     Отписаться
@@ -91,7 +91,7 @@ class EventsTable extends React.Component {
                                                     variant="fab"
                                                     mini
                                                     color="secondary"
-                                                    onClick={() => this.unsubEvent(ev._id)}>
+                                                    onClick={this.unsubEvent(ev._id)}>
                                                     <RemoveIcon/>
                                                 </Button>
                                             </Hidden>
@@ -102,7 +102,7 @@ class EventsTable extends React.Component {
                                                     variant="raised"
                                                     color="secondary"
                                                     type="submit"
-                                                    onClick={() => this.subEvent(ev._id)}
+                                                    onClick={this.subEvent(ev._id)}
                                                     size="small"
 
                                                 >
@@ -114,7 +114,7 @@ class EventsTable extends React.Component {
                                                     variant="fab"
                                                     mini
                                                     color="primary"
-                                                    onClick={() => this.subEvent(ev._id)}>
+                                                    onClick={this.subEvent(ev._id)}>
                                                     <AddIcon/>
                                                 </Button>
                                             </Hidden>
@@ -126,7 +126,7 @@ class EventsTable extends React.Component {
                     </TableBody>
                 </Table>
             </Paper>
-        )
+        );
     }
 }
 

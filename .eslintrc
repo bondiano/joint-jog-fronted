@@ -16,7 +16,8 @@
   "globals": {
     "document": true,
     "window": true,
-    "console": true
+    "console": true,
+    "Promise": true
   },
   "rules": {
     "quotes": 0,
