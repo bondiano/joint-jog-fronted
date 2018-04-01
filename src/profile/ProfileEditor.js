@@ -185,7 +185,7 @@ class ProfileEditorForm extends React.Component {
                     <Typography variant="caption" color="error">{!this.state.isValid.age && AGE_VALID_ERROR}</Typography>
                 </div>
 
-
+                <div>
                 <FormControl className={classes.fieldLine}>
                     <FormLabel component="legend">Пол</FormLabel>
                     <RadioGroup
@@ -197,6 +197,7 @@ class ProfileEditorForm extends React.Component {
                         <FormControlLabel value="male" control={<Radio />} label="Мужской" />
                     </RadioGroup>
                 </FormControl>
+                </div>
 
                 <div className={classes.fieldLine}>
                     <TextField
@@ -233,6 +234,7 @@ class ProfileEditorForm extends React.Component {
 
                 <Typography variant="caption" color="error">{!this.state.isValid.social && SOCIAL_VALID_ERROR}</Typography>
 
+            <div>
                 <Button
                     variant="raised"
                     color="secondary"
@@ -251,6 +253,7 @@ class ProfileEditorForm extends React.Component {
                 >
                     Сохранить
                 </Button>
+            </div>
 
             </Paper>
         );
