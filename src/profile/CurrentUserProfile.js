@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles } from 'material-ui';
+import ScrollArea from 'react-scrollbar';
 
 import * as profileActions from './ProfileActions';
 import { ProfileStyles } from './ProfileStyles';
@@ -44,27 +45,29 @@ class ProfileForm extends React.Component {
         const { classes } = this.props;
 
         return (
-            <div className={classes.root}>
-                {this.state.isEditor ?
-                    <ProfileEditor
-                        data={this.props.profileData}
-                        changeFormType={this.changeFormType}
+            <ScrollArea>
+                <div className={classes.root}>
+                    {this.state.isEditor ?
+                        <ProfileEditor
+                            data={this.props.profileData}
+                            changeFormType={this.changeFormType}
+                            history={this.props.history}
+                        /> :
+                        <ProfileInfo
+                            data={this.props.profileData}
+                            isCurrentUser
+                            changeFormType={this.changeFormType}
+                            isSending={this.props.isSending}
+                        />
+                    }
+                    <EventsTable
+                        events={this.props.profileEvents}
+                        isCurrentUser
                         history={this.props.history}
-                    /> :
-                    <ProfileInfo
-                        data={this.props.profileData}
-                        isCurrentUser={true}
-                        changeFormType={this.changeFormType}
-                        isSending={this.props.isSending}
+                        username={this.props.currentUserUsername}
                     />
-                }
-                <EventsTable
-                    events={this.props.profileEvents}
-                    isCurrentUser={true}
-                    history={this.props.history}
-                    username={this.props.currentUserUsername}
-                />
-            </div>
+                </div>
+            </ScrollArea>
         );
     }
 }

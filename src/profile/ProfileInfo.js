@@ -56,5 +56,3 @@ class ProfileInfo extends React.Component {
 }
 
 export default withStyles(ProfileStyles)(ProfileInfo);
-
-
