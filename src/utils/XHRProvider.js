@@ -3,7 +3,7 @@ import axios from 'axios';
 import { gcf } from '../config';
 
 let instance = null;
-const headerWithToken = {headers: {'Authorization': `Bearer ${localStorage.getItem('token')}`}};
+const auth = () => `bearer ${window.localStorage.getItem('token')}`;
 
 export default class XHRProvider {
     constructor() {
@@ -12,15 +12,20 @@ export default class XHRProvider {
         }
         instance = axios.create({
             baseURL: gcf.url,
+            transformRequest: [(data, headers) => {
+                headers['Authorization'] = auth();
+                return JSON.stringify(data);
+            }],
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Authorization': `bearer ${window.localStorage.getItem('token')}`
             }
         });
     }
 
     successHandler = (response) => {
         if(!response.data.success) {
-            return new Promise((resolve, reject) => reject({response}))
+            return new Promise((resolve, reject) => reject({response}));
         }
         return ({
             data: response.data.payload,
@@ -33,21 +38,21 @@ export default class XHRProvider {
             status: response.status
     });
 
-    get = (path, needToken = false) =>
+    get = (path) =>
         instance
-            .get(path, needToken && headerWithToken)
+            .get(path)
             .then(this.successHandler)
             .catch(this.errorHandler);
 
-    post = (path, body, needToken = false) =>
+    post = (path, body) =>
         instance
-            .post(path, body, needToken && headerWithToken)
+            .post(path, body)
             .then(this.successHandler)
             .catch(this.errorHandler);
 
-    patch = (path, body, needToken = false) =>
+    patch = (path, body) =>
         instance
-            .patch(path, body, needToken && headerWithToken)
+            .patch(path, body)
             .then(this.successHandler)
             .catch(this.errorHandler);
 }

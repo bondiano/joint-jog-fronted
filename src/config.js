@@ -1,3 +1,3 @@
 export const gcf = {};
 
-gcf.url = 'http://localhost:3001';
+gcf.url = 'https://joint-jog-noveo.herokuapp.com/';
