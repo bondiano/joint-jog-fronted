@@ -2,6 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { withStyles, CircularProgress } from 'material-ui';
+import ScrollArea from 'react-scrollbar';
+
 
 import * as profileActions from './ProfileActions';
 import { ProfileStyles } from './ProfileStyles';
@@ -9,7 +11,7 @@ import EventsTable from "./EventsTable";
 import ProfileInfo from "./ProfileInfo";
 import ProfileEditor from "./ProfileEditor";
 
-class ProfileForm extends React.Component {
+class CurrentUserProfile extends React.Component {
     static propTypes = {
         history: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired,
@@ -43,33 +45,35 @@ class ProfileForm extends React.Component {
 
     render() {
         const { classes } = this.props;
-
         return (
-            <div className={classes.root}>
-                {this.props.isLoadingData ?
-                    <CircularProgress size={32} className={classes.fabProgress}/> :
-                    <div>{this.state.isEditor ?
-                        <ProfileEditor
-                            data={this.props.profileData}
-                            changeFormType={this.changeFormType}
-                            history={this.props.history}
-                        /> :
-                        <ProfileInfo
-                            data={this.props.profileData}
+            <ScrollArea>
+                <div className={classes.root}>
+                    {this.props.isLoadingData ?
+                        <CircularProgress size={32} className={classes.fabProgress}/> :
+                        <div>{this.state.isEditor ?
+                            <ProfileEditor
+                                data={this.props.profileData}
+                                changeFormType={this.changeFormType}
+                                history={this.props.history}
+                            /> :
+                            <ProfileInfo
+                                data={this.props.profileData}
+                                isCurrentUser={true}
+                                changeFormType={this.changeFormType}
+                                isSending={this.props.isSending}
+                            />
+                        }</div>
+                    }
+                    {this.props.isLoadingEvents ?
+                        <CircularProgress size={32} className={classes.fabProgress}/> :
+                        <EventsTable
+                            events={this.props.profileEvents}
                             isCurrentUser={true}
-                            changeFormType={this.changeFormType}
-                        />
-                    }</div>
-                }
-                {this.props.isLoadingEvents ?
-                    <CircularProgress size={32} className={classes.fabProgress}/> :
-                    <EventsTable
-                        events={this.props.profileEvents}
-                        isCurrentUser={true}
-                        history={this.props.history}
-                        username={this.props.currentUserUsername}
-                    />}
-            </div>
+                            history={this.props.history}
+                            username={this.props.currentUserUsername}
+                        />}
+                </div>
+            </ScrollArea>
         );
     }
 }
@@ -87,5 +91,5 @@ const mapDispatchToProps = {
     profileEventsRequest: profileActions.profileEventsRequest
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(ProfileStyles)(ProfileForm));
+export default connect(mapStateToProps, mapDispatchToProps)(withStyles(ProfileStyles)(CurrentUserProfile));
 
