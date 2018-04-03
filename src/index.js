@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import reducer from './reducer';
-import popupMiddlewere from './notification/PopupMiddlewere';
+import popupMiddlewere from './popup/PopupMiddlewere';
 import rootSaga from './saga';
 import App from './app/App';
 

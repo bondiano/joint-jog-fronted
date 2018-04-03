@@ -6,7 +6,7 @@ const PopupPortal = ({portalElementId, children}) => createPortal(
     <div>
         {children}
     </div>,
-    portalElementId
+    document.getElementById(portalElementId)
 );
 
 PopupPortal.propTypes = {

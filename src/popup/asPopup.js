@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{ Component } from 'react';
 import { connect } from 'react-redux';
 
 const asPopup = (types = [], options = { hideAfter: 4000, type: 'notification', maxCount: 3 }) => {
@@ -10,14 +10,10 @@ const asPopup = (types = [], options = { hideAfter: 4000, type: 'notification', 
         const mapDispatchToProps = {
         };
 
-        return connect(mapStateToProps, mapDispatchToProps)(class extends React {
-            constructor(props) {
-                super(props);
-            }
-
+        return connect(mapStateToProps, mapDispatchToProps)(class extends Component {
             render() {
                 return (
-                    <WrappedComponent {...this.props}/>
+                    <WrappedComponent popup={{hide: false, action: () => {}}} {...this.props}/>
                 );
             }
         });
