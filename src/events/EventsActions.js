@@ -16,10 +16,11 @@ export const unsubscribeEventError = (error) => ({
     error
 });
 
-export const subscribeEventRequest = (id, history) => ({
+export const subscribeEventRequest = (id, history, username) => ({
     type: types.SUBSCRIBE_EVENT_REQUEST,
     id,
-    history
+    history,
+    username
 });
 
 export const subscribeEventSuccess = () => ({

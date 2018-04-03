@@ -52,11 +52,12 @@ class EventCreateForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        const title = this.state.title, 
-            description = this.state.description, 
-            date = this.state.date, 
-            pointsList = this.props.pointsList;
-        this.props.createNewPointRequest(title, description, date, pointsList, this.props.history);
+        this.props.createNewPointRequest({
+            title: this.state.title, 
+            description: this.state.description, 
+            date:  new Date(this.state.date).getTime(), 
+            points: this.props.pointsList
+        }, this.props.history);
     };
 
     addNewPoint = (e) => {

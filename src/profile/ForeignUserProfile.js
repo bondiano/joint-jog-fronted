@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { withStyles} from 'material-ui';
+import { withStyles, CircularProgress } from 'material-ui';
 import ScrollArea from 'react-scrollbar';
 
 import * as profileActions from './ProfileActions';
@@ -19,6 +19,7 @@ class ForeignUserProfile extends React.Component {
         currentUserUsername: PropTypes.string.isRequired,
         profileDataRequest: PropTypes.func.isRequired,
         profileEventsRequest: PropTypes.func.isRequired,
+        isLoadingData: PropTypes.bool.isRequired,
     };
 
     constructor(props) {
@@ -39,15 +40,21 @@ class ForeignUserProfile extends React.Component {
         return (
             <ScrollArea>
                 <div className={classes.root}>
-                    <ProfileInfo
-                        data={this.props.profileData}
-                        isCurrentUser={false}
-                    />
-                    <EventsTable
-                        events={this.props.profileEvents}
-                        isCurrentUser={false}
-                        history={this.props.history}
-                    />
+                    {this.props.isLoadingData ?
+                        <CircularProgress size={32} className={classes.fabProgress}/> :
+                        <div>
+                            <ProfileInfo
+                                data={this.props.profileData}
+                                isCurrentUser={false}
+                            />
+                            <EventsTable
+                                events={this.props.profileEvents}
+                                isCurrentUser={false}
+                                history={this.props.history}
+                                username={this.props.profileData.username}
+                            />
+                        </div>
+                    }
                 </div>
             </ScrollArea>
         );
@@ -57,7 +64,8 @@ class ForeignUserProfile extends React.Component {
 const mapStateToProps = state => ({
     profileData: state.profile.profile,
     profileEvents: state.profile.events,
-    currentUserUsername: state.auth.username
+    currentUserUsername: state.auth.username,
+    isLoadingData: state.profile.isLoadingData
 });
 
 const mapDispatchToProps = {
