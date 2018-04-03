@@ -7,7 +7,7 @@ import { MuiThemeProvider } from 'material-ui/styles';
 import { connect } from 'react-redux';
 
 import Navbar from '../common/Navbar';
-import Notification from '../common/Notification';
+import ErrorNotification from '../common/ErrorNotification';
 import PrivateRouter from '../common/PrivateRouter';
 import RegisterForm from '../auth/RegisterForm';
 import LoginForm from "../auth/LoginForm";
@@ -100,7 +100,7 @@ class App extends React.Component {
                         <Route path="/profile/:username" component={ForeignUserProfile} />
                     </Switch>
                 <PopupPortal>
-                    <Notification/>
+                    <ErrorNotification/>
                 </PopupPortal>
                 </MuiThemeProvider>
             </div>

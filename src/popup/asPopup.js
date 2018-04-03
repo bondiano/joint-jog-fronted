@@ -10,7 +10,7 @@ const asPopup = (types = [], options = { hideAfter: 4000, type: 'notification', 
         const mapDispatchToProps = {
         };
 
-        return connect(mapStateToProps, mapDispatchToProps)(class extends Component {
+        return connect(mapStateToProps, mapDispatchToProps)(class HOC extends Component {
             render() {
                 return (
                     <WrappedComponent popup={{hide: false, action: () => {}}} {...this.props}/>
