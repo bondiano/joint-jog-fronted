@@ -33,6 +33,7 @@ function* profileEventsRequestSaga(action) {
     } catch(err) {
         yield put(actions.profileRequestError('Извините, произошла ошибка. Попробуйте позже.'));
         yield call(console.error, err.message)
+        
     }
 }
 
