@@ -25,7 +25,7 @@ class EventsTable extends React.Component {
         const month = date.getMonth();
         const year = date.getFullYear();
 
-        return `${day}.${month < 10 ? `0${month}` : month}.${year}`;
+        return `${day}.${month < 9 ? `0${month+1}` : month+1}.${year}`;
     };
 
     render() {
