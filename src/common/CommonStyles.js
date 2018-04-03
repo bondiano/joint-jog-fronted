@@ -36,12 +36,12 @@ export const NavbarStyles = theme => ({
         marginRight: 20,
     },
     logo: {
-        height: '45px',
-        letterSpacing: '-0.5px'
+        height: '45px'
     },
     title: {
         display: 'inline',
-        marginLeft: '5px'
+        marginLeft: '5px',
+        letterSpacing: '-0.5px'
     }
 });
 
