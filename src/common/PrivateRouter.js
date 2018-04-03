@@ -4,9 +4,9 @@ import { Route } from 'react-router';
 import { Redirect } from 'react-router-dom';
 
 const PrivateRoute = (props) => {
-    const {component: Component, routerProps, isAuth, location, ...rest} = props;
+    const {component: Component, routerProps, isAuth, ...rest} = props;
     return isAuth ? (<Route {...rest} render={props => (<Component {...routerProps} {...props}/>)}/>)
-    : (<Redirect to={{pathname: '/login', state: {from: location}}}/>);
+    : (<Redirect to={{pathname: '/login'}}/>);
 };
 
 PrivateRoute.defaultProps = {
@@ -15,7 +15,6 @@ PrivateRoute.defaultProps = {
 };
 
 PrivateRoute.propTypes = {
-    location: PropTypes.object.isRequired,
     component: PropTypes.func.isRequired,
     routerProps: PropTypes.object,
     isAuth: PropTypes.bool

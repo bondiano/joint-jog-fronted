@@ -28,6 +28,7 @@ class EventEditForm extends Component {
         fetchEvent: PropTypes.func.isRequired,
         isSending: PropTypes.bool.isRequired,
         isLoading: PropTypes.bool.isRequired,
+        clearEditorPoints: PropTypes.func.isRequired,
         editCurrentPoints: PropTypes.func.isRequired,
         editEventRequest: PropTypes.func.isRequired,
         currentMapCenter: PropTypes.array.isRequired,
@@ -74,6 +75,10 @@ class EventEditForm extends Component {
             });
         }
     }
+
+    componentWillUnmount() {
+        this.props.clearEditorPoints();
+    }
  
     handleChange = (e) => {
         const {name, value} = e.target;
@@ -84,12 +89,13 @@ class EventEditForm extends Component {
 
     handleSubmit = (e) => {
         e.preventDefault();
-        const title = this.state.title, 
-            id = this.props.match.params.id,
-            description = this.state.description, 
-            date = this.state.date,
-            pointsList = this.props.pointsList;
-        this.props.editEventRequest({id, title, description, date, pointsList, history: this.props.history});
+        this.props.editEventRequest({
+            _id: this.props.match.params.id,
+            title: this.state.title, 
+            description: this.state.description, 
+            date:  new Date(this.state.date).getTime(), 
+            points: this.props.pointsList
+        }, this.props.history);
     };
 
     addNewPoint = (e) => {
@@ -233,7 +239,8 @@ const mapDispatchToProps = {
     removePoint: mapActions.removePoint,
     changePointTitle: mapActions.changePointTitle,
     showRoute: mapActions.showRoute,
-    hideRoute: mapActions.hideRoute,    
+    hideRoute: mapActions.hideRoute,
+    clearEditorPoints: mapActions.clearEditorPoints,
     editCurrentPoints: mapActions.editCurrentPoints,
     editEventRequest: editorActions.editEventRequest,
     fetchEvent: editorActions.fetchEventRequest
