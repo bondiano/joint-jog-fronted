@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { withStyles, CircularProgress } from 'material-ui';
 import ScrollArea from 'react-scrollbar';
 
-
 import * as profileActions from './ProfileActions';
 import { ProfileStyles } from './ProfileStyles';
 import EventsTable from "./EventsTable";
@@ -16,7 +15,6 @@ class CurrentUserProfile extends React.Component {
         history: PropTypes.object.isRequired,
         classes: PropTypes.object.isRequired,
         isLoadingData: PropTypes.bool.isRequired,
-        isLoadingEvents: PropTypes.bool.isRequired,
         profileData: PropTypes.object.isRequired,
         profileEvents: PropTypes.array.isRequired,
         currentUserUsername: PropTypes.string.isRequired,
@@ -49,7 +47,8 @@ class CurrentUserProfile extends React.Component {
             <ScrollArea>
                 <div className={classes.root}>
                     {this.props.isLoadingData ?
-                        <CircularProgress size={32} className={classes.fabProgress}/> :
+                    <CircularProgress size={32} className={classes.fabProgress}/> :
+                        <div>
                         <div>{this.state.isEditor ?
                             <ProfileEditor
                                 data={this.props.profileData}
@@ -62,15 +61,14 @@ class CurrentUserProfile extends React.Component {
                                 changeFormType={this.changeFormType}
                             />
                         }</div>
-                    }
-                    {this.props.isLoadingEvents ?
-                        <CircularProgress size={32} className={classes.fabProgress}/> :
                         <EventsTable
                             events={this.props.profileEvents}
                             isCurrentUser
                             history={this.props.history}
                             username={this.props.currentUserUsername}
-                        />}
+                        />
+                        </div>
+                    }
                 </div>
             </ScrollArea>
         );
@@ -81,7 +79,6 @@ const mapStateToProps = state => ({
     profileData: state.profile.profile,
     profileEvents: state.profile.events,
     isLoadingData: state.profile.isLoadingData,
-    isLoadingEvents: state.profile.isLoadingEvents,
     currentUserUsername: state.auth.username
 });
 

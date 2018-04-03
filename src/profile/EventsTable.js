@@ -1,19 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
 import { Typography, Paper, withStyles, Button, Hidden } from 'material-ui';
 import Table, { TableBody, TableCell, TableRow } from 'material-ui/Table';
-import AddIcon from 'material-ui-icons/Add';
-import RemoveIcon from 'material-ui-icons/Remove';
 
 import { ProfileStyles } from './ProfileStyles';
-import * as eventsActions from '../events/EventsActions';
 import { onMap } from "../assets";
+import SubUnsubButton from "./SubUnsubButton";
 
 class EventsTable extends React.Component {
     static propTypes = {
-        unsubscribeEvent: PropTypes.func.isRequired,
-        subscribeEvent: PropTypes.func.isRequired,
         events: PropTypes.array.isRequired,
         username: PropTypes.string,
         isCurrentUser: PropTypes.bool.isRequired,
@@ -23,14 +18,6 @@ class EventsTable extends React.Component {
 
     toEvent = (eventId) => (e) => {
         this.props.history.push(`/event/${eventId}`);
-    };
-
-    subEvent = (eventId) => (e) => {
-        this.props.subscribeEvent(eventId);
-    };
-
-    unsubEvent = (eventId) => (e) => {
-        this.props.unsubscribeEvent(eventId, null, this.props.username);
     };
 
     formatDate = (date) => {
@@ -73,53 +60,14 @@ class EventsTable extends React.Component {
                                             </Button>
                                         </Hidden>
                                     </TableCell>
-                                    {this.props.isCurrentUser ?
-                                        <TableCell padding="none" className={classes.cell}>
-                                            <Hidden smDown>
-                                                <Button
-                                                    variant="raised"
-                                                    color="secondary"
-                                                    type="submit"
-                                                    onClick={this.unsubEvent(ev._id)}
-                                                    size="small"
-                                                >
-                                                    Отписаться
-                                                </Button>
-                                            </Hidden>
-                                            <Hidden mdUp>
-                                                <Button
-                                                    variant="fab"
-                                                    mini
-                                                    color="secondary"
-                                                    onClick={this.unsubEvent(ev._id)}>
-                                                    <RemoveIcon/>
-                                                </Button>
-                                            </Hidden>
-                                        </TableCell> :
-                                        <TableCell padding="none" className={classes.cell}>
-                                            <Hidden smDown>
-                                                <Button
-                                                    variant="raised"
-                                                    color="secondary"
-                                                    type="submit"
-                                                    onClick={this.subEvent(ev._id)}
-                                                    size="small"
-
-                                                >
-                                                    Подписаться
-                                                </Button>
-                                            </Hidden>
-                                            <Hidden mdUp>
-                                                <Button
-                                                    variant="fab"
-                                                    mini
-                                                    color="primary"
-                                                    onClick={this.subEvent(ev._id)}>
-                                                    <AddIcon/>
-                                                </Button>
-                                            </Hidden>
-                                        </TableCell>
-                                    }
+                                    <TableCell padding="none" className={classes.cell}>
+                                        <SubUnsubButton
+                                            isCurrentUser={this.props.isCurrentUser}
+                                            eventId={ev._id}
+                                            eventSubscribers={ev.subscribers}
+                                            username={this.props.username}
+                                        />
+                                    </TableCell>
                                 </TableRow>
                             );
                         })}
@@ -130,12 +78,5 @@ class EventsTable extends React.Component {
     }
 }
 
-const mapStateToProps = state => ({});
-
-const mapDispatchToProps = {
-    unsubscribeEvent: eventsActions.unsubscribeEventRequest,
-    subscribeEvent: eventsActions.subscribeEventRequest
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(withStyles(ProfileStyles)(EventsTable));
+export default withStyles(ProfileStyles)(EventsTable);
 

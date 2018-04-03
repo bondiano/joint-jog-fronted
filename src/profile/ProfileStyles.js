@@ -41,6 +41,9 @@ export const ProfileStyles = theme => ({
     buttonLine:{
         margin: 16
     },
+    button: {
+        width: 110
+    },
     icon: {
         marginTop: 10,
         marginLeft: 10

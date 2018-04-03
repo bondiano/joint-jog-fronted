@@ -4,8 +4,7 @@ const initialState = {
     error: '',
     profile: {},
     events: [],
-    isLoadingData: false,
-    isLoadingEvents: false,
+    isLoadingData: false
 };
 
 export const profile = (state = initialState, action) => {
@@ -19,7 +18,6 @@ export const profile = (state = initialState, action) => {
         case types.PROFILE_EVENTS_REQUEST:
             return {
                 ...state,
-                isLoadingEvents: true
             };
         case types.PROFILE_DATA_REQUEST_SUCCESS:
             return {
@@ -33,7 +31,6 @@ export const profile = (state = initialState, action) => {
                 ...state,
                 events: action.events,
                 error: '',
-                isLoadingEvents: false
             };
         case types.PROFILE_UPDATE_REQUEST_SUCCESS:
             return {
@@ -46,7 +43,6 @@ export const profile = (state = initialState, action) => {
             return {
                 ...state,
                 error: action.error,
-                isLoadingEvents: false,
                 isLoadingData: false
             };
         default:
