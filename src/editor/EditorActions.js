@@ -1,12 +1,8 @@
 import * as types from './EditorActionTypes';
 
-export const createNewEventRequest = (title, description, date, pointsList, history) => ({
+export const createNewEventRequest = (eventData) => ({
     type: types.CREATE_NEW_EVENT_REQUEST,
-    title, 
-    description, 
-    date, 
-    pointsList, 
-    history
+    eventData
 });
 
 export const createNewEventSuccess = () => ({
@@ -18,14 +14,9 @@ export const createNewEventError = (error) => ({
     error
 });
 
-export const editEventRequest = (id, title, description, date, pointsList, history) => ({
+export const editEventRequest = (id, eventData) => ({
     type: types.EDIT_EVENT_REQUEST,
-    id, 
-    title, 
-    description, 
-    date, 
-    pointsList,
-    history
+    eventData
 });
 
 export const editEventSuccess = () => ({

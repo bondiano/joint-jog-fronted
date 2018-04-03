@@ -58,12 +58,8 @@ export const CreateEventFormStyles = theme => ({
     pointButton: {
         minWidth: 32
     },
-    loader: {
-        minWidth: 200,
-        display: 'flex',
-        justifyContent: 'center'
-    },
-    progress: {
-        color: purple[500]
+    pointTextField: {
+        whiteSpace: 'nowrap',
+        overflow: 'hidden'
     }
 });

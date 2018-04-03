@@ -56,7 +56,7 @@ class EventCreateForm extends Component {
             description = this.state.description, 
             date = this.state.date, 
             pointsList = this.props.pointsList;
-        this.props.createNewPointRequest(title, description, date, pointsList, this.props.history);
+        this.props.createNewPointRequest({title, description, date, pointsList, history: this.props.history});
     };
 
     addNewPoint = (e) => {

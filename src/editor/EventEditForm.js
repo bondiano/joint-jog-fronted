@@ -10,6 +10,8 @@ import { CircularProgress } from 'material-ui/Progress';
 import * as mapActions from '../map/MapActions';
 import * as editorActions from './EditorActions';
 
+import Preloader from '../common/Preloader';
+
 import PointsList from './PointsList';
 import { CreateEventFormStyles } from './EditorStyles';
 
@@ -66,7 +68,6 @@ class EventEditForm extends Component {
         if (this.props.currentEvent !== nextProps.currentEvent) {
             const {event} = nextProps.currentEvent;
             this.setState({
-                ...this.state,
                 title: event.title,
                 description: event.describe,
                 date: new Date(event.date).toISOString().substring(0, 16)
@@ -75,8 +76,7 @@ class EventEditForm extends Component {
     }
  
     handleChange = (e) => {
-        const name = e.target.name;
-        const value = e.target.value;
+        const {name, value} = e.target;
         this.setState({
             [name]: value
         });
@@ -87,9 +87,9 @@ class EventEditForm extends Component {
         const title = this.state.title, 
             id = this.props.match.params.id,
             description = this.state.description, 
-            date = this.state.date, 
+            date = this.state.date,
             pointsList = this.props.pointsList;
-        this.props.editEventRequest(id, title, description, date, pointsList, this.props.history);
+        this.props.editEventRequest({id, title, description, date, pointsList, history: this.props.history});
     };
 
     addNewPoint = (e) => {
@@ -110,17 +110,6 @@ class EventEditForm extends Component {
 
     showRoute = () => {
         this.props.showRoute();
-    };
-
-    loader = () => {
-        const {classes} = this.props;
-        return (
-            <div className={classes.loader}>
-                <Typography className={classes.heading} variant="headline" component="h2">
-                    <CircularProgress className={classes.progress} thickness={7} />
-                </Typography>
-            </div>
-        );
     };
 
     content = () => {
@@ -221,8 +210,7 @@ class EventEditForm extends Component {
         return (
             <Slide direction="left" mountOnEnter unmountOnExit in={showEditor}>
                 <div className={classes.root}>
-                    {this.props.isLoading 
-                        || this.props.error ? this.loader() : this.content()}
+                    {this.props.isLoading || this.props.error ? <Preloader/> : this.content()}
                 </div>
             </Slide>
         );

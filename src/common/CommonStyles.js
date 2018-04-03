@@ -1,3 +1,5 @@
+import purple from 'material-ui/colors/purple';
+
 export const HideButtonStyles = themes => ({
     hideButton: {
         position: 'absolute',
@@ -34,10 +36,26 @@ export const NavbarStyles = theme => ({
         marginRight: 20,
     },
     logo: {
-        height: '45px'
+        height: '45px',
+        letterSpacing: '-0.5px'
     },
     title: {
         display: 'inline',
         marginLeft: '5px'
     }
+});
+
+export const PreloaderStyles = theme => ({
+    heading: {
+        margin: '16px 8px 8px 8px',
+        textAlign: 'center'
+    },
+    loader: {
+        minWidth: 200,
+        display: 'flex',
+        justifyContent: 'center'
+    },
+    progress: {
+        color: purple[500]
+    },
 });
