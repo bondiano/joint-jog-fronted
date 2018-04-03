@@ -130,7 +130,7 @@ class ProfileEditorForm extends React.Component {
     render() {
         const { classes } = this.props;
         const socialNetworks = {
-            vk: (url) =>
+            vk: (url) => (
                 <div className={classes.fieldLine}>
                     <TextField
                         onBlur={this.handleChangeSocial}
@@ -139,8 +139,9 @@ class ProfileEditorForm extends React.Component {
                         name="vk"
                         defaultValue={url}
                     />
-                </div>,
-            facebook: (url) =>
+                </div>
+            ),
+            facebook: (url) => (
                 <div className={classes.fieldLine}>
                     <TextField
                         onBlur={this.handleChangeSocial}
@@ -149,8 +150,9 @@ class ProfileEditorForm extends React.Component {
                         name="facebook"
                         defaultValue={url}
                     />
-                </div>,
-            twitter: (url) =>
+                </div>
+            ),
+            twitter: (url) => (
                 <div className={classes.fieldLine}>
                     <TextField
                         onBlur={this.handleChangeSocial}
@@ -160,6 +162,7 @@ class ProfileEditorForm extends React.Component {
                         defaultValue={url}
                     />
                 </div>
+            )
         };
         return (
             <Paper  className={classes.rootEditor}>
