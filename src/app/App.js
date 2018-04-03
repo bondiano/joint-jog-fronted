@@ -18,8 +18,9 @@ import * as authActions from '../auth/AuthActions';
 
 import theme from '../theme';
 import {AppStyles} from './AppStyles';
-import CurrentUserProfile from "../profile/CurrentUserProfile";
-import ForeignUserProfile from "../profile/ForeignUserProfile";
+import CurrentUserProfile from '../profile/CurrentUserProfile';
+import ForeignUserProfile from '../profile/ForeignUserProfile';
+import Notification from '../notification/Notification';
 
 class App extends React.Component {
     static propTypes = {
