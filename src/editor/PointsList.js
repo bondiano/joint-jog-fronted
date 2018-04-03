@@ -20,6 +20,7 @@ const PointsList = ({pointsList, removePointHandler, handlePointTitleChange, cla
                             name="pointTitle"
                             margin="dense"
                             onBlur={handlePointTitleChange(index, point.title)}
+                            className={classes.pointTextField}
                         />
                         <Tooltip id="tooltip-fab" title="Удалить" placement="top">
                             <Button 

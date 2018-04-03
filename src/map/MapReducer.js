@@ -126,7 +126,7 @@ export const map = (state = initialState, action) => {
         case types.EDIT_CURRENT_POINTS:
             return {
                 ...state,
-                editorPointsList: [...state.currentEventPointsList]
+                editorPointsList: state.currentEventPointsList
             };
         default:
             return state;
