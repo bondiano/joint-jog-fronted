@@ -1,12 +1,12 @@
 import React from 'react';
-import asPopup from './asPopup';
+import asPopup from '../popup/asPopup';
 
-function Notification() {
+const Notification = ({popup: {hide, action}}) => {
     return (
         <div>
             Some notification
         </div>
     );
-}
+};
 
 export default asPopup()(Notification);

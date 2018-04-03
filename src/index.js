@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import reducer from './reducer';
-import { popupMiddleware } from './notification/popup.redux';
+import popupMiddlewere from './notification/PopupMiddlewere';
 import rootSaga from './saga';
 import App from './app/App';
 
@@ -16,7 +16,7 @@ const initialState = {};
 const store = createStore(
     reducer,
     initialState,
-    composeWithDevTools(applyMiddleware(popupMiddleware, sagaMiddleware))
+    composeWithDevTools(applyMiddleware(popupMiddlewere, sagaMiddleware))
 );
 
 

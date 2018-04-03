@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-const asPopup = (types, options = {portalElementId: 'popup', hideAfter: 4000, maxCount: 3}) => {
+const asPopup = (types = [], options = { hideAfter: 4000, type: 'notification', maxCount: 3 }) => {
 
     return (WrappedComponent) => {
         const mapStateToProps = (state) => ({

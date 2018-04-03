@@ -11,16 +11,3 @@ export const unlisten = (actionType) => ({
     type: 'POPUP_UNLISTEN',
     actionType
 });
-
-export const popupMiddleware = store => next => action => {
-    
-};
-
-const initialState = {
-    listening: {},
-    notifications: {}
-};
-
-export default (state = initialState, action) => {
-
-};
