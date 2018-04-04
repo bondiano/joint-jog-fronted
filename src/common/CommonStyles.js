@@ -59,3 +59,24 @@ export const PreloaderStyles = theme => ({
         color: purple[500]
     },
 });
+
+export const NotificationStyles = theme => ({
+    error: {
+        minWidth: 320,
+        position: 'fixed',
+        bottom: 0,
+        right: 0,
+        zIndex: 1000,
+        padding: '24px',
+        borderLeft: '2px',
+        borderLeftStyle: 'solid',
+        borderColor: purple[500]
+    },
+    errorMessage: {
+        display: 'flex',
+        alignItems: 'center' 
+    },
+    errorIcon: {
+        marginRight: '3px'
+    }
+});

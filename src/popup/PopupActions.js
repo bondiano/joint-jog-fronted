@@ -1,15 +1,18 @@
+import * as types from './PopupActionTypes';
+
 export const hide = (actionType) => ({
-    type: 'POPUP_HIDE',
+    type: types.POPUP_HIDE,
     actionType
 });
 
 export const listen = (actionTypesList, componentType) => ({
-    type: 'POPUP_LISTEN',
+    type: types.POPUP_LISTEN,
     actionTypesList,
     componentType
 });
 
-export const unlisten = (actionType) => ({
-    type: 'POPUP_UNLISTEN',
-    actionType
+export const unlisten = (actionTypesList, componentType) => ({
+    type: types.POPUP_UNLISTEN,
+    actionTypesList,
+    componentType
 });

@@ -1,11 +1,11 @@
-import React from 'react';
+import React,{ Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { createPortal } from 'react-dom';
 
 const PopupPortal = ({portalElementId, children}) => createPortal(
-    <div>
+    <Fragment>
         {children}
-    </div>,
+    </Fragment>,
     document.getElementById(portalElementId)
 );
 
