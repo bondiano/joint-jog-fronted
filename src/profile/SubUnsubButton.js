@@ -30,7 +30,7 @@ class SubUnsubButton extends React.Component {
 
     render() {
         const {eventId, isCurrentUser, eventSubscribers, currentUserId, classes} = this.props;
-        const isSubscribed = eventSubscribers.indexOf(currentUserId) === -1;
+        const isSubscribed = !(eventSubscribers.indexOf(currentUserId) === -1);
         return (
             <div>
                 {isCurrentUser ?
