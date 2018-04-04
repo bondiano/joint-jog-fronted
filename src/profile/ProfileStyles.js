@@ -13,9 +13,10 @@ export const ProfileStyles = theme => ({
         display: 'flex',
         flexWrap: 'nowrap',
         flexDirection: 'column',
+        alignItems: 'center',
         [theme.breakpoints.up('md')]: {
             width: 700,
-            alignItems: 'center',
+
         },
         [theme.breakpoints.down('sm')]: {
             width: 300,
@@ -36,7 +37,8 @@ export const ProfileStyles = theme => ({
         align: 'center'
     },
     fieldLine: {
-        margin: 8
+        margin: 8,
+        width: 250,
     },
     buttonLine:{
         margin: 16
