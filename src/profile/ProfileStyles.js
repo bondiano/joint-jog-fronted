@@ -13,9 +13,9 @@ export const ProfileStyles = theme => ({
         display: 'flex',
         flexWrap: 'nowrap',
         flexDirection: 'column',
-        alignItems: 'center',
         [theme.breakpoints.up('md')]: {
             width: 700,
+            alignItems: 'center',
         },
         [theme.breakpoints.down('sm')]: {
             width: 300,

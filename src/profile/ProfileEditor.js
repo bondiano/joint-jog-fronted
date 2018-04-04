@@ -47,9 +47,9 @@ class ProfileEditorForm extends React.Component {
         this.setState({
             username: this.props.data.username,
             socialNetworks: this.props.data.socialNetworks,
-            firstName: this.props.data.firstName,
-            lastName: this.props.data.lastName,
-            age: this.props.data.age,
+            firstName: this.props.data.firstName ? this.props.data.firstName : '',
+            lastName: this.props.data.lastName ? this.props.data.lastName : '',
+            age: this.props.data.age ? this.props.data.age : '',
             sex: this.props.data.sex,
         });
     }
@@ -127,41 +127,6 @@ class ProfileEditorForm extends React.Component {
 
     render() {
         const { classes } = this.props;
-        const socialNetworks = {
-            vk: (url) => (
-                <div className={classes.fieldLine}>
-                    <TextField
-                        onBlur={this.handleChangeSocial}
-                        type="text"
-                        label="Вы в vk(ссылка):"
-                        name="vk"
-                        defaultValue={url}
-                    />
-                </div>
-            ),
-            facebook: (url) => (
-                <div className={classes.fieldLine}>
-                    <TextField
-                        onBlur={this.handleChangeSocial}
-                        type="text"
-                        label="Вы в facebook(ссылка):"
-                        name="facebook"
-                        defaultValue={url}
-                    />
-                </div>
-            ),
-            twitter: (url) => (
-                <div className={classes.fieldLine}>
-                    <TextField
-                        onBlur={this.handleChangeSocial}
-                        type="text"
-                        label="Вы в twitter(ссылка):"
-                        name="twitter"
-                        defaultValue={url}
-                    />
-                </div>
-            )
-        };
         return (
             <Paper  className={classes.rootEditor}>
                 <Typography className={classes.heading} variant="headline" component="h2">Профиль</Typography>
@@ -232,12 +197,38 @@ class ProfileEditorForm extends React.Component {
                 </FormControl>
                 </div>
 
-                {this.state.socialNetworks && this.state.socialNetworks.map((sc, index) => {
-                    return socialNetworks[sc.type] &&
-                        (<div key={`${sc.type}-${index}`}>
-                            {socialNetworks[sc.type](sc.url)}
-                        </div>);
-                })}
+                <div className={classes.fieldLine}>
+                    <TextField
+                        onBlur={this.handleChangeSocial}
+                        type="text"
+                        label="Вы в vk(ссылка):"
+                        name="vk"
+                        defaultValue={this.state.socialNetworks.find(sc => sc.type === 'vk') &&
+                            (this.state.socialNetworks.find(sc => sc.type === 'vk')).url}
+                    />
+                </div>
+
+                <div className={classes.fieldLine}>
+                    <TextField
+                        onBlur={this.handleChangeSocial}
+                        type="text"
+                        label="Вы в facebook(ссылка):"
+                        name="facebook"
+                        defaultValue={this.state.socialNetworks.find(sc => sc.type === 'facebook') &&
+                        (this.state.socialNetworks.find(sc => sc.type === 'facebook')).url}
+                    />
+                </div>
+
+                <div className={classes.fieldLine}>
+                    <TextField
+                        onBlur={this.handleChangeSocial}
+                        type="text"
+                        label="Вы в twitter(ссылка):"
+                        name="twitter"
+                        defaultValue={this.state.socialNetworks.find(sc => sc.type === 'twitter') &&
+                        (this.state.socialNetworks.find(sc => sc.type === 'twitter')).url}
+                    />
+                </div>
 
                 <Typography variant="caption" color="error">{!this.state.isValid.social && SOCIAL_VALID_ERROR}</Typography>
 
