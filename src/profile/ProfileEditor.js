@@ -55,15 +55,13 @@ class ProfileEditorForm extends React.Component {
     }
 
     handleChange = (e) => {
-        const name = e.target.name;
-        const value = e.target.value;
+        const { name, value } = e.target;
         this.setState({[name]: value},
             () => { this.validateField(name, value); });
     };
 
     handleChangeSocial = (e) => {
-        const name = e.target.name;
-        const value = e.target.value;
+        const { name, value } = e.target;
         // eslint-disable-next-line
         const socialValid = value.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm) || value === '';
 
