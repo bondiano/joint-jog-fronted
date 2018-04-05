@@ -5,24 +5,21 @@ import AddIcon from 'material-ui-icons/Add';
 
 import {EventStyles} from './EventsStyles';
 
-const NewEventButton = ({classes, toCreateNewEvent}) => {
-
-    return(
-        <Fragment>
-            <Hidden mdUp>
-                <Button 
-                    variant="fab" 
-                    color="primary" 
-                    aria-label="add" 
-                    className={classes.newEvent} 
-                    onClick={toCreateNewEvent}
-                >
-                    <AddIcon/>
-                </Button>
-            </Hidden>
-        </Fragment>
-    );
-};
+const NewEventButton = ({classes, toCreateNewEvent}) => (
+    <Fragment>
+        <Hidden mdUp>
+            <Button 
+                variant="fab" 
+                color="primary" 
+                aria-label="add" 
+                className={classes.newEvent} 
+                onClick={toCreateNewEvent}
+            >
+                <AddIcon/>
+            </Button>
+        </Hidden>
+    </Fragment>
+);
 
 NewEventButton.propTypes = {
     toCreateNewEvent: PropTypes.func.isRequired,

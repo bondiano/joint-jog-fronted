@@ -36,14 +36,6 @@ export const EventInfoModalStyles = theme => ({
     textLine: {
         margin: '4px 8px 4px 8px'
     },
-    loader: {
-        minWidth: 200,
-        display: 'flex',
-        justifyContent: 'center'
-    },
-    progress: {
-        color: purple[500]
-    },
     button: {
         margin: 4
     },

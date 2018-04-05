@@ -15,6 +15,11 @@ const theme = createMuiTheme({
                 display: 'flex',
                 alignItem: 'center'
             }
+        },
+        MuiButton: {
+            fab: {
+                boxShadow: 'none'
+            }
         }
     },
     palette: {

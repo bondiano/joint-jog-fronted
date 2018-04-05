@@ -12,12 +12,7 @@ const xhr = new XHRProvider();
 
 function* createNewEventSaga(action) {
     try {
-        const response = yield call(xhr.post, '/event/create', {
-            date: new Date(action.date).getTime(),
-            points: action.pointsList,
-            title: action.title,
-            describe: action.description
-        });
+        const response = yield call(xhr.post, '/event/create', action.eventData);
         if (response.data.success) {
             yield put(actions.createNewEventSuccess());            
             yield put(mapActions.clearEditorPoints());
@@ -52,15 +47,10 @@ function* fetchEventSaga(action) {
 
 function* editEventSaga(action) {
     try {
-        const response = yield call(xhr.patch, `/event/${action.id}`, {
-            date: new Date(action.date).getTime(),
-            points: action.pointsList,
-            title: action.title,
-            describe: action.description
-        });
+        const response = yield call(xhr.patch, `/event/${action.eventData._id}`, action.eventData);
         if (response.data.success) {
             yield put(actions.editEventSuccess());
-            yield fetchEventSaga({id: action.id});
+            yield fetchEventSaga({id: action.eventData._id});     
             yield call(action.history.push, '/');
         } else {
             yield put(actions.editEventError('Извините, произошла ошибка. Попробуйте позже.'));              

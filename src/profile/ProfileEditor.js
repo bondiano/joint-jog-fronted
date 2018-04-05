@@ -47,23 +47,21 @@ class ProfileEditorForm extends React.Component {
         this.setState({
             username: this.props.data.username,
             socialNetworks: this.props.data.socialNetworks,
-            firstName: this.props.data.firstName,
-            lastName: this.props.data.lastName,
-            age: this.props.data.age,
+            firstName: this.props.data.firstName ? this.props.data.firstName : '',
+            lastName: this.props.data.lastName ? this.props.data.lastName : '',
+            age: this.props.data.age ? this.props.data.age : '',
             sex: this.props.data.sex,
         });
     }
 
     handleChange = (e) => {
-        const name = e.target.name;
-        const value = e.target.value;
+        const { name, value } = e.target;
         this.setState({[name]: value},
             () => { this.validateField(name, value); });
     };
 
     handleChangeSocial = (e) => {
-        const name = e.target.name;
-        const value = e.target.value;
+        const { name, value } = e.target;
         // eslint-disable-next-line
         const socialValid = value.match(/^(?:http(s)?:\/\/)?[\w.-]+(?:\.[\w\.-]+)+[\w\-\._~:/?#[\]@!\$&'\(\)\*\+,;=.]+$/gm) || value === '';
 
@@ -203,10 +201,10 @@ class ProfileEditorForm extends React.Component {
                     <TextField
                         onBlur={this.handleChangeSocial}
                         type="text"
-                        label="Вы в VK(ссылка):"
+                        label="Вы в vk(ссылка):"
                         name="vk"
-                        value={(() => this.state.socialNetworks.find(sc => sc.type === 'vk')) &&
-                        (() => this.state.socialNetworks.find(sc => sc.type === 'vk')).url}
+                        defaultValue={this.state.socialNetworks.find(sc => sc.type === 'vk') &&
+                            (this.state.socialNetworks.find(sc => sc.type === 'vk')).url}
                     />
                 </div>
 
@@ -216,8 +214,8 @@ class ProfileEditorForm extends React.Component {
                         type="text"
                         label="Вы в facebook(ссылка):"
                         name="facebook"
-                        value={(() => this.state.socialNetworks.find(sc => sc.type === 'facebook')) &&
-                        (() => this.state.socialNetworks.find(sc => sc.type === 'facebook')).url}
+                        defaultValue={this.state.socialNetworks.find(sc => sc.type === 'facebook') &&
+                        (this.state.socialNetworks.find(sc => sc.type === 'facebook')).url}
                     />
                 </div>
 
@@ -227,8 +225,8 @@ class ProfileEditorForm extends React.Component {
                         type="text"
                         label="Вы в twitter(ссылка):"
                         name="twitter"
-                        value={(() => this.state.socialNetworks.find(sc => sc.type === 'twitter')) &&
-                        (() => this.state.socialNetworks.find(sc => sc.type === 'twitter')).url}
+                        defaultValue={this.state.socialNetworks.find(sc => sc.type === 'twitter') &&
+                        (this.state.socialNetworks.find(sc => sc.type === 'twitter')).url}
                     />
                 </div>
 

@@ -8,18 +8,17 @@ import ModalComponent from '../common/ModalComponent';
 import HideModalButton from '../common/HideModalButton';
 
 class EditorContainer extends Component {
-    constructor(props) {
-        super(props);
+    constructor() {
+        super();
         this.state = {
             showModal: true
         };
     }
 
     hideHandler = () => {
-        this.setState({
-            ...this.state,
+        this.setState(({showModal}) => ({
             showModal: !this.state.showModal
-        });
+        }));
     }
 
     render() {

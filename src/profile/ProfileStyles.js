@@ -16,6 +16,7 @@ export const ProfileStyles = theme => ({
         alignItems: 'center',
         [theme.breakpoints.up('md')]: {
             width: 700,
+
         },
         [theme.breakpoints.down('sm')]: {
             width: 300,
@@ -36,10 +37,14 @@ export const ProfileStyles = theme => ({
         align: 'center'
     },
     fieldLine: {
-        margin: 8
+        margin: 8,
+        width: 250,
     },
     buttonLine:{
         margin: 16
+    },
+    button: {
+        width: 110
     },
     icon: {
         marginTop: 10,

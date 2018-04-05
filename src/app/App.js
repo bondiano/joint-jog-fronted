@@ -85,7 +85,6 @@ class App extends React.Component {
                         toCreateNewEvent={this.toCreateNewEvent}
                         logout={this.logout}
                         isAuth={this.props.isAuth}
-                        username={this.props.currentUserUsername}
                     />
                     <Switch>
                         <Route exact path="/" component={EventContainer} />

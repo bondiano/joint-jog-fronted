@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import ScrollArea from 'react-scrollbar';
 import Slide from 'material-ui/transitions/Slide';
 
+import Preloader from '../common/Preloader';
 import ModalComponent from '../common/ModalComponent';
 import * as actions from './EventsActions';
 import * as mapActions from '../map/MapActions';
@@ -46,17 +47,6 @@ class EventInfoModal extends Component {
         const id = this.props.match.params.id;
         this.props.fetchEvent(id);
     }
-
-    loader = () => {
-        const {classes} = this.props;
-        return (
-            <div className={classes.loader}>
-                <Typography className={classes.heading} variant="headline" component="h2">
-                    <CircularProgress className={classes.progress} thickness={7} />
-                </Typography>
-            </div>
-        );
-    };
 
     subscribe = () => {
         const id = this.props.match.params.id;
@@ -137,8 +127,7 @@ class EventInfoModal extends Component {
             <ModalComponent>
                 <Slide direction="left" mountOnEnter unmountOnExit in={showEditor}>
                     <div className={classes.root}>
-                        {this.props.isLoading 
-                            || this.props.error ? this.loader() : this.content()}
+                        {this.props.isLoading || this.props.error ? <Preloader/> : this.content()}
                     </div>
                 </Slide>
             </ModalComponent>
