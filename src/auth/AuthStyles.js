@@ -2,13 +2,19 @@ import purple from 'material-ui/colors/purple';
 export const AuthStyles = theme => ({
     container: {
         textAlign: 'center',
-        minWidth: 300
+        minWidth: 300,
+        textAlign: 'center',
+        display: 'flex',
+        flexWrap: 'nowrap',
+        flexDirection: 'column',
+        alignItems: 'center',
     },
     cardHeading: {
         margin: 8
     },
     fieldLine: {
-        margin: 8
+        margin: 8,
+        width: 250,
     },
     buttonLine:{
         margin: 16

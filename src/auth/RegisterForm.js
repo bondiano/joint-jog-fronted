@@ -63,12 +63,12 @@ class RegisterForm extends React.Component {
                 fieldValidErrors.email = emailValid ? '' : 'Неверный формат электронной почты.';
                 break;
             case 'username':
-                usernameValid = (value.length >= 6) && (value.length <= 16);
-                fieldValidErrors.username = usernameValid ? '': 'Никнейм должен быть больше 5 и меньше 16 символов.';
+                usernameValid = value.match(/^[a-zA-Z][a-zA-Z0-9-_\.]{5,16}$/i);
+                fieldValidErrors.username = usernameValid ? '': 'Неверный формат логина.';
                 break;
             case 'password':
-                passwordValid = (value.length >= 6) && (value.length <= 24);
-                fieldValidErrors.password = passwordValid ? '': 'Пароль должен быть больше 6 и меньше 24 символов.';
+                passwordValid = value.match(/(?=^.{5,24}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/i);
+                fieldValidErrors.password = passwordValid ? '': 'Неверный формат пароля. Пароль должен содержать латинские буквы и цифры.';
                 break;
             default:
                 break;
