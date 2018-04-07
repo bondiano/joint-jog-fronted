@@ -93,7 +93,7 @@ class App extends React.Component {
                         <Route path="/login" component={LoginForm} />
                         <Route path="/register" component={RegisterForm} />
                         <PrivateRouter path="/editor" isAuth={this.state.isAuth} component={EditorContainer} />
-                        <Route exact path="/profile/" component={CurrentUserProfile} />
+                        <PrivateRouter exact path="/profile/" isAuth={this.state.isAuth} component={CurrentUserProfile} />
                         <Route path="/profile/:username" component={ForeignUserProfile} />
                     </Switch>
                 </MuiThemeProvider>
