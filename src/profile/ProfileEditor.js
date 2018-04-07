@@ -104,7 +104,7 @@ class ProfileEditorForm extends React.Component {
                 emailValid = (value.match(/^([\w.%+-]+)@([\w-]+\.)+([\w]{2,})$/i) || value === '');
                 break;
             case 'username':
-                usernameValid = (value.length >= 4) && (value.length <= 16);
+                usernameValid = value.match(/^[a-zA-Z][a-zA-Z0-9-_\.]{5,16}$/i);
                 break;
             case 'age':
                 ageValid = (+value > 11) || value === '';
