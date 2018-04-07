@@ -67,7 +67,7 @@ class RegisterForm extends React.Component {
                 fieldValidErrors.username = usernameValid ? '': 'Неверный формат логина.';
                 break;
             case 'password':
-                passwordValid = value.match(/(?=^.{5,24}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$/i);
+                passwordValid = value.match(/[0-9а-яА-Яa-zA-Z!@#$%^&*]{6,24}/i);
                 fieldValidErrors.password = passwordValid ? '': 'Неверный формат пароля. Пароль должен содержать латинские буквы и цифры.';
                 break;
             default:
